@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:e2_explorer/src/features/common_widgets/layout/loading_parent_widget.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_client.dart';
@@ -39,7 +41,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
   }
 
   Future<void> _getSelectedServer(Duration duration) async {
-    selectedServer = (await MqttServerRepository().getSelectedMqttServer()) ?? MqttServer.defaultServer;
+    selectedServer = (await MqttServerRepository().getSelectedMqttServer()) ??
+        MqttServer.defaultServer;
     setState(() {
       isLoading = false;
     });
@@ -82,7 +85,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
                           if (serverNullable != null) {
                             final server = serverNullable.value;
                             setState(() {
-                              selectedServer = server ?? MqttServer.defaultServer;
+                              selectedServer =
+                                  server ?? MqttServer.defaultServer;
                             });
                           }
                         },
@@ -101,11 +105,12 @@ class _ConnectionPageState extends State<ConnectionPage> {
                           await client.connect();
                           if (client.isConnected) {
                             /// ToDO set on page render
-                            appWindow.hide();
+
+                            if (!Platform.isMacOS) appWindow.hide();
                             const newSize = Size(1400, 800);
                             appWindow.minSize = newSize;
                             appWindow.size = newSize;
-                            appWindow.show();
+                            if (!Platform.isMacOS) appWindow.show();
                             if (context.mounted) {
                               context.goNamed(RouteNames.dashboard);
                             }
