@@ -46,7 +46,7 @@ class E2Message {
   final String deviceLog;
   final String errorLog;
   final String? initiatorId;
-  final String formatter;
+  final String? formatter;
 
   E2Message({
     required this.eventType,
@@ -88,7 +88,7 @@ class E2Message {
     required this.deviceLog,
     required this.errorLog,
     required this.initiatorId,
-    required this.formatter,
+    this.formatter,
   });
 
   Map<String, dynamic> toMap() {
@@ -141,9 +141,10 @@ class E2Message {
     return E2Message(
       eventType: map['EE_EVENT_TYPE'] as String,
       id: map['EE_ID'] as String,
-      eeTimestamp: (map['EE_TIMESTAMP'] as String).isEmpty || map["EE_TIMESTAMP"] == null
-          ? null
-          : DateTime.parse(map["EE_TIMESTAMP"]),
+      eeTimestamp:
+          (map['EE_TIMESTAMP'] as String).isEmpty || map["EE_TIMESTAMP"] == null
+              ? null
+              : DateTime.parse(map["EE_TIMESTAMP"]),
       totalMessages: map['EE_TOTAL_MESSAGES'] as int,
       messageId: map['EE_MESSAGE_ID'] as int,
       sbId: map['SB_ID'] as String,
@@ -160,9 +161,10 @@ class E2Message {
       defaultCuda: map['DEFAULT_CUDA'] as String,
       cpu: map['CPU'] as String,
       timestamp: map['TIMESTAMP'] as String,
-      currentTime: (map['CURRENT_TIME'] as String).isEmpty || map["CURRENT_TIME"] == null
-          ? null
-          : DateTime.parse(map["CURRENT_TIME"]),
+      currentTime:
+          (map['CURRENT_TIME'] as String).isEmpty || map["CURRENT_TIME"] == null
+              ? null
+              : DateTime.parse(map["CURRENT_TIME"]),
       uptime: map['UPTIME'] as double,
       version: map['VERSION'] as String,
       loggerVersion: map['LOGGER_VERSION'] as String,
@@ -174,7 +176,8 @@ class E2Message {
       noStreamsData: map['NR_STREAMS_DATA'] as int,
       gitBranch: map['GIT_BRANCH'] as String,
       condaEnv: map['CONDA_ENV'] as String,
-      configPipelines: E2ConfigPipelines.fromList(map['CONFIG_STREAMS'] as List),
+      configPipelines:
+          E2ConfigPipelines.fromList(map['CONFIG_STREAMS'] as List),
       dctStats: E2DctStats.fromMap(map['DCT_STATS']),
       commStats: E2CommStats.fromMap(map['COMM_STATS']),
       servingPids: map['SERVING_PIDS'] as List<int>,
@@ -183,7 +186,7 @@ class E2Message {
       deviceLog: map['DEVICE_LOG'] as String,
       errorLog: map['ERROR_LOG'] as String,
       initiatorId: map['INITIATOR_ID'] as String?,
-      formatter: map['EE_FORMATTER'] as String,
+      formatter: map['EE_FORMATTER'] as String?,
     );
   }
 }

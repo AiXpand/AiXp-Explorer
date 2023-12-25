@@ -37,23 +37,28 @@ class TreeDataSource<TreeItemDataType, UniqueIDType> {
       setNewChildren: setNewChildren,
       removeChildren: removeChildren,
     );
-    _filteredDataSource = TreeDataSource<TreeItemDataType, UniqueIDType>(roots: filteredTree);
+    _filteredDataSource =
+        TreeDataSource<TreeItemDataType, UniqueIDType>(roots: filteredTree);
   }
 
   bool get isFiltered => filteredData != null;
 
   /// Returns the filteredRoots if a filter is set
   /// or the tree roots otherwise
-  Iterable<TreeItemDataType> get currentRoots => isFiltered ? filteredData!.roots : this.roots;
+  Iterable<TreeItemDataType> get currentRoots =>
+      isFiltered ? filteredData!.roots : this.roots;
 
-  TreeDataSource<TreeItemDataType, UniqueIDType>? get filteredData => _filteredDataSource;
+  TreeDataSource<TreeItemDataType, UniqueIDType>? get filteredData =>
+      _filteredDataSource;
   void clearFilter() {
     _filteredDataSource = null;
   }
 
   TreeDataSource<TreeItemDataType, UniqueIDType>? _filteredDataSource;
 
-  void visitTreeWithAction({required TreeItemDataType startingNode, required Visitor<TreeItemDataType> action}) {
+  void visitTreeWithAction(
+      {required TreeItemDataType startingNode,
+      required Visitor<TreeItemDataType> action}) {
     action(startingNode);
     final Iterable<TreeItemDataType> children = getChildren(startingNode);
     for (final TreeItemDataType child in children) {
@@ -82,7 +87,9 @@ class TreeDataSource<TreeItemDataType, UniqueIDType> {
     }
   }
 
-  void visitParentsWithAction({required TreeItemDataType startingNode, required Visitor<TreeItemDataType> action}) {
+  void visitParentsWithAction(
+      {required TreeItemDataType startingNode,
+      required Visitor<TreeItemDataType> action}) {
     TreeItemDataType? currentParent = getParent(startingNode);
     while (currentParent != null) {
       action(currentParent);

@@ -9,7 +9,8 @@ class MqttMessageTransformer {
       return message;
     } else {
       /// This is an unknown format. Message should be dropped.
-      throw FormatException('EE_FORMATTER is invalid for the message with path: ${message['EE_PAYLOAD_PATH']}');
+      throw FormatException(
+          'EE_FORMATTER is invalid for the message with path: ${message['EE_PAYLOAD_PATH']}');
     }
   }
 }

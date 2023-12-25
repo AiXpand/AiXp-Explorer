@@ -45,7 +45,8 @@ class Cavi2Message {
         demoMode: json["demoMode"],
         eeFormatter: json["EE_FORMATTER"],
         sbImplementation: json["SB_IMPLEMENTATION"],
-        eePayloadPath: List<String?>.from(json["EE_PAYLOAD_PATH"].map((x) => x)),
+        eePayloadPath:
+            List<String?>.from(json["EE_PAYLOAD_PATH"].map((x) => x)),
       );
 
   Map<String, dynamic> toMap() => {

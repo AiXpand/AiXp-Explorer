@@ -1,11 +1,13 @@
 part of hf_tree;
 
-typedef TreeNodeHeaderBuilder<TreeItemDataType extends Object, UniqueIDType> = Widget Function(
+typedef TreeNodeHeaderBuilder<TreeItemDataType extends Object, UniqueIDType>
+    = Widget Function(
   BuildContext context,
   TreeNode<TreeItemDataType> node,
 );
 
-class SliverTree<TreeItemDataType extends Object, UniqueIDType> extends StatefulWidget {
+class SliverTree<TreeItemDataType extends Object, UniqueIDType>
+    extends StatefulWidget {
   const SliverTree({
     super.key,
     required this.controller,
@@ -18,16 +20,19 @@ class SliverTree<TreeItemDataType extends Object, UniqueIDType> extends Stateful
   final Widget Function(BuildContext context) emptyStateBuilder;
 
   @override
-  State<SliverTree<TreeItemDataType, UniqueIDType>> createState() => _SliverTreeState<TreeItemDataType, UniqueIDType>();
+  State<SliverTree<TreeItemDataType, UniqueIDType>> createState() =>
+      _SliverTreeState<TreeItemDataType, UniqueIDType>();
 }
 
 class _SliverTreeState<TreeItemDataType extends Object, UniqueIDType>
     extends State<SliverTree<TreeItemDataType, UniqueIDType>> {
   /// A list containing all the expanded items and their children
-  List<TreeNode<TreeItemDataType>> _displayedNodesList = <TreeNode<TreeItemDataType>>[];
+  List<TreeNode<TreeItemDataType>> _displayedNodesList =
+      <TreeNode<TreeItemDataType>>[];
 
   void _updateDisplayedNodesList() {
-    final List<TreeNode<TreeItemDataType>> displayedNodesList = <TreeNode<TreeItemDataType>>[];
+    final List<TreeNode<TreeItemDataType>> displayedNodesList =
+        <TreeNode<TreeItemDataType>>[];
     widget.controller.visitNodes(onVisit: displayedNodesList.add);
     _displayedNodesList = displayedNodesList;
   }
@@ -42,7 +47,8 @@ class _SliverTreeState<TreeItemDataType extends Object, UniqueIDType>
   }
 
   @override
-  void didUpdateWidget(covariant SliverTree<TreeItemDataType, UniqueIDType> oldWidget) {
+  void didUpdateWidget(
+      covariant SliverTree<TreeItemDataType, UniqueIDType> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != widget.controller) {
       oldWidget.controller.removeListener(_rebuild);

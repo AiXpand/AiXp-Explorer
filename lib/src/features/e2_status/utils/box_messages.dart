@@ -54,7 +54,8 @@ class BoxMessages {
   }
 
   void addPayloadToPipeline(String pipelineName, Map<String, dynamic> payload) {
-    final Map<String, dynamic> convertedMessage = MqttMessageTransformer.formatToRaw(payload);
+    final Map<String, dynamic> convertedMessage =
+        MqttMessageTransformer.formatToRaw(payload);
     final E2Payload payloadObject = E2Payload.fromMap(
       convertedMessage,
       originalMap: payload,
@@ -79,7 +80,8 @@ class BoxMessages {
   void addHeartbeat(Map<String, dynamic> receivedHeartbeat) {
     // bool isV2 = false;
     // final Map<String, dynamic> heartbeat = Map<String, dynamic>.from(receivedHeartbeat);
-    final Map<String, dynamic> convertedMessage = MqttMessageTransformer.formatToRaw(receivedHeartbeat);
+    final Map<String, dynamic> convertedMessage =
+        MqttMessageTransformer.formatToRaw(receivedHeartbeat);
     final E2Heartbeat heartbeatObject = E2Heartbeat.fromMap(
       convertedMessage,
       originalMap: receivedHeartbeat,

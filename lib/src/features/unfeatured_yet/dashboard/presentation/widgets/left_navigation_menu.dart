@@ -26,7 +26,8 @@ class LeftNavigationMenu extends StatefulWidget {
 
 class _LeftNavigationMenuState extends State<LeftNavigationMenu> {
   int _currentIndex = 0;
-  final OverlayController _settingsOverlayController = OverlayController('Settings Menu');
+  final OverlayController _settingsOverlayController =
+      OverlayController('Settings Menu');
   bool isExpanded = true;
 
   @override
@@ -78,7 +79,8 @@ class _LeftNavigationMenuState extends State<LeftNavigationMenu> {
                       const Alignment targetAnchor = Alignment.bottomRight;
                       const Alignment followerAnchor = Alignment.bottomLeft;
 
-                      final dynamic returnedValue = await _settingsOverlayController.showOverlay(
+                      final dynamic returnedValue =
+                          await _settingsOverlayController.showOverlay(
                         context: context,
                         isModal: false,
                         targetAnchor: targetAnchor,
@@ -114,7 +116,9 @@ class _LeftNavigationMenuState extends State<LeftNavigationMenu> {
                     isExpanded = !isExpanded;
                   });
                 },
-                icon: isExpanded ? CarbonIcons.chevron_left : CarbonIcons.chevron_right,
+                icon: isExpanded
+                    ? CarbonIcons.chevron_left
+                    : CarbonIcons.chevron_right,
                 foregroundColor: ColorStyles.grey,
                 tooltipMessage: '',
               ),

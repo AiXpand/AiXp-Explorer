@@ -9,7 +9,8 @@ class MqttServerRepository {
 
   MqttServerRepository._internal() : super();
 
-  static final MqttServerRepository _singleton = MqttServerRepository._internal();
+  static final MqttServerRepository _singleton =
+      MqttServerRepository._internal();
 
   static const String _mqttServersKey = 'mqtt_servers';
   static const String _selectedServerNameKey = 'selected_server_name';

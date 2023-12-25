@@ -36,7 +36,8 @@ class _SettingsMenuState extends State<SettingsMenu> {
       child: Container(
         decoration: BoxDecoration(
           color: ColorStyles.dark630,
-          border: Border.all(color: ColorStyles.selectedHoverButtonBlue, width: 2),
+          border:
+              Border.all(color: ColorStyles.selectedHoverButtonBlue, width: 2),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         height: widget.height,
@@ -63,9 +64,12 @@ class _SettingsMenuState extends State<SettingsMenu> {
                       height: 4,
                     ),
                     Text(
-                      isConnected ? 'Status: Connected' : 'Status: Disconnected',
+                      isConnected
+                          ? 'Status: Connected'
+                          : 'Status: Disconnected',
                       style: TextStyles.caption(
-                        color: isConnected ? ColorStyles.green : ColorStyles.red,
+                        color:
+                            isConnected ? ColorStyles.green : ColorStyles.red,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -88,11 +92,18 @@ class _SettingsMenuState extends State<SettingsMenu> {
                         },
                         height: 25,
                         text: isConnected ? 'Disconnect' : 'Connect',
-                        textColor: isConnected ? ColorStyles.light100 : ColorStyles.dark600,
-                        hoveredTextColor: isConnected ? ColorStyles.light100 : ColorStyles.dark600,
+                        textColor: isConnected
+                            ? ColorStyles.light100
+                            : ColorStyles.dark600,
+                        hoveredTextColor: isConnected
+                            ? ColorStyles.light100
+                            : ColorStyles.dark600,
                         fontSize: 12,
-                        backgroundColor: isConnected ? ColorStyles.red : ColorStyles.green,
-                        hoverColor: isConnected ? ColorStyles.red.withOpacity(0.8) : ColorStyles.green.withOpacity(0.8),
+                        backgroundColor:
+                            isConnected ? ColorStyles.red : ColorStyles.green,
+                        hoverColor: isConnected
+                            ? ColorStyles.red.withOpacity(0.8)
+                            : ColorStyles.green.withOpacity(0.8),
                       ),
                     ),
                     const SizedBox(width: 4),

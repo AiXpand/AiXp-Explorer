@@ -97,7 +97,8 @@ class _AddConnectionDialogState extends State<AddConnectionDialog> {
                                           return 'Name can not be empty!';
                                         }
                                         if (value == 'Default server' ||
-                                            currentServers.any((element) => element.name == value)) {
+                                            currentServers.any((element) =>
+                                                element.name == value)) {
                                           return 'Name already exists!';
                                         }
                                         return null;
@@ -127,13 +128,17 @@ class _AddConnectionDialogState extends State<AddConnectionDialog> {
                                       inputFieldLabel: 'Port',
                                       hintText: '',
                                       keyboardType: TextInputType.number,
-                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Port can not be empty!';
                                         }
                                         final parsedValue = int.tryParse(value);
-                                        if (parsedValue == null || parsedValue > 65535 || parsedValue < 0) {
+                                        if (parsedValue == null ||
+                                            parsedValue > 65535 ||
+                                            parsedValue < 0) {
                                           return 'Port value is invalid!';
                                         }
                                         return null;
@@ -203,7 +208,8 @@ class _AddConnectionDialogState extends State<AddConnectionDialog> {
                               backgroundColor: ColorStyles.blue,
                               hoverColor: ColorStyles.lightBlue,
                               onTap: () async {
-                                currentServers = await MqttServerRepository().getMqttServers();
+                                currentServers = await MqttServerRepository()
+                                    .getMqttServers();
                                 if (_formKey.currentState!.validate()) {
                                   final newServer = MqttServer(
                                     name: _nameController.text,
@@ -212,7 +218,8 @@ class _AddConnectionDialogState extends State<AddConnectionDialog> {
                                     username: _usernameController.text,
                                     password: _passwordController.text,
                                   );
-                                  await MqttServerRepository().addMqttServer(newServer);
+                                  await MqttServerRepository()
+                                      .addMqttServer(newServer);
                                   if (context.mounted) {
                                     Navigator.of(context).pop(newServer);
                                   }

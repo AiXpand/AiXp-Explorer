@@ -14,7 +14,8 @@ class LandingScreen extends StatefulWidget {
   State<LandingScreen> createState() => _LandingScreenState();
 }
 
-class _LandingScreenState extends State<LandingScreen> with TickerProviderStateMixin {
+class _LandingScreenState extends State<LandingScreen>
+    with TickerProviderStateMixin {
   final E2Client client = E2Client();
   late TabController _tabController;
   late int _tabIndex;

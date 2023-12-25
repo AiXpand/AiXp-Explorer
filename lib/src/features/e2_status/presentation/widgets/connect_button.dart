@@ -20,7 +20,10 @@ class _ConnectButtonState extends State<ConnectButton> {
 
   @override
   void initState() {
-    E2Client().notifiers.connection.addListener((data) => true, (data) => onConnectionChange(data));
+    E2Client()
+        .notifiers
+        .connection
+        .addListener((data) => true, (data) => onConnectionChange(data));
     super.initState();
   }
 

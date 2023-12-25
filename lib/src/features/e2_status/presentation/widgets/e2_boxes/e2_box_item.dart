@@ -7,7 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class E2BoxItem extends StatelessWidget {
-  const E2BoxItem({super.key, required this.boxName, this.isSelected = false, required this.messageCount, this.onTap});
+  const E2BoxItem(
+      {super.key,
+      required this.boxName,
+      this.isSelected = false,
+      required this.messageCount,
+      this.onTap});
 
   final String boxName;
   final VoidCallback? onTap;

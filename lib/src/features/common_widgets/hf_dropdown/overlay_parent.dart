@@ -11,7 +11,8 @@ class OverlayParent extends StatefulWidget {
   });
 
   final String? name;
-  final Widget Function(BuildContext context, OverlayController overlay) builder;
+  final Widget Function(BuildContext context, OverlayController overlay)
+      builder;
   final OverlayController? overlayController;
   @override
   State<OverlayParent> createState() => _OverlayParentState();
@@ -22,7 +23,8 @@ class _OverlayParentState extends State<OverlayParent> {
   @override
   void initState() {
     super.initState();
-    _controller = widget.overlayController ?? OverlayController(widget.name ?? 'Unnamed overlayParent');
+    _controller = widget.overlayController ??
+        OverlayController(widget.name ?? 'Unnamed overlayParent');
   }
 
   @override

@@ -57,7 +57,8 @@ class _HFDropdownButtonState extends State<HFDropdownButton> {
 
   @override
   Widget build(BuildContext context) {
-    final IconData rightIcon = widget.isExpanded ? CarbonIcons.chevron_up : CarbonIcons.chevron_down;
+    final IconData rightIcon =
+        widget.isExpanded ? CarbonIcons.chevron_up : CarbonIcons.chevron_down;
 
     return ClickableContainer(
       // width: double.infinity,
@@ -89,16 +90,17 @@ class _HFDropdownButtonState extends State<HFDropdownButton> {
                 padding: const EdgeInsets.only(bottom: 6),
                 child: !isHover
                     ? Icon(
-                  rightIcon,
-                  color: _defaultColor,
-                )
+                        rightIcon,
+                        color: _defaultColor,
+                      )
                     : IconButtonWithTooltip(
-                  onTap: _onDropdownTap,
-                  icon: rightIcon,
-                  tooltipMessage: widget.isExpanded ? 'Hide options' : 'Show options',
-                  foregroundColor: _hoveredColor,
-                  foregroundColorHover: const Color(0xffbdbdbd),
-                ),
+                        onTap: _onDropdownTap,
+                        icon: rightIcon,
+                        tooltipMessage:
+                            widget.isExpanded ? 'Hide options' : 'Show options',
+                        foregroundColor: _hoveredColor,
+                        foregroundColorHover: const Color(0xffbdbdbd),
+                      ),
               ),
             ],
           ),

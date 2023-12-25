@@ -52,7 +52,8 @@ class _BoxesListState extends State<BoxesList> {
   @override
   void initState() {
     super.initState();
-    _listenerID = client.notifiers.all.addListener((data) => true, boxMessageListener);
+    _listenerID =
+        client.notifiers.all.addListener((data) => true, boxMessageListener);
     // _listenerID = client.notifiers.heartbeats.addListener((data) => true, boxMessageListener);
     // _listenerID = client.notifiers.notifications.addListener((data) => true, boxMessageListener);
     // _listenerID = client.notifiers.payloads.addListener((data) => true, boxMessageListener);
@@ -76,7 +77,8 @@ class _BoxesListState extends State<BoxesList> {
         child: ListView.separated(
           itemBuilder: (context, index) {
             final currentBox = _boxes[_boxNames[index]];
-            final messageCount = client.boxMessages[currentBox?.name]?.totalMessageCount ?? 0;
+            final messageCount =
+                client.boxMessages[currentBox?.name]?.totalMessageCount ?? 0;
             return E2BoxItem(
               key: ValueKey(currentBox!.name),
               messageCount: messageCount,

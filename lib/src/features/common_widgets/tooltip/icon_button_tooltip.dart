@@ -24,7 +24,8 @@ class IconButtonWithTooltip extends StatefulWidget {
   State<StatefulWidget> createState() => _IconButtonWithTooltipState();
 }
 
-class _IconButtonWithTooltipState extends State<IconButtonWithTooltip> with SingleTickerProviderStateMixin {
+class _IconButtonWithTooltipState extends State<IconButtonWithTooltip>
+    with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<Color?> animation;
 

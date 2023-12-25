@@ -35,7 +35,8 @@ class _TreeVerticalLinesPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _TreeVerticalLinesPainter oldDelegate) => oldDelegate.node.level != node.level;
+  bool shouldRepaint(covariant _TreeVerticalLinesPainter oldDelegate) =>
+      oldDelegate.node.level != node.level;
 }
 
 class TreeItemPadded extends StatelessWidget {

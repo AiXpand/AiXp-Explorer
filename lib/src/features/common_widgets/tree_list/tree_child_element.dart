@@ -66,7 +66,9 @@ class _SubTreeElementState extends State<TreeChildElement> {
                 padding: const EdgeInsets.all(8),
                 child: Icon(
                   CarbonIcons.container_software,
-                  color: widget.isSelected ? ColorStyles.light100 : ColorStyles.lightGrey,
+                  color: widget.isSelected
+                      ? ColorStyles.light100
+                      : ColorStyles.lightGrey,
                   size: 20,
                 ),
               ),
@@ -74,7 +76,10 @@ class _SubTreeElementState extends State<TreeChildElement> {
                 child: LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
                     final TextStyle style = GoogleFonts.inter(
-                        color: widget.isSelected ? ColorStyles.light100 : ColorStyles.lightGrey, fontSize: 14);
+                        color: widget.isSelected
+                            ? ColorStyles.light100
+                            : ColorStyles.lightGrey,
+                        fontSize: 14);
                     final TextPainter textPainter = TextPainter(
                       text: TextSpan(text: widget.text, style: style),
                       maxLines: 1,
@@ -86,14 +91,18 @@ class _SubTreeElementState extends State<TreeChildElement> {
                         widget.text,
                         style: GoogleFonts.inter(
                           fontSize: 14,
-                          color: widget.isSelected ? ColorStyles.light100 : ColorStyles.lightGrey,
+                          color: widget.isSelected
+                              ? ColorStyles.light100
+                              : ColorStyles.lightGrey,
                         ),
                         overflow: TextOverflow.ellipsis,
                       );
                     } else {
                       return Tooltip(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                        margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 6),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 1, vertical: 1),
                         textStyle: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           color: const Color(0xffBDBDBD),
@@ -101,7 +110,8 @@ class _SubTreeElementState extends State<TreeChildElement> {
                         ),
                         decoration: BoxDecoration(
                           color: const Color(0xff1F1F1F),
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4)),
                           border: Border.all(
                             color: const Color(0xffBDBDBD),
                           ),
@@ -111,7 +121,9 @@ class _SubTreeElementState extends State<TreeChildElement> {
                           widget.text,
                           style: TextStyle(
                             fontSize: 14,
-                            color: widget.isSelected ? ColorStyles.light100 : ColorStyles.lightGrey,
+                            color: widget.isSelected
+                                ? ColorStyles.light100
+                                : ColorStyles.lightGrey,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),

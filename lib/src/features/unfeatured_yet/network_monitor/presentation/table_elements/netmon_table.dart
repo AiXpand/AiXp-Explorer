@@ -106,7 +106,8 @@ class _NetmonTableState extends State<NetmonTable> {
     } else {
       final theme = Theme.of(context);
       return Theme(
-        data: theme.copyWith(iconTheme: theme.iconTheme.copyWith(color: ColorStyles.light200)),
+        data: theme.copyWith(
+            iconTheme: theme.iconTheme.copyWith(color: ColorStyles.light200)),
         child: Container(
           decoration: const BoxDecoration(
             color: ColorStyles.dark900,
@@ -116,7 +117,8 @@ class _NetmonTableState extends State<NetmonTable> {
             columnSpacing: 12,
             sortAscending: sortAscending,
             sortColumnIndex: sortColumnIndex,
-            headingRowColor: MaterialStateColor.resolveWith((states) => ColorStyles.dark700),
+            headingRowColor:
+                MaterialStateColor.resolveWith((states) => ColorStyles.dark700),
             border: TableBorder.all(
               width: 2,
               color: ColorStyles.dark600,
@@ -131,7 +133,9 @@ class _NetmonTableState extends State<NetmonTable> {
                 .toList(),
             // rows: [],
             rows: sortedTableData
-                .map((data) => createNetmonTableDataRow(data.boxId, data.details, onBoxClicked: widget.onBoxSelected))
+                .map((data) => createNetmonTableDataRow(
+                    data.boxId, data.details,
+                    onBoxClicked: widget.onBoxSelected))
                 .toList(),
           ),
         ),
@@ -171,46 +175,58 @@ class NetmonTableHeaderData {
 final _netmonTableColumnsData = [
   NetmonTableHeaderData(
     title: 'Box ID',
-    sortingFunction: (box1, box2) => box1.boxId.toLowerCase().compareTo(box2.boxId.toLowerCase()),
+    sortingFunction: (box1, box2) =>
+        box1.boxId.toLowerCase().compareTo(box2.boxId.toLowerCase()),
   ),
   NetmonTableHeaderData(
     title: 'Working',
-    sortingFunction: (box1, box2) => box1.details.working.toLowerCase().compareTo(box2.details.working.toLowerCase()),
+    sortingFunction: (box1, box2) => box1.details.working
+        .toLowerCase()
+        .compareTo(box2.details.working.toLowerCase()),
   ),
   NetmonTableHeaderData(
     title: 'Trust',
-    sortingFunction: (box1, box2) => box1.details.trust.compareTo(box2.details.trust),
+    sortingFunction: (box1, box2) =>
+        box1.details.trust.compareTo(box2.details.trust),
   ),
   NetmonTableHeaderData(
     title: 'Score',
-    sortingFunction: (box1, box2) => box1.details.score.compareTo(box2.details.score),
+    sortingFunction: (box1, box2) =>
+        box1.details.score.compareTo(box2.details.score),
   ),
   NetmonTableHeaderData(
     title: 'Disk',
-    sortingFunction: (box1, box2) => box1.details.availDisk.compareTo(box2.details.availDisk),
+    sortingFunction: (box1, box2) =>
+        box1.details.availDisk.compareTo(box2.details.availDisk),
   ),
   NetmonTableHeaderData(
     title: 'Mem',
-    sortingFunction: (box1, box2) => box1.details.availMem.compareTo(box2.details.availMem),
+    sortingFunction: (box1, box2) =>
+        box1.details.availMem.compareTo(box2.details.availMem),
   ),
   NetmonTableHeaderData(
     title: 'CPU Load',
-    sortingFunction: (box1, box2) => box1.details.cpuPast1h.compareTo(box2.details.cpuPast1h),
+    sortingFunction: (box1, box2) =>
+        box1.details.cpuPast1h.compareTo(box2.details.cpuPast1h),
   ),
   NetmonTableHeaderData(
     title: 'GPU Load',
-    sortingFunction: (box1, box2) => box1.details.gpuLoadPast1h.compareTo(box2.details.gpuLoadPast1h),
+    sortingFunction: (box1, box2) =>
+        box1.details.gpuLoadPast1h.compareTo(box2.details.gpuLoadPast1h),
   ),
   NetmonTableHeaderData(
     title: 'GPU Mem',
-    sortingFunction: (box1, box2) => box1.details.gpuLoadPast1h.compareTo(box2.details.gpuLoadPast1h),
+    sortingFunction: (box1, box2) =>
+        box1.details.gpuLoadPast1h.compareTo(box2.details.gpuLoadPast1h),
   ),
   NetmonTableHeaderData(
     title: 'Last seen',
-    sortingFunction: (box1, box2) => box1.details.lastSeenSec.compareTo(box2.details.lastSeenSec),
+    sortingFunction: (box1, box2) =>
+        box1.details.lastSeenSec.compareTo(box2.details.lastSeenSec),
   ),
   NetmonTableHeaderData(
     title: 'Version',
-    sortingFunction: (box1, box2) => box1.details.version.compareTo(box2.details.version),
+    sortingFunction: (box1, box2) =>
+        box1.details.version.compareTo(box2.details.version),
   ),
 ];

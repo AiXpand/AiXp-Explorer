@@ -46,7 +46,8 @@ class _TreeParentElementState extends State<TreeParentElement> {
           isParent: widget.isChildSelected,
           isSelected: widget.isSelected,
           // isCategorySelected: isCategorySelected,
-          shapeCorners: isExpanded ? ShapeUtilsCorners.top : ShapeUtilsCorners.all,
+          shapeCorners:
+              isExpanded ? ShapeUtilsCorners.top : ShapeUtilsCorners.all,
           height: widget.height,
           onTap: () {
             widget.onTap?.call();
@@ -103,7 +104,8 @@ class _TreeParentElementState extends State<TreeParentElement> {
               Expanded(
                 child: LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
-                    const TextStyle style = TextStyle(color: ColorStyles.lightGrey, fontSize: 14);
+                    const TextStyle style =
+                        TextStyle(color: ColorStyles.lightGrey, fontSize: 14);
                     final TextPainter textPainter = TextPainter(
                       text: TextSpan(text: widget.text, style: style),
                       maxLines: 1,
@@ -118,8 +120,10 @@ class _TreeParentElementState extends State<TreeParentElement> {
                       );
                     } else {
                       return Tooltip(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                        margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 6),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 1, vertical: 1),
                         textStyle: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           color: const Color(0xffBDBDBD),
@@ -127,7 +131,8 @@ class _TreeParentElementState extends State<TreeParentElement> {
                         ),
                         decoration: BoxDecoration(
                           color: const Color(0xff1F1F1F),
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4)),
                           border: Border.all(
                             color: const Color(0xffBDBDBD),
                           ),
@@ -164,7 +169,8 @@ class _TreeParentElementState extends State<TreeParentElement> {
           duration: const Duration(milliseconds: 250),
           switchInCurve: Curves.decelerate,
           switchOutCurve: Curves.easeOut,
-          transitionBuilder: (Widget child, Animation<double> animation) => SizeTransition(
+          transitionBuilder: (Widget child, Animation<double> animation) =>
+              SizeTransition(
             sizeFactor: animation,
             axisAlignment: 1,
             child: child,

@@ -47,7 +47,9 @@ class DropdownLabelItem extends StatelessWidget {
                 childBuilder: (bool isHovered) {
                   return Icon(
                     Icons.add,
-                    color: isHovered ? ColorStyles.light100 : const Color(0xff828282),
+                    color: isHovered
+                        ? ColorStyles.light100
+                        : const Color(0xff828282),
                     size: 16,
                   );
                 },

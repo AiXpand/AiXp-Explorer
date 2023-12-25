@@ -37,7 +37,8 @@ class _NetworkPageState extends State<NetworkPage> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text('Warning'),
-                    content: const Text('The selected box has no messages at the moment!'),
+                    content: const Text(
+                        'The selected box has no messages at the moment!'),
                     actions: <Widget>[
                       TextButton(
                         style: TextButton.styleFrom(
@@ -79,7 +80,9 @@ class _NetworkPageState extends State<NetworkPage> {
                 ],
               ),
             ),
-            selectedBoxName != null ? Expanded(child: DebugViewer(boxName: selectedBoxName)) : Container(),
+            selectedBoxName != null
+                ? Expanded(child: DebugViewer(boxName: selectedBoxName))
+                : Container(),
           ],
         )
       ],

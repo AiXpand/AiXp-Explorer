@@ -31,7 +31,8 @@ class _PipelineDetailedViewState extends State<PipelineDetailedView> {
   @override
   void initState() {
     super.initState();
-    currentHeartbeat = _client.boxMessages[widget.boxName]?.heartbeatMessages.lastOrNull;
+    currentHeartbeat =
+        _client.boxMessages[widget.boxName]?.heartbeatMessages.lastOrNull;
   }
 
   @override
@@ -48,7 +49,8 @@ class _PipelineDetailedViewState extends State<PipelineDetailedView> {
     return E2Listener(
       onHeartbeat: (data) {
         setState(() {
-          currentHeartbeat = _client.boxMessages[widget.boxName]?.heartbeatMessages.lastOrNull;
+          currentHeartbeat =
+              _client.boxMessages[widget.boxName]?.heartbeatMessages.lastOrNull;
         });
       },
       dataFilter: E2ListenerFilters.filterByBox(widget.boxName),
@@ -62,8 +64,9 @@ class _PipelineDetailedViewState extends State<PipelineDetailedView> {
           );
         }
         // final pipelines = currentHeartbeat!.configPipelines.allPipelines;
-        final pipelinesMapList =
-            (currentHeartbeat!.configPipelines as List).map((e) => e as Map<String, dynamic>).toList();
+        final pipelinesMapList = (currentHeartbeat!.configPipelines as List)
+            .map((e) => e as Map<String, dynamic>)
+            .toList();
         return Container(
           width: double.infinity,
           color: const Color(0xff161616),
@@ -137,7 +140,9 @@ class _PipelineDetailedViewState extends State<PipelineDetailedView> {
                 ),
                 Expanded(
                   flex: 2,
-                  child: selectedPipelineName != null && selectedPluginId != null && currentHeartbeat != null
+                  child: selectedPipelineName != null &&
+                          selectedPluginId != null &&
+                          currentHeartbeat != null
                       ? Container(
                           height: double.infinity,
                           width: double.infinity,
@@ -154,8 +159,10 @@ class _PipelineDetailedViewState extends State<PipelineDetailedView> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: PipelineViewer(
-                                  pipelineBody:
-                                      pipelinesMapList.firstWhere((element) => element['NAME'] == selectedPipelineName),
+                                  pipelineBody: pipelinesMapList.firstWhere(
+                                      (element) =>
+                                          element['NAME'] ==
+                                          selectedPipelineName),
                                 ),
                               ),
                             )

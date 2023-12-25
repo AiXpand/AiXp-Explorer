@@ -18,7 +18,8 @@ class E2Plugin {
 
   factory E2Plugin.fromMap(Map<String, dynamic> map) {
     return E2Plugin(
-      instances: (map['INSTANCES'] as List).map((e) => e as PluginInstance).toList(),
+      instances:
+          (map['INSTANCES'] as List).map((e) => e as PluginInstance).toList(),
       signature: map['SIGNATURE'] as String,
     );
   }

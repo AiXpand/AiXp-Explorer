@@ -26,7 +26,8 @@ class _HardwareInfoViewState extends State<HardwareInfoView> {
   @override
   void initState() {
     super.initState();
-    heartbeatHistory = _client.boxMessages[widget.boxName]?.heartbeatMessages ?? [];
+    heartbeatHistory =
+        _client.boxMessages[widget.boxName]?.heartbeatMessages ?? [];
   }
 
   @override
@@ -40,7 +41,8 @@ class _HardwareInfoViewState extends State<HardwareInfoView> {
       onHeartbeat: (data) {
         // print('Hb received on hw info view');
         setState(() {
-          heartbeatHistory = _client.boxMessages[widget.boxName]?.heartbeatMessages ?? [];
+          heartbeatHistory =
+              _client.boxMessages[widget.boxName]?.heartbeatMessages ?? [];
         });
       },
       dataFilter: E2ListenerFilters.filterByBox(widget.boxName),
@@ -116,11 +118,13 @@ class _HardwareInfoViewState extends State<HardwareInfoView> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                if (lastHeartbeat.totalDisk != null && lastHeartbeat.availableDisk != null)
+                                if (lastHeartbeat.totalDisk != null &&
+                                    lastHeartbeat.availableDisk != null)
                                   LinearProgressIndicator(
                                     color: Colors.green,
                                     backgroundColor: Colors.teal,
-                                    value: (lastHeartbeat.totalDisk! - lastHeartbeat.availableDisk!) /
+                                    value: (lastHeartbeat.totalDisk! -
+                                            lastHeartbeat.availableDisk!) /
                                         lastHeartbeat.totalDisk!,
                                   ),
                               ],
@@ -138,7 +142,9 @@ class _HardwareInfoViewState extends State<HardwareInfoView> {
                                   height: 10,
                                 ),
                                 UsageChart(
-                                  values: heartbeatHistory.map((e) => e.cpuUsed ?? 0).toList(),
+                                  values: heartbeatHistory
+                                      .map((e) => e.cpuUsed ?? 0)
+                                      .toList(),
                                   maxValue: 100,
                                   maxSamplesNo: 50,
                                 ),
@@ -163,9 +169,12 @@ class _HardwareInfoViewState extends State<HardwareInfoView> {
                                   height: 10,
                                 ),
                                 UsageChart(
-                                  values:
-                                      heartbeatHistory.map((e) => ((e.machineMemory! - e.availableMemory!))).toList(),
-                                  maxValue: lastHeartbeat.machineMemory!.ceilToDouble(),
+                                  values: heartbeatHistory
+                                      .map((e) => ((e.machineMemory! -
+                                          e.availableMemory!)))
+                                      .toList(),
+                                  maxValue: lastHeartbeat.machineMemory!
+                                      .ceilToDouble(),
                                 ),
                               ],
                             ),
@@ -186,13 +195,18 @@ class _HardwareInfoViewState extends State<HardwareInfoView> {
                                     child: SingleChildScrollView(
                                       child: Column(
                                         children: [
-                                          ...lastHeartbeat.gpus.asMap().entries.map(
+                                          ...lastHeartbeat.gpus
+                                              .asMap()
+                                              .entries
+                                              .map(
                                                 (gpu) => InfoCard(
                                                   child: Column(
                                                     children: [
                                                       Text(
                                                         gpu.value.name,
-                                                        style: const TextStyle(color: Colors.white),
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
                                                       ),
                                                       const SizedBox(
                                                         height: 10,
@@ -201,9 +215,16 @@ class _HardwareInfoViewState extends State<HardwareInfoView> {
                                                         height: 100,
                                                         values: heartbeatHistory
                                                             .map((message) =>
-                                                                message.gpus[gpu.key].allocatedMem.toDouble())
+                                                                message
+                                                                    .gpus[
+                                                                        gpu.key]
+                                                                    .allocatedMem
+                                                                    .toDouble())
                                                             .toList(),
-                                                        maxValue: lastHeartbeat.gpus[gpu.key].totalMem.ceilToDouble(),
+                                                        maxValue: lastHeartbeat
+                                                            .gpus[gpu.key]
+                                                            .totalMem
+                                                            .ceilToDouble(),
                                                       ),
                                                     ],
                                                   ),

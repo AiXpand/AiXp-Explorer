@@ -162,7 +162,8 @@ class E2Client {
 
   void _onHeartbeat(Map<String, dynamic> message) {
     final boxName = getBoxName(message);
-    final currentBox = boxMessages.putIfAbsent(boxName, () => BoxMessages(boxName: boxName));
+    final currentBox =
+        boxMessages.putIfAbsent(boxName, () => BoxMessages(boxName: boxName));
     currentBox.addHeartbeat(message);
     loadFilters(boxName, currentBox.heartbeatMessages.last);
 
@@ -172,13 +173,15 @@ class E2Client {
 
   void _onNotification(Map<String, dynamic> message) {
     final boxName = getBoxName(message);
-    final currentBox = boxMessages.putIfAbsent(boxName, () => BoxMessages(boxName: boxName));
+    final currentBox =
+        boxMessages.putIfAbsent(boxName, () => BoxMessages(boxName: boxName));
     currentBox.addNotification(message);
     notifiers.notifications.emit(message);
     notifiers.all.emit(message);
   }
 
   void _onPayload(Map<String, dynamic> message) {
+    // print(message);
     // final boxName = getBoxName(message);
     String boxName = '';
     try {
@@ -188,7 +191,8 @@ class E2Client {
       return;
     }
 
-    final currentBox = boxMessages.putIfAbsent(boxName, () => BoxMessages(boxName: boxName));
+    final currentBox =
+        boxMessages.putIfAbsent(boxName, () => BoxMessages(boxName: boxName));
     // print(currentBox);
     try {
       currentBox.addPayloadToPipeline(message['EE_PAYLOAD_PATH'][1], message);
@@ -199,7 +203,8 @@ class E2Client {
         print(
           'Problem with payload message. Can not access message.EE_PAYLOAD_PATH[1]\nMessage: ${message['messageId']}\n Error:$_',
         );
-        // print(stackTrace);
+        print(_);
+        print(stackTrace);
       }
     }
   }

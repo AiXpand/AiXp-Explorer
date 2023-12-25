@@ -50,7 +50,8 @@ class _FullPayloadViewState extends State<FullPayloadView> {
     };
   }
 
-  bool Function(PayloadMessage) filterMessagesByPipelines(List<String> pipelines) {
+  bool Function(PayloadMessage) filterMessagesByPipelines(
+      List<String> pipelines) {
     return (PayloadMessage message) {
       return pipelines.contains(message.payload.pipelineName);
     };
@@ -74,7 +75,8 @@ class _FullPayloadViewState extends State<FullPayloadView> {
   //   }
   // }
 
-  bool Function(PayloadMessage) filterMessagesByMessageFilters(List<MessageFilter> filters) {
+  bool Function(PayloadMessage) filterMessagesByMessageFilters(
+      List<MessageFilter> filters) {
     return (PayloadMessage message) {
       bool filterPass = false;
       for (final filter in filters) {
@@ -142,7 +144,8 @@ class _FullPayloadViewState extends State<FullPayloadView> {
                 // _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
 
                 /// ToDo:  find  a way to optimize and insert the element in the sorted list
-                final Map<String, dynamic> convertedMessage = MqttMessageTransformer.formatToRaw(message);
+                final Map<String, dynamic> convertedMessage =
+                    MqttMessageTransformer.formatToRaw(message);
                 final E2Payload payloadObject = E2Payload.fromMap(
                   convertedMessage,
                   originalMap: message,
@@ -171,7 +174,8 @@ class _FullPayloadViewState extends State<FullPayloadView> {
                       // ),
                       FilterDropdown(
                         filters: _client.boxFilters.values.toList(),
-                        onCheckedItemsChanged: (List<MessageFilter> checkedItems) {
+                        onCheckedItemsChanged:
+                            (List<MessageFilter> checkedItems) {
                           debugPrint('Checked filters: $checkedItems');
                           setStateBuilder(() {
                             filters = checkedItems;
@@ -187,8 +191,12 @@ class _FullPayloadViewState extends State<FullPayloadView> {
                                   // messages: messagesByPipelines[selectedPipelineName] ?? [],
                                   messages: filters.isEmpty
                                       ? messages
-                                      : messages.where(filterMessagesByMessageFilters(filters)).toList(),
-                                  selectedMessageId: _selectedMessage?.payload.hash,
+                                      : messages
+                                          .where(filterMessagesByMessageFilters(
+                                              filters))
+                                          .toList(),
+                                  selectedMessageId:
+                                      _selectedMessage?.payload.hash,
                                   scrollController: _scrollController,
                                   onTap: (int index, PayloadMessage message) {
                                     setState(() {

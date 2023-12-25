@@ -76,7 +76,9 @@ class _MessageWatcherPageState extends State<MessageWatcherPage> {
     );
     // mqttHbs.serverConnect().then((value) => mqttHbs.subscribe());
     // mqttPayload.serverConnect().then((value) => mqttPayload.subscribe());
-    mqttNotification.serverConnect().then((value) => mqttNotification.subscribe());
+    mqttNotification
+        .serverConnect()
+        .then((value) => mqttNotification.subscribe());
     // mqttNotification.serverConnect();
     // mqttPayload.serverConnect();
   }
@@ -118,7 +120,8 @@ class _MessageWatcherPageState extends State<MessageWatcherPage> {
                       } else {
                         boxId = message['EE_ID'];
                         if (message['HEARTBEAT_VERSION'] == 'v2') {
-                          final encodedData = message['ENCODED_DATA'] as String?;
+                          final encodedData =
+                              message['ENCODED_DATA'] as String?;
                           if (encodedData != null) {
                             final decodedData = decodeData(encodedData);
                             message.remove('ENCODED_DATA');

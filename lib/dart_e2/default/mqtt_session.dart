@@ -54,13 +54,16 @@ class MqttSession extends GenericSession {
   bool get isPayloadConnected => _payloadMqtt.isConnected;
 
   @override
-  bool get isConnected => isHeartbeatConnected && isNotificationConnected && isPayloadConnected;
+  bool get isConnected =>
+      isHeartbeatConnected && isNotificationConnected && isPayloadConnected;
 
   /// Sends a command to a specific box.
   @override
   void sendCommand(E2Command command) {
-    print('Sent command on lummetry/${command.targetId}/config: ${command.toMap()}');
-    _payloadMqtt.sendOnTopic(command.toJson(), 'lummetry/${command.targetId}/config');
+    print(
+        'Sent command on lummetry/${command.targetId}/config: ${command.toMap()}');
+    _payloadMqtt.sendOnTopic(
+        command.toJson(), 'lummetry/${command.targetId}/config');
     // _payloadMqtt.sendOnTopic(command.toJson(), 'lummetry/{}/config');
   }
 
@@ -80,7 +83,8 @@ class MqttSession extends GenericSession {
     _notificationReceiveStream?.stream.listen((message) {
       onNotification(message);
     });
-    await _notificationMqtt.serverConnect(receiveStream: _notificationReceiveStream);
+    await _notificationMqtt.serverConnect(
+        receiveStream: _notificationReceiveStream);
     _notificationMqtt.subscribe();
 
     /// Payload (Default communicator) connect
@@ -127,7 +131,8 @@ class MqttSession extends GenericSession {
         boxes[boxName]!.isOnline = true;
         boxes[boxName]!.lastHbReceived = timeNow;
       } else {
-        boxes[boxName] = E2Box(name: boxName, isOnline: true, lastHbReceived: timeNow);
+        boxes[boxName] =
+            E2Box(name: boxName, isOnline: true, lastHbReceived: timeNow);
       }
       onHeartbeat.call(message);
     } catch (_) {

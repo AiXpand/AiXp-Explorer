@@ -61,13 +61,15 @@ class _E2ListenerState extends State<E2Listener> {
     _listenerIds = _ListenerIds(client: _client);
     if (widget.onHeartbeat != null) {
       _listenerIds.addHeartbeatListenerId(
-        _client.notifiers.heartbeats.addListener(dataFilter, widget.onHeartbeat!),
+        _client.notifiers.heartbeats
+            .addListener(dataFilter, widget.onHeartbeat!),
       );
     }
 
     if (widget.onNotification != null) {
       _listenerIds.addNotificationListenerId(
-        _client.notifiers.notifications.addListener(dataFilter, widget.onNotification!),
+        _client.notifiers.notifications
+            .addListener(dataFilter, widget.onNotification!),
       );
     }
 
@@ -79,7 +81,8 @@ class _E2ListenerState extends State<E2Listener> {
 
     if (widget.onConnectionChanged != null) {
       _listenerIds.addConnectionListener(
-        _client.notifiers.connection.addListener(dataFilter, widget.onConnectionChanged!),
+        _client.notifiers.connection
+            .addListener(dataFilter, widget.onConnectionChanged!),
       );
     }
   }

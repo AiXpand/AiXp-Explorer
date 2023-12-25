@@ -10,12 +10,16 @@ class Cavi2Time {
   });
 
   factory Cavi2Time.fromMap(Map<String, dynamic> json) => Cavi2Time(
-        deviceTime: (json['deviceTime'] as String).isEmpty || json["deviceTime"] == null
-            ? null
-            : DateTime.parse(json["deviceTime"]),
+        deviceTime:
+            (json['deviceTime'] as String).isEmpty || json["deviceTime"] == null
+                ? null
+                : DateTime.parse(json["deviceTime"]),
         hostTime:
-            (json['hostTime'] as String).isEmpty || json["hostTime"] == null ? null : DateTime.parse(json["hostTime"]),
-        internetTime: (json['internetTime'] as String).isEmpty || json["internetTime"] == null
+            (json['hostTime'] as String).isEmpty || json["hostTime"] == null
+                ? null
+                : DateTime.parse(json["hostTime"]),
+        internetTime: (json['internetTime'] as String).isEmpty ||
+                json["internetTime"] == null
             ? null
             : DateTime.parse(json["internetTime"]),
       );

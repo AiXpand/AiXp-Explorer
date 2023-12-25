@@ -44,8 +44,12 @@ class NavigationButton extends StatelessWidget {
           shapeCorners: ShapeUtilsCorners.all,
           borderRadius: 8,
           style: ClickableStyleHelper(
-            defaultColor: isSelected ? ColorStyles.selectedButtonBlue : ColorStyles.spaceGrey,
-            hoverColor: isSelected ? ColorStyles.selectedHoverButtonBlue : ColorStyles.dark630,
+            defaultColor: isSelected
+                ? ColorStyles.selectedButtonBlue
+                : ColorStyles.spaceGrey,
+            hoverColor: isSelected
+                ? ColorStyles.selectedHoverButtonBlue
+                : ColorStyles.dark630,
           ),
           childBuilder: (isHovered) {
             /// ToDO: Treat this case separately
@@ -65,7 +69,9 @@ class NavigationButton extends StatelessWidget {
                     children: [
                       Icon(
                         icon,
-                        color: isHovered ? ColorStyles.light100 : ColorStyles.light200,
+                        color: isHovered
+                            ? ColorStyles.light100
+                            : ColorStyles.light200,
                       ),
                       SizedBox(
                         height: 8,
@@ -73,7 +79,9 @@ class NavigationButton extends StatelessWidget {
                       Text(
                         title,
                         style: TextStyles.small14(
-                          color: isHovered ? ColorStyles.light100 : ColorStyles.light200,
+                          color: isHovered
+                              ? ColorStyles.light100
+                              : ColorStyles.light200,
                         ),
                         // overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
@@ -87,7 +95,9 @@ class NavigationButton extends StatelessWidget {
                     message: title,
                     child: Icon(
                       icon,
-                      color: isHovered ? ColorStyles.light100 : ColorStyles.light200,
+                      color: isHovered
+                          ? ColorStyles.light100
+                          : ColorStyles.light200,
                     ),
                   ),
                 );

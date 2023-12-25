@@ -31,7 +31,9 @@ class _StressTestCpuMonitorState extends State<StressTestCpuMonitor> {
               child: Builder(builder: (context) {
                 final box = _client.boxMessages[boxName]!;
                 final hb = box.heartbeatDecodedMessages.lastOrNull;
-                final memoryUsed = hb == null ? null : (hb.machineMemory ?? 0) - (hb.availableMemory ?? 0);
+                final memoryUsed = hb == null
+                    ? null
+                    : (hb.machineMemory ?? 0) - (hb.availableMemory ?? 0);
                 return Text(
                   'Box ${box.boxName} : CPU - ${box.heartbeatDecodedMessages.lastOrNull?.cpuUsed ?? 'N/A'} %, RAM - ${memoryUsed?.round()} GB used',
                   style: TextStyles.body(),

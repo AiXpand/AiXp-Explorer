@@ -36,7 +36,8 @@ class _DropdownSelectableItemState extends State<DropdownSelectableItem> {
   bool _popupMenuOpen = false;
   @override
   Widget build(BuildContext context) {
-    final bool shouldShowCheckmark = !((_isHovered && widget.menuItems.isNotEmpty) || _popupMenuOpen);
+    final bool shouldShowCheckmark =
+        !((_isHovered && widget.menuItems.isNotEmpty) || _popupMenuOpen);
 
     return ClickableContainer(
       onTap: () {
@@ -72,7 +73,8 @@ class _DropdownSelectableItemState extends State<DropdownSelectableItem> {
               ),
             ),
             Visibility(
-              visible: widget.menuItems.isNotEmpty && (_isHovered == true || _popupMenuOpen == true),
+              visible: widget.menuItems.isNotEmpty &&
+                  (_isHovered == true || _popupMenuOpen == true),
               child: OptionsMenuButton(
                 onOpenOptionBox: () {
                   debugPrint('onOpenOptionBox');

@@ -36,20 +36,24 @@ class E2Payload extends E2Message {
   }
 
   static Map<String, dynamic> extractContent(Map<String, dynamic> map) {
-    return Map<String, dynamic>.from(map)..removeWhere((key, value) => mandatoryKeys.contains(key));
+    return Map<String, dynamic>.from(map)
+      ..removeWhere((key, value) => mandatoryKeys.contains(key));
   }
 
   factory E2Payload.fromMap(
     Map<String, dynamic> map, {
     Map<String, dynamic>? originalMap,
   }) {
-    final content = Map<String, dynamic>.from(map)..removeWhere((key, value) => mandatoryKeys.contains(key));
+    final content = Map<String, dynamic>.from(map)
+      ..removeWhere((key, value) => mandatoryKeys.contains(key));
     return E2Payload(
-      payloadPath: (map['EE_PAYLOAD_PATH'] as List).map((e) => e as String).toList(),
+      payloadPath:
+          (map['EE_PAYLOAD_PATH'] as List?)?.map((e) => e as String).toList() ??
+              [],
       formatter: map['EE_FORMATTER'] as String?,
-      sign: map['EE_SIGN'] as String,
-      sender: map['EE_SENDER'] as String,
-      hash: map['EE_HASH'] as String,
+      sign: map['EE_SIGN'] as String?,
+      sender: map['EE_SENDER'] as String?,
+      hash: map['EE_HASH'] as String?,
       content: content,
       timestamp: map['EE_TIMESTAMP'] as String,
       timezone: map['EE_TIMEZONE'] as String,

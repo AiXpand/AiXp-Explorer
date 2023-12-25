@@ -29,9 +29,10 @@ class SimpleMessageViewer extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () async {
-            await Clipboard.setData(ClipboardData(text: const JsonEncoder.withIndent('    ').convert(message)));
-            await ScaffoldMessenger.of(context)
-                .showSnackBar(const SnackBar(content: Text('Copied to your clipboard !')));
+            await Clipboard.setData(ClipboardData(
+                text: const JsonEncoder.withIndent('    ').convert(message)));
+            await ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Copied to your clipboard !')));
           },
           child: const Text('Copy to clipboard'),
         ),

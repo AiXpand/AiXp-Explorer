@@ -14,7 +14,8 @@ Widget defaultTreeTransitionBuilder(
   return SizeTransition(sizeFactor: animation, child: child);
 }
 
-Widget fadeSizeTransitionBuilder(BuildContext context, Widget child, Animation<double> animation) {
+Widget fadeSizeTransitionBuilder(
+    BuildContext context, Widget child, Animation<double> animation) {
   return FadeTransition(
     opacity: animation,
     child: SizeTransition(
@@ -52,7 +53,8 @@ class _SliverListtreeAnimated<TreeItemDataType extends Object, UniqueIDType>
   Map<TreeItemDataType, bool> _expansionStatesMap = <TreeItemDataType, bool>{};
 
   // A list containing all the expanded items and their children
-  List<TreeNode<TreeItemDataType>> _displayedNodesList = <TreeNode<TreeItemDataType>>[];
+  List<TreeNode<TreeItemDataType>> _displayedNodesList =
+      <TreeNode<TreeItemDataType>>[];
 
   void _onFilterUpdate() {
     // Clear expansion states cache
@@ -60,29 +62,35 @@ class _SliverListtreeAnimated<TreeItemDataType extends Object, UniqueIDType>
   }
 
   void _updateDisplayedNodesList() {
-    final Map<TreeItemDataType, bool> oldExpandedStateMap = Map<TreeItemDataType, bool>.of(_expansionStatesMap);
+    final Map<TreeItemDataType, bool> oldExpandedStateMap =
+        Map<TreeItemDataType, bool>.of(_expansionStatesMap);
 
-    final Map<TreeItemDataType, bool> currentExpandedStateMap = <TreeItemDataType, bool>{};
-    final List<TreeNode<TreeItemDataType>> displayedNodesList = <TreeNode<TreeItemDataType>>[];
+    final Map<TreeItemDataType, bool> currentExpandedStateMap =
+        <TreeItemDataType, bool>{};
+    final List<TreeNode<TreeItemDataType>> displayedNodesList =
+        <TreeNode<TreeItemDataType>>[];
 
     final Visitor<TreeNode<TreeItemDataType>> onVisit;
 
     if (widget.duration == Duration.zero) {
       onVisit = (TreeNode<TreeItemDataType> node) {
         displayedNodesList.add(node);
-        currentExpandedStateMap[node.data] = widget.controller.isItemExpanded(node.data);
+        currentExpandedStateMap[node.data] =
+            widget.controller.isItemExpanded(node.data);
       };
     } else {
       onVisit = (TreeNode<TreeItemDataType> node) {
         displayedNodesList.add(node);
-        currentExpandedStateMap[node.data] = widget.controller.isItemExpanded(node.data);
+        currentExpandedStateMap[node.data] =
+            widget.controller.isItemExpanded(node.data);
 
         if (widget.controller.animateExpandCollapse == false) {
           return;
         }
 
         final bool? previousState = oldExpandedStateMap[node.data];
-        if ((previousState != null) && (previousState != widget.controller.isItemExpanded(node.data))) {
+        if ((previousState != null) &&
+            (previousState != widget.controller.isItemExpanded(node.data))) {
           _animatingItems.add(node.data);
         }
       };
@@ -112,8 +120,10 @@ class _SliverListtreeAnimated<TreeItemDataType extends Object, UniqueIDType>
     _rebuild();
   }
 
-  List<TreeNode<TreeItemDataType>> _buildSubtree(TreeNode<TreeItemDataType> node) {
-    final List<TreeNode<TreeItemDataType>> displayedNodesSubtree = <TreeNode<TreeItemDataType>>[];
+  List<TreeNode<TreeItemDataType>> _buildSubtree(
+      TreeNode<TreeItemDataType> node) {
+    final List<TreeNode<TreeItemDataType>> displayedNodesSubtree =
+        <TreeNode<TreeItemDataType>>[];
     widget.controller.visitNodes(
       startingNode: node,
       onVisit: displayedNodesSubtree.add,
@@ -130,7 +140,9 @@ class _SliverListtreeAnimated<TreeItemDataType extends Object, UniqueIDType>
   }
 
   @override
-  void didUpdateWidget(covariant SliverListTreeAnimated<TreeItemDataType, UniqueIDType> oldWidget) {
+  void didUpdateWidget(
+      covariant SliverListTreeAnimated<TreeItemDataType, UniqueIDType>
+          oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != widget.controller) {
       oldWidget.controller.removeListener(_rebuild);
@@ -183,12 +195,13 @@ class _TreeNodeKey extends GlobalObjectKey {
   const _TreeNodeKey(super.value);
 }
 
-typedef _TreeNodeContentBuilder<TreeItemDataType extends Object, UniqueIDType> = List<TreeNode<TreeItemDataType>>
-    Function(
+typedef _TreeNodeContentBuilder<TreeItemDataType extends Object, UniqueIDType>
+    = List<TreeNode<TreeItemDataType>> Function(
   TreeNode<TreeItemDataType> virtualRoot,
 );
 
-class _TreeNodeWidget<TreeItemDataType extends Object, UniqueIDType> extends StatefulWidget {
+class _TreeNodeWidget<TreeItemDataType extends Object, UniqueIDType>
+    extends StatefulWidget {
   const _TreeNodeWidget({
     super.key,
     required this.node,
@@ -219,7 +232,8 @@ class _TreeNodeWidget<TreeItemDataType extends Object, UniqueIDType> extends Sta
 }
 
 class _TreeNodeWidgetState<TreeItemDataType extends Object, UniqueIDType>
-    extends State<_TreeNodeWidget<TreeItemDataType, UniqueIDType>> with SingleTickerProviderStateMixin {
+    extends State<_TreeNodeWidget<TreeItemDataType, UniqueIDType>>
+    with SingleTickerProviderStateMixin {
   //TreeNode<TreeItemDataType> get item => widget.node;
   //TreeItemDataType get nodeData => item.data;
 
@@ -260,13 +274,15 @@ class _TreeNodeWidgetState<TreeItemDataType extends Object, UniqueIDType>
   }
 
   @override
-  void didUpdateWidget(covariant _TreeNodeWidget<TreeItemDataType, UniqueIDType> oldWidget) {
+  void didUpdateWidget(
+      covariant _TreeNodeWidget<TreeItemDataType, UniqueIDType> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     curveTween.curve = widget.curve;
     animationController.duration = widget.duration;
 
-    final bool expansionState = widget.controller.isItemExpanded(widget.node.data);
+    final bool expansionState =
+        widget.controller.isItemExpanded(widget.node.data);
 
     if (_isExpandedInternal != expansionState) {
       _isExpandedInternal = expansionState;
@@ -287,7 +303,8 @@ class _TreeNodeWidgetState<TreeItemDataType extends Object, UniqueIDType>
   Widget build(BuildContext context) {
     final Widget header = widget.headerBuilder(context, widget.node);
 
-    late final Widget content = _TreeNodeContent<TreeItemDataType, UniqueIDType>(
+    late final Widget content =
+        _TreeNodeContent<TreeItemDataType, UniqueIDType>(
       virtualRoot: widget.node,
       headerBuilder: widget.headerBuilder,
       contentBuilder: widget.contentBuilder,
@@ -309,7 +326,8 @@ class _TreeNodeWidgetState<TreeItemDataType extends Object, UniqueIDType>
   }
 }
 
-class _TreeNodeContent<TreeItemDataType extends Object, UniqueIDType> extends StatefulWidget {
+class _TreeNodeContent<TreeItemDataType extends Object, UniqueIDType>
+    extends StatefulWidget {
   const _TreeNodeContent({
     super.key,
     required this.virtualRoot,
@@ -349,7 +367,8 @@ class _TreeNodeContentState<TreeItemDataType extends Object, UniqueIDType>
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          for (final TreeNode<TreeItemDataType> virtualItem in virtualItems) widget.headerBuilder(context, virtualItem),
+          for (final TreeNode<TreeItemDataType> virtualItem in virtualItems)
+            widget.headerBuilder(context, virtualItem),
         ],
       ),
     );

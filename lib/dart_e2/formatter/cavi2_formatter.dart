@@ -4,7 +4,9 @@ import 'package:e2_explorer/dart_e2/models/e2_message.dart';
 class Cavi2Formatter {
   static E2Message cavi2ToRaw(Cavi2Message cavi2Message) {
     return E2Message(
-      eventType: cavi2Message.type != null ? cavi2Message.type!.toUpperCase() : 'UNKNOWN_MESSAGE_TYPE',
+      eventType: cavi2Message.type != null
+          ? cavi2Message.type!.toUpperCase()
+          : 'UNKNOWN_MESSAGE_TYPE',
 
       /// treat different if payload
       id: cavi2Message.sender.hostId!,

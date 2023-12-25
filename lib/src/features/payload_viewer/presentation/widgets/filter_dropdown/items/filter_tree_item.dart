@@ -60,7 +60,9 @@ class FilterTreeItem extends StatelessWidget {
             children: <Widget>[
               if (hasChildren)
                 Icon(
-                  isExpanded ? CupertinoIcons.chevron_down : CupertinoIcons.chevron_right,
+                  isExpanded
+                      ? CupertinoIcons.chevron_down
+                      : CupertinoIcons.chevron_right,
                   size: 12,
                   color: Colors.white38,
                 )

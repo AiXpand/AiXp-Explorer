@@ -43,8 +43,10 @@ class _HeartbeatViewState extends State<HeartbeatView> {
   void initState() {
     super.initState();
     messages = _client.boxMessages[widget.boxName]?.heartbeatMessages ?? [];
-    rawMessages = _client.boxMessages[widget.boxName]?.rawHeartbeatMessages ?? [];
-    heartbeatVersion = _client.boxMessages[widget.boxName]?.heartbeatVersion ?? HeartbeatVersion.unknown;
+    rawMessages =
+        _client.boxMessages[widget.boxName]?.rawHeartbeatMessages ?? [];
+    heartbeatVersion = _client.boxMessages[widget.boxName]?.heartbeatVersion ??
+        HeartbeatVersion.unknown;
   }
 
   @override
@@ -58,8 +60,11 @@ class _HeartbeatViewState extends State<HeartbeatView> {
       onHeartbeat: (data) {
         // print('Hb received on hw info view');
         setState(() {
-          messages = _client.boxMessages[widget.boxName]?.heartbeatMessages ?? [];
-          heartbeatVersion = _client.boxMessages[widget.boxName]?.heartbeatVersion ?? HeartbeatVersion.unknown;
+          messages =
+              _client.boxMessages[widget.boxName]?.heartbeatMessages ?? [];
+          heartbeatVersion =
+              _client.boxMessages[widget.boxName]?.heartbeatVersion ??
+                  HeartbeatVersion.unknown;
         });
         // print('Raw message');
         // print(rawMessages.lastOrNull);

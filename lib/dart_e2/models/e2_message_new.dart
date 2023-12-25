@@ -9,10 +9,10 @@ class E2Message {
     required this.sender,
     required this.hash,
     this.messageBody,
-  })  : boxId = payloadPath[0]!,
-        pipelineName = payloadPath[1],
-        pluginSignature = payloadPath[2],
-        pluginInstanceName = payloadPath[3];
+  })  : boxId = payloadPath.isNotEmpty ? payloadPath[0]! : null,
+        pipelineName = payloadPath.isNotEmpty ? payloadPath[1] : null,
+        pluginSignature = payloadPath.isNotEmpty ? payloadPath[2] : null,
+        pluginInstanceName = payloadPath.isNotEmpty ? payloadPath[3] : null;
 
   /// Should be a list, containing 4 elements with the following structure: [boxID, pipelineName,
   /// pluginSignature, pluginInstanceName]
@@ -20,7 +20,7 @@ class E2Message {
   final List<String?> payloadPath;
 
   /// Extracted from payloadPath[0], represents the execution engine id.
-  final String boxId;
+  final String? boxId;
 
   /// Extracted from payloadPath[1], represents the running pipeline. Can be null.
   final String? pipelineName;
@@ -35,13 +35,13 @@ class E2Message {
   final String? formatter;
 
   /// Represents the signature used to validate the message.
-  final String sign;
+  final String? sign;
 
   /// Represents the sender unique id. Used to validate the message.
-  final String sender;
+  final String? sender;
 
   /// Represents the hash??
-  final String hash;
+  final String? hash;
 
   /// The unmodified message as it was received on MQTT. If the message was created manually, this field is going to be null.
   final Map<String, dynamic>? messageBody;
@@ -61,7 +61,8 @@ class E2Message {
     Map<String, dynamic>? originalMap,
   }) {
     return E2Message(
-      payloadPath: (map['EE_PAYLOAD_PATH'] as List).map((e) => e as String).toList(),
+      payloadPath:
+          (map['EE_PAYLOAD_PATH'] as List).map((e) => e as String).toList(),
       formatter: map['EE_FORMATTER'] as String?,
       sign: map['EE_SIGN'] as String,
       sender: map['EE_SENDER'] as String,

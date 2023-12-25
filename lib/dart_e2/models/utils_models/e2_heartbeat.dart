@@ -136,12 +136,14 @@ class E2Heartbeat extends E2Message {
   }) {
     final bool isV2 = map['HEARTBEAT_VERSION'] == 'v2';
     if (isV2) {
-      final metadataEncoded = XpandUtils.decodeEncryptedGzipMessage(map['ENCODED_DATA']);
+      final metadataEncoded =
+          XpandUtils.decodeEncryptedGzipMessage(map['ENCODED_DATA']);
       map.addAll(metadataEncoded);
     }
 
     return E2Heartbeat(
-      payloadPath: (map['EE_PAYLOAD_PATH'] as List).map((e) => e as String).toList(),
+      payloadPath:
+          (map['EE_PAYLOAD_PATH'] as List).map((e) => e as String).toList(),
       formatter: map['EE_FORMATTER'] as String,
       sign: map['EE_SIGN'] as String,
       sender: map['EE_SENDER'] as String,
@@ -171,7 +173,8 @@ class E2Heartbeat extends E2Message {
       noStreamsData: map['NR_STREAMS_DATA'] as int,
       gitBranch: map['GIT_BRANCH'] as String,
       condaEnv: map['CONDA_ENV'] as String,
-      configPipelines: E2ConfigPipelines.fromList(map['CONFIG_STREAMS'] as List),
+      configPipelines:
+          E2ConfigPipelines.fromList(map['CONFIG_STREAMS'] as List),
       dctStats: E2DctStats.fromMap(map['DCT_STATS']),
       commStats: E2CommStats.fromMap(map['COMM_STATS']),
       servingPids: map['SERVING_PIDS'] as List<int>,

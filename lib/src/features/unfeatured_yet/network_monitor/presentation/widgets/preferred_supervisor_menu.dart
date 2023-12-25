@@ -24,7 +24,8 @@ class PreferredSupervisorMenu extends StatefulWidget {
   final String selectedSupervisor;
 
   @override
-  State<PreferredSupervisorMenu> createState() => _PreferredSupervisorMenuState();
+  State<PreferredSupervisorMenu> createState() =>
+      _PreferredSupervisorMenuState();
 }
 
 class _PreferredSupervisorMenuState extends State<PreferredSupervisorMenu> {
@@ -37,7 +38,8 @@ class _PreferredSupervisorMenuState extends State<PreferredSupervisorMenu> {
       child: Container(
         decoration: BoxDecoration(
           color: ColorStyles.dark700,
-          border: Border.all(color: ColorStyles.selectedHoverButtonBlue, width: 2),
+          border:
+              Border.all(color: ColorStyles.selectedHoverButtonBlue, width: 2),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         height: widget.height,
@@ -48,7 +50,8 @@ class _PreferredSupervisorMenuState extends State<PreferredSupervisorMenu> {
               itemBuilder: (context, index) {
                 return ClickableContainer(
                   onTap: () {
-                    widget.overlayController.closeWithResult(widget.supervisors[index]);
+                    widget.overlayController
+                        .closeWithResult(widget.supervisors[index]);
                   },
                   height: 35,
                   style: const ClickableStyleHelper(
@@ -62,10 +65,14 @@ class _PreferredSupervisorMenuState extends State<PreferredSupervisorMenu> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
-                            widget.selectedSupervisor == widget.supervisors[index]
+                            widget.selectedSupervisor ==
+                                    widget.supervisors[index]
                                 ? CarbonIcons.checkbox_checked_filled
                                 : CarbonIcons.checkbox,
-                            color: widget.selectedSupervisor == widget.supervisors[index] ? Colors.blue : Colors.white,
+                            color: widget.selectedSupervisor ==
+                                    widget.supervisors[index]
+                                ? Colors.blue
+                                : Colors.white,
                             size: 20,
                           ),
                           const SizedBox(width: 8),

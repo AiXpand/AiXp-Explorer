@@ -34,12 +34,14 @@ class PayloadMessage {
     final pluginSignature = payload.pluginSignature;
     final pluginInstanceName = payload.pluginInstanceName;
 
-    final localTimestamp = _parseLocalTimestamp(payload.timestamp, payload.timezone);
+    final localTimestamp =
+        _parseLocalTimestamp(payload.timestamp, payload.timezone);
 
     return PayloadMessage(
       localTimestamp: localTimestamp,
       payload: payload,
-      filteringId: '$boxName#$pipelineName#$pluginSignature#$pluginInstanceName',
+      filteringId:
+          '$boxName#$pipelineName#$pluginSignature#$pluginInstanceName',
     );
   }
 

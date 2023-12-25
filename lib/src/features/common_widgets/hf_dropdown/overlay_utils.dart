@@ -21,7 +21,8 @@ class OverlayController {
   OverlayEvent onTapOutside = OverlayEvent();
 
   void addListener(VoidCallback listener) => _isVisible.addListener(listener);
-  void removeListener(VoidCallback listener) => _isVisible.removeListener(listener);
+  void removeListener(VoidCallback listener) =>
+      _isVisible.removeListener(listener);
 
   void closeWithResult(dynamic result) {
     _isVisible.value = false;
@@ -40,13 +41,15 @@ class OverlayController {
   }
 
   bool get isVisible => _isVisible.value;
-  bool get canOpen => _isVisible.value == false && resultCompleter.isCompleted == false;
+  bool get canOpen =>
+      _isVisible.value == false && resultCompleter.isCompleted == false;
   Future<dynamic> waitForResult() => resultCompleter.future;
 
   Future<dynamic> showOverlay({
     required BuildContext context,
     required Widget Function(BuildContext context, Widget content) shellBuilder,
-    required Widget Function(BuildContext context, OverlayController controller) contentBuilder,
+    required Widget Function(BuildContext context, OverlayController controller)
+        contentBuilder,
     OverlayOnTapOutside? onTapOutside,
     Alignment? targetAnchor,
     Alignment? followerAnchor,
@@ -89,7 +92,8 @@ Future<dynamic> showOverlay({
   OverlayController? controller,
 }) async {
   final OverlayState overlayState = Overlay.of(context);
-  final OverlayController overlayController = controller ?? OverlayController('Unnamed show overlay controller');
+  final OverlayController overlayController =
+      controller ?? OverlayController('Unnamed show overlay controller');
 
   final OverlayEntry overlayEntry = OverlayEntry(
     builder: (BuildContext context) => builder(context, overlayController),
@@ -143,10 +147,12 @@ OverlayOnScreenInfo getOverlayOnScreenInfo(
   double? width,
   LayerLink layerLink,
 ) {
-  final RenderObject? renderObject = targetKey.currentContext!.findRenderObject();
+  final RenderObject? renderObject =
+      targetKey.currentContext!.findRenderObject();
   final RenderBox targetRenderBox = renderObject! as RenderBox;
   final MediaQueryData mediaQuery = MediaQuery.of(context);
-  final Offset globalTargetPosition = targetRenderBox.localToGlobal(Offset.zero);
+  final Offset globalTargetPosition =
+      targetRenderBox.localToGlobal(Offset.zero);
   final Offset globalTargetCenterPosition = targetRenderBox.localToGlobal(
     Offset(
       targetRenderBox.size.width / 2,
@@ -154,8 +160,10 @@ OverlayOnScreenInfo getOverlayOnScreenInfo(
     ),
   );
   final Alignment targetScreenRegion = Alignment(
-    (globalTargetCenterPosition.dx * 2 / mediaQuery.size.width - 1).roundToDouble(),
-    (globalTargetCenterPosition.dy * 2 / mediaQuery.size.height - 1).roundToDouble(),
+    (globalTargetCenterPosition.dx * 2 / mediaQuery.size.width - 1)
+        .roundToDouble(),
+    (globalTargetCenterPosition.dy * 2 / mediaQuery.size.height - 1)
+        .roundToDouble(),
   );
   final Rect targetScreenRect = Rect.fromLTWH(
     globalTargetPosition.dx,
@@ -181,10 +189,15 @@ OverlayOnScreenInfo getOverlayOnScreenInfo(
           : Alignment.bottomRight;
 
   final Alignment computedTargetAnchor = targetAnchor ?? targetAnchorDefault;
-  final Alignment computedFollowerAnchor = followerAnchor ?? followerAnchorDefault;
+  final Alignment computedFollowerAnchor =
+      followerAnchor ?? followerAnchorDefault;
   final Offset defaultOffset = Offset(
-    computedTargetAnchor.x.sign == -computedFollowerAnchor.x.sign ? 8 * -computedFollowerAnchor.x.sign : 0,
-    computedTargetAnchor.y.sign == -computedFollowerAnchor.y.sign ? 8 * -computedFollowerAnchor.y.sign : 0,
+    computedTargetAnchor.x.sign == -computedFollowerAnchor.x.sign
+        ? 8 * -computedFollowerAnchor.x.sign
+        : 0,
+    computedTargetAnchor.y.sign == -computedFollowerAnchor.y.sign
+        ? 8 * -computedFollowerAnchor.y.sign
+        : 0,
   );
 
   return OverlayOnScreenInfo(
@@ -211,7 +224,8 @@ Future<dynamic> showLinkedOverlay({
   double? maxHeight = double.infinity,
   double? maxWidth = double.infinity,
   required Widget Function(BuildContext context, Widget content) shellBuilder,
-  required Widget Function(BuildContext context, OverlayController controller) contentBuilder,
+  required Widget Function(BuildContext context, OverlayController controller)
+      contentBuilder,
   bool isModal = false,
   OverlayOnTapOutside? onTapOutside,
   required GlobalKey targetKey,
@@ -238,7 +252,8 @@ Future<dynamic> showLinkedOverlay({
     builder: (BuildContext context, OverlayController controller) {
       return Stack(
         children: <Widget>[
-          if (isModal) Positioned.fill(child: Container(color: modalBackgroundColor)),
+          if (isModal)
+            Positioned.fill(child: Container(color: modalBackgroundColor)),
           Positioned(
             width: onScreenInfo.width,
             child: CompositedTransformFollower(
@@ -254,7 +269,8 @@ Future<dynamic> showLinkedOverlay({
                 ),
                 child: AnimatedBuilder(
                   animation: controller.onRebuild,
-                  builder: (BuildContext context, Widget? child) => shellBuilder(
+                  builder: (BuildContext context, Widget? child) =>
+                      shellBuilder(
                     context,
                     TapRegion(
                       groupId: tapRegionGroupId,

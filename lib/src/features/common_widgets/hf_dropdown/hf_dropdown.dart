@@ -7,10 +7,14 @@ import 'hf_dropdown.dart';
 export 'overlay_utils.dart';
 
 typedef DropdownButtonOnTap = void Function({bool isModal});
-typedef DropdownButtonBuilder = Widget Function(BuildContext context, DropdownButtonOnTap onButtonTap);
-typedef DropdownContentBuilder = Widget Function(BuildContext context, OverlayController overlay);
-typedef DropdownContentShellBuilder = Widget Function(BuildContext context, Widget content);
-typedef DropdownItemChanged<ItemType> = void Function(ItemType item, bool checked);
+typedef DropdownButtonBuilder = Widget Function(
+    BuildContext context, DropdownButtonOnTap onButtonTap);
+typedef DropdownContentBuilder = Widget Function(
+    BuildContext context, OverlayController overlay);
+typedef DropdownContentShellBuilder = Widget Function(
+    BuildContext context, Widget content);
+typedef DropdownItemChanged<ItemType> = void Function(
+    ItemType item, bool checked);
 typedef DropdownItemSelected<ItemType> = void Function(ItemType item);
 typedef DropdownOnClose = void Function(dynamic result);
 
@@ -57,7 +61,8 @@ class _HFDropdownState extends State<HFDropdown> {
   @override
   void initState() {
     super.initState();
-    _overlayController = widget.overlayController ?? OverlayController('Unnamed Dropdown');
+    _overlayController =
+        widget.overlayController ?? OverlayController('Unnamed Dropdown');
   }
 
   @override

@@ -100,7 +100,9 @@ class _PayloadMessageListState extends State<PayloadMessageList> {
                   widget.onTap?.call(index, widget.messages[index]);
                 },
                 child: Container(
-                  color: widget.selectedMessageId == message.hash ? const Color(0xff2A3A6F) : _defaultColor,
+                  color: widget.selectedMessageId == message.hash
+                      ? const Color(0xff2A3A6F)
+                      : _defaultColor,
                   height: 30,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -119,7 +121,8 @@ class _PayloadMessageListState extends State<PayloadMessageList> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            DateFormat('HH:mm:ss').format(widget.messages[index].localTimestamp),
+                            DateFormat('HH:mm:ss')
+                                .format(widget.messages[index].localTimestamp),
                             style: const TextStyle(
                               color: Colors.white38,
                             ),

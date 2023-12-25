@@ -2,7 +2,8 @@ part of hf_tree;
 
 typedef NodeGetUuid<UuidType, ItemType> = UuidType Function(ItemType node);
 typedef NodeGetChildren<ItemType> = Iterable<ItemType> Function(ItemType node);
-typedef FilterResultSetNewChildren<T> = T Function(T oldNode, Iterable<T> newChildren);
+typedef FilterResultSetNewChildren<T> = T Function(
+    T oldNode, Iterable<T> newChildren);
 typedef FilterResultRemoveChildren<T> = T Function(T oldNode);
 
 T? filterNode<T>(
@@ -17,7 +18,8 @@ T? filterNode<T>(
   final List<T> filteredChildren = <T>[];
   final Iterable<T> children = getChildren(node);
   for (final T child in children) {
-    final T? filteredChild = filterNode(child, condition, getChildren, setNewChildren);
+    final T? filteredChild =
+        filterNode(child, condition, getChildren, setNewChildren);
     if (filteredChild != null) {
       filteredChildren.add(filteredChild);
     }
@@ -40,9 +42,11 @@ List<T> filterTree<T>({
 }) {
   final List<T> result = <T>[];
   for (final T root in roots) {
-    final T? filteredRoot = filterNode(root, condition, getChildren, setNewChildren);
+    final T? filteredRoot =
+        filterNode(root, condition, getChildren, setNewChildren);
     if (filteredRoot != null) {
-      final T filteredRootToReturn = includeResultsChildren ? filteredRoot : removeChildren(filteredRoot);
+      final T filteredRootToReturn =
+          includeResultsChildren ? filteredRoot : removeChildren(filteredRoot);
       result.add(filteredRootToReturn);
     }
   }

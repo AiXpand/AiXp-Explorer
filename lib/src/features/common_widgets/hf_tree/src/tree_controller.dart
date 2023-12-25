@@ -14,7 +14,8 @@ class TreeControllerEvent extends ChangeNotifier {
   }
 }
 
-class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeNotifier {
+class TreeController<TreeItemDataType extends Object, UniqueIDType>
+    with ChangeNotifier {
   TreeController({
     required this.dataSource,
     this.syncChildCheckboxWithParent = true,
@@ -47,7 +48,9 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
   }
 
   void applyFilter() {
-    if (_filterCondition == null || _setNewChildren == null || _removeChildren == null) {
+    if (_filterCondition == null ||
+        _setNewChildren == null ||
+        _removeChildren == null) {
       debugPrint('No filter to apply');
       return;
     }
@@ -68,7 +71,8 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
     handleFilterUpdate();
   }
 
-  void setDataSource(TreeDataSource<TreeItemDataType, UniqueIDType> dataSource) {
+  void setDataSource(
+      TreeDataSource<TreeItemDataType, UniqueIDType> dataSource) {
     final bool previousDataSourceWasFiltered = this.dataSource.isFiltered;
     this.dataSource = dataSource;
     if (previousDataSourceWasFiltered) {
@@ -206,7 +210,8 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
     }
   }
 
-  void updateAncestorsIndeterminateStateToReflectChildren(TreeItemDataType item) {
+  void updateAncestorsIndeterminateStateToReflectChildren(
+      TreeItemDataType item) {
     final TreeItemDataType? parent = dataSource.getParent(item);
     if (parent == null) {
       return;
@@ -254,7 +259,8 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
 
   bool syncChildCheckboxWithParent = true;
 
-  void setItemCheckboxValue(TreeItemDataType item, {required bool value, bool includeChildren = false}) {
+  void setItemCheckboxValue(TreeItemDataType item,
+      {required bool value, bool includeChildren = false}) {
     final UniqueIDType id = dataSource.getUniqueID(item);
     final Iterable<TreeItemDataType> children = dataSource.getChildren(item);
 
@@ -267,7 +273,8 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
         dataSource.visitChildrenWithAction(
           startingNode: item,
           actionBeforeVisit: (TreeItemDataType currentChild) {
-            final UniqueIDType currentChildID = dataSource.getUniqueID(currentChild);
+            final UniqueIDType currentChildID =
+                dataSource.getUniqueID(currentChild);
             setCheckboxValueForId(currentChildID, value: value);
           },
         );
@@ -302,7 +309,8 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
   final Set<UniqueIDType> _selectedItems = <UniqueIDType>{};
 
   void selectItem(TreeItemDataType item) => setItemSelected(item, value: true);
-  void deselectItem(TreeItemDataType item) => setItemSelected(item, value: false);
+  void deselectItem(TreeItemDataType item) =>
+      setItemSelected(item, value: false);
 
   bool isItemSelected(TreeItemDataType item) {
     final UniqueIDType id = dataSource.getUniqueID(item);
@@ -327,10 +335,13 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
     _animateExpandCollapse = previousValue;
   }
 
-  void _collapse(TreeItemDataType item) => setItemExpanded(item, expanded: false);
+  void _collapse(TreeItemDataType item) =>
+      setItemExpanded(item, expanded: false);
   void _expand(TreeItemDataType item) => setItemExpanded(item, expanded: true);
 
-  void expandMatchingNodes(NodeMatchCondition<TreeNode<TreeItemDataType>> matchCondition, {bool shouldRebuild = true}) {
+  void expandMatchingNodes(
+      NodeMatchCondition<TreeNode<TreeItemDataType>> matchCondition,
+      {bool shouldRebuild = true}) {
     visitNodes(
       matchCondition: (TreeNode<TreeItemDataType> node) {
         return dataSource.hasChildren(node.data);
@@ -379,7 +390,8 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
     rebuild();
   }
 
-  void _applyCascadingAction(Iterable<TreeItemDataType> items, Visitor<TreeItemDataType> action) {
+  void _applyCascadingAction(
+      Iterable<TreeItemDataType> items, Visitor<TreeItemDataType> action) {
     for (final TreeItemDataType item in items) {
       action(item);
       _applyCascadingAction(dataSource.getChildren(item), action);
@@ -406,7 +418,8 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
 
   void collapseAll() => collapseCascading(displayedTree);
 
-  bool isNodeExpandedCondition(TreeNode<TreeItemDataType> node) => isItemExpanded(node.data);
+  bool isNodeExpandedCondition(TreeNode<TreeItemDataType> node) =>
+      isItemExpanded(node.data);
 
   /// Visit nodes matching a specific condition.
   ///
@@ -416,7 +429,8 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
     NodeMatchCondition<TreeNode<TreeItemDataType>>? matchCondition,
     TreeNode<TreeItemDataType>? startingNode,
   }) {
-    final NodeMatchCondition<TreeNode<TreeItemDataType>> visitChildren = matchCondition ?? isNodeExpandedCondition;
+    final NodeMatchCondition<TreeNode<TreeItemDataType>> visitChildren =
+        matchCondition ?? isNodeExpandedCondition;
 
     void createTreeNodesForItems({
       required TreeNode<TreeItemDataType>? parent,
@@ -436,7 +450,8 @@ class TreeController<TreeItemDataType extends Object, UniqueIDType> with ChangeN
         onVisit(node);
 
         if (itemHasChildren && visitChildren(node)) {
-          final Iterable<TreeItemDataType> children = dataSource.getChildren(item);
+          final Iterable<TreeItemDataType> children =
+              dataSource.getChildren(item);
           createTreeNodesForItems(
             parent: node,
             items: children,

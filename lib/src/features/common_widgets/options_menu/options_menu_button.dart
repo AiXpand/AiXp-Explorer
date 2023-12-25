@@ -128,15 +128,21 @@ class _OptionsMenuButtonState extends State<OptionsMenuButton> {
             : screenRegion.y <= 0
                 ? Alignment.topRight
                 : Alignment.bottomRight;
-        final Alignment targetAnchor = widget.targetAnchor ?? naturalTargetAnchor;
-        final Alignment followerAnchor = widget.followerAnchor ?? naturalFollowerAnchor;
+        final Alignment targetAnchor =
+            widget.targetAnchor ?? naturalTargetAnchor;
+        final Alignment followerAnchor =
+            widget.followerAnchor ?? naturalFollowerAnchor;
 
         /// Offset is computed based on the target and follower anchors.
         /// If the anchor axis of the target and follower directly oppose, then an offset
         /// is needed on that axis to separate the menu from the button.
         final Offset offset = Offset(
-          targetAnchor.x.sign == -followerAnchor.x.sign ? 8 * -followerAnchor.x.sign : 0,
-          targetAnchor.y.sign == -followerAnchor.y.sign ? 8 * -followerAnchor.y.sign : 0,
+          targetAnchor.x.sign == -followerAnchor.x.sign
+              ? 8 * -followerAnchor.x.sign
+              : 0,
+          targetAnchor.y.sign == -followerAnchor.y.sign
+              ? 8 * -followerAnchor.y.sign
+              : 0,
         );
 
         return Stack(
@@ -167,7 +173,8 @@ class _OptionsMenuButtonState extends State<OptionsMenuButton> {
     );
   }
 
-  void _onBoxOffsetChanged(Size size, EdgeInsets offset, EdgeInsets rootPadding) {
+  void _onBoxOffsetChanged(
+      Size size, EdgeInsets offset, EdgeInsets rootPadding) {
     _computeScreenRegion();
     _updateOptionBox();
   }

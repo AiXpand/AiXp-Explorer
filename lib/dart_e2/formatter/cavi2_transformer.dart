@@ -1,6 +1,7 @@
 class Cavi2Transformer {
   /// A method used to transform the cavi2 payload into a raw payload in order for use to be able to load it into our class models.
   static Map<String, dynamic> decodeCavi2(Map<String, dynamic> encodedOutput) {
+    // return cavi2Decoder(encodedOutput);
     // Remove specific keys if they exist
     if (encodedOutput.containsKey('SB_IMPLEMENTATION')) {
       encodedOutput.remove('SB_IMPLEMENTATION');
@@ -49,20 +50,20 @@ class Cavi2Transformer {
       Map<String, dynamic> pluginMetadata = metadata['pluginMetadata'];
 
       // Rename and add capture metadata
+      final newCaptureMetadata = Map<String, dynamic>.from({});
       captureMetadata.forEach((k, v) {
-        captureMetadata['_C_$k'] = v;
+        newCaptureMetadata['_C_$k'] = v;
       });
-      captureMetadata.keys.toList().forEach((k) {
-        captureMetadata.remove(k);
-      });
+      captureMetadata.clear();
+      captureMetadata.addAll(newCaptureMetadata);
 
       // Rename and add plugin metadata
+      final newPluginMetadata = Map<String, dynamic>.from({});
       pluginMetadata.forEach((k, v) {
-        pluginMetadata['_P_$k'] = v;
+        newPluginMetadata['_P_$k'] = v;
       });
-      pluginMetadata.keys.toList().forEach((k) {
-        pluginMetadata.remove(k);
-      });
+      pluginMetadata.clear();
+      pluginMetadata.addAll(newPluginMetadata);
 
       // Process data values
       output['STREAM'] = data['identifiers']['streamId'];
@@ -88,9 +89,9 @@ class Cavi2Transformer {
       });
 
       // Process image data
-      String img = data['img']['id'];
-      int imgH = data['img']['height'];
-      int imgW = data['img']['width'];
+      String? img = data['img']['id'];
+      int? imgH = data['img']['height'];
+      int? imgW = data['img']['width'];
       data.remove('img');
 
       if (img != null) {

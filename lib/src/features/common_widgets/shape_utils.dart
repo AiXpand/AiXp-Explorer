@@ -5,7 +5,8 @@ enum ShapeUtilsCorners { all, top, bottom, left, right, none }
 enum ShapeUtilsBorder { all, vertical, horizontal, none }
 
 class ShapeUtils {
-  static BorderRadius getBorderRadius(ShapeUtilsCorners corners, double radius) {
+  static BorderRadius getBorderRadius(
+      ShapeUtilsCorners corners, double radius) {
     switch (corners) {
       case ShapeUtilsCorners.all:
         return BorderRadius.all(Radius.circular(radius));
@@ -34,7 +35,8 @@ class ShapeUtils {
     }
   }
 
-  static Border getBorder(ShapeUtilsBorder border, Color color, [double width = 1.0]) {
+  static Border getBorder(ShapeUtilsBorder border, Color color,
+      [double width = 1.0]) {
     switch (border) {
       case ShapeUtilsBorder.all:
         return Border.all(color: color, width: width);

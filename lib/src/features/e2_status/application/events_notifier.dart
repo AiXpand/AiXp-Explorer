@@ -20,7 +20,8 @@ class EventsNotifier {
     return _listenerIDCounter;
   }
 
-  int addListener(bool Function(dynamic data) filter, Function(dynamic data) listener) {
+  int addListener(
+      bool Function(dynamic data) filter, Function(dynamic data) listener) {
     final listenerID = newListenerID();
     _listeners[listenerID] = _ListenerWithFilter(filter, listener);
     debugPrint('Added listener with ID: $listenerID');
@@ -38,6 +39,8 @@ class EventsNotifier {
   }
 
   void emit(dynamic data) {
-    _listeners.values.where((listener) => listener.filter(data)).forEach((listener) => listener.listener(data));
+    _listeners.values
+        .where((listener) => listener.filter(data))
+        .forEach((listener) => listener.listener(data));
   }
 }

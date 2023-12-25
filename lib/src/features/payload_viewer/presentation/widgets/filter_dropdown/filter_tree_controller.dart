@@ -17,8 +17,10 @@ class FilterTreeController extends TreeController<MessageFilter, String> {
   }
 
   @override
-  void setItemCheckboxValue(MessageFilter item, {required bool value, bool includeChildren = true}) {
-    super.setItemCheckboxValue(item, value: value, includeChildren: includeChildren);
+  void setItemCheckboxValue(MessageFilter item,
+      {required bool value, bool includeChildren = true}) {
+    super.setItemCheckboxValue(item,
+        value: value, includeChildren: includeChildren);
     final newCheckedItems = getCheckedItems(dataSource.roots);
     onCheckedItemsChanged?.call(newCheckedItems);
   }

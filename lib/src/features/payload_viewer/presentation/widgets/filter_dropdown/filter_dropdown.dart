@@ -25,7 +25,8 @@ class FilterDropdown extends StatefulWidget {
 }
 
 class _FilterDropdownState extends State<FilterDropdown> {
-  late final OverlayController overlayController = OverlayController('filter dropdown');
+  late final OverlayController overlayController =
+      OverlayController('filter dropdown');
   late final FilterTreeController treeController = FilterTreeController(
     filters: widget.filters,
     onCheckedItemsChanged: widget.onCheckedItemsChanged,
@@ -55,19 +56,29 @@ class _FilterDropdownState extends State<FilterDropdown> {
           condition: (MessageFilter messageFilter) {
             return messageFilter.name.toLowerCase().contains(searchQuery);
           },
-          setNewChildren: (MessageFilter oldNode, Iterable<MessageFilter> newChildren) {
+          setNewChildren:
+              (MessageFilter oldNode, Iterable<MessageFilter> newChildren) {
             switch (oldNode.type) {
               case FilterType.pipelineFilter:
-                return (oldNode as PipelineFilter)
-                    .copyWith(children: newChildren.toList().map((e) => e as PluginTypeFilter).toList());
+                return (oldNode as PipelineFilter).copyWith(
+                    children: newChildren
+                        .toList()
+                        .map((e) => e as PluginTypeFilter)
+                        .toList());
               case FilterType.pluginTypeFilter:
-                return (oldNode as PluginTypeFilter)
-                    .copyWith(children: newChildren.toList().map((e) => e as PluginInstanceFilter).toList());
+                return (oldNode as PluginTypeFilter).copyWith(
+                    children: newChildren
+                        .toList()
+                        .map((e) => e as PluginInstanceFilter)
+                        .toList());
               case FilterType.pluginInstanceFilter:
                 return oldNode;
               case FilterType.boxFilter:
-                return (oldNode as BoxFilter)
-                    .copyWith(children: newChildren.toList().map((e) => e as PipelineFilter).toList());
+                return (oldNode as BoxFilter).copyWith(
+                    children: newChildren
+                        .toList()
+                        .map((e) => e as PipelineFilter)
+                        .toList());
             }
           },
           removeChildren: (MessageFilter oldNode) {
@@ -83,7 +94,8 @@ class _FilterDropdownState extends State<FilterDropdown> {
             }
           })
       ..expandMatchingNodes(
-        (TreeNode<MessageFilter> node) => node.data.name.toLowerCase().contains(searchQuery),
+        (TreeNode<MessageFilter> node) =>
+            node.data.name.toLowerCase().contains(searchQuery),
         shouldRebuild: shouldRebuild,
       );
   }
@@ -93,7 +105,8 @@ class _FilterDropdownState extends State<FilterDropdown> {
     return HFDropdown(
       contentWidth: 300,
       overlayController: overlayController,
-      buttonBuilder: (BuildContext context, DropdownButtonOnTap onButtonTap) => ElevatedButton(
+      buttonBuilder: (BuildContext context, DropdownButtonOnTap onButtonTap) =>
+          ElevatedButton(
         onPressed: onButtonTap,
         // icon: CarbonIcons.location,
         // buttonColor: Colors.transparent,

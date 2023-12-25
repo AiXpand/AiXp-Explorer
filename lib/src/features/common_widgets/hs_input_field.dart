@@ -183,7 +183,9 @@ class _HSInputFieldState extends State<HSInputField> {
               Text(
                 widget.inputFieldLabel,
                 style: TextStyles.smallStrong(
-                  color: widget.enabled ? ColorStyles.light100 : ColorStyles.light900,
+                  color: widget.enabled
+                      ? ColorStyles.light100
+                      : ColorStyles.light900,
                 ),
               ),
               optionalTextWidget
@@ -199,7 +201,8 @@ class _HSInputFieldState extends State<HSInputField> {
             textInputAction: widget.textInputAction,
             enabled: widget.enabled,
             style: TextStyles.small(
-              color: widget.enabled ? ColorStyles.light100 : ColorStyles.light900,
+              color:
+                  widget.enabled ? ColorStyles.light100 : ColorStyles.light900,
             ),
             autofocus: widget.autofocus,
             autovalidateMode: widget.autoValidateMode,
@@ -217,26 +220,38 @@ class _HSInputFieldState extends State<HSInputField> {
               filled: true,
               counterText: widget.counterText,
               isDense: widget.isDense,
-              fillColor: widget.enabled ? widget.inputBackgroundColor : widget.disabledColor ?? ColorStyles.dark800,
+              fillColor: widget.enabled
+                  ? widget.inputBackgroundColor
+                  : widget.disabledColor ?? ColorStyles.dark800,
               enabledBorder: OutlineInputBorder(
-                borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(widget.cornerRadius)),
+                borderRadius: widget.borderRadius ??
+                    BorderRadius.all(Radius.circular(widget.cornerRadius)),
                 borderSide: !widget.enableBorder
                     ? BorderSide.none
                     : BorderSide(
-                        color: widget.isValid ? widget.borderColor : ColorStyles.red,
+                        color: widget.isValid
+                            ? widget.borderColor
+                            : ColorStyles.red,
                         width: 2,
                       ),
               ),
               errorBorder: OutlineInputBorder(
-                borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(widget.cornerRadius)),
-                borderSide: !widget.enableBorder ? BorderSide.none : const BorderSide(color: ColorStyles.red, width: 2),
+                borderRadius: widget.borderRadius ??
+                    BorderRadius.all(Radius.circular(widget.cornerRadius)),
+                borderSide: !widget.enableBorder
+                    ? BorderSide.none
+                    : const BorderSide(color: ColorStyles.red, width: 2),
               ),
               focusedErrorBorder: OutlineInputBorder(
-                borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(widget.cornerRadius)),
-                borderSide: !widget.enableBorder ? BorderSide.none : const BorderSide(color: ColorStyles.red, width: 2),
+                borderRadius: widget.borderRadius ??
+                    BorderRadius.all(Radius.circular(widget.cornerRadius)),
+                borderSide: !widget.enableBorder
+                    ? BorderSide.none
+                    : const BorderSide(color: ColorStyles.red, width: 2),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: widget.borderRadius ?? BorderRadius.all(Radius.circular(widget.cornerRadius)),
+                borderRadius: widget.borderRadius ??
+                    BorderRadius.all(Radius.circular(widget.cornerRadius)),
                 borderSide: !widget.enableBorder
                     ? BorderSide.none
                     : BorderSide(
@@ -291,7 +306,8 @@ class _HSInputFieldState extends State<HSInputField> {
             widget.onChanged!.call(text);
           }
           setState(() {
-            charactersLeft = maxCharacters - widget.textFieldController!.text.length;
+            charactersLeft =
+                maxCharacters - widget.textFieldController!.text.length;
           });
         },
         style: TextStyles.small(

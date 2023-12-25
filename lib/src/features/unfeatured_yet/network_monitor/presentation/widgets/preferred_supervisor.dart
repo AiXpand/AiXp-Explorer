@@ -117,7 +117,8 @@ class _PreferredSupervisorState extends State<PreferredSupervisor> {
                   ),
                   IconButtonWithTooltip(
                     onTap: () {
-                      final newSupervisor = _controller.text.replaceAll(' ', '');
+                      final newSupervisor =
+                          _controller.text.replaceAll(' ', '');
                       if (newSupervisor.isEmpty) {
                         widget.onSupervisorChanged.call(null);
                         setState(() {

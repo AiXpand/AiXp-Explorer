@@ -1,8 +1,10 @@
 part of hf_tree;
 
-typedef TreeItemCheckedCallback<TreeItemDataType extends Object> = void Function(TreeItemDataType item, {bool checked});
+typedef TreeItemCheckedCallback<TreeItemDataType extends Object> = void
+    Function(TreeItemDataType item, {bool checked});
 
-class TreeView<TreeItemDataType extends Object, UniqueIDType> extends BoxScrollView {
+class TreeView<TreeItemDataType extends Object, UniqueIDType>
+    extends BoxScrollView {
   const TreeView({
     super.key,
     required this.treeController,

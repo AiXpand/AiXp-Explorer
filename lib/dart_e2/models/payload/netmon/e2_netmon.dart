@@ -35,19 +35,22 @@ class E2Netmon extends E2Payload {
     final currentNetwork = map['CURRENT_NETWORK'] as Map<String, dynamic>;
     final currentNetworkMap = <String, NetmonBoxDetails>{};
     currentNetwork.forEach((key, value) {
-      currentNetworkMap[key] = NetmonBoxDetails.fromMap(value as Map<String, dynamic>);
+      currentNetworkMap[key] =
+          NetmonBoxDetails.fromMap(value as Map<String, dynamic>);
     });
     final content = E2Payload.extractContent(map)..remove('CURRENT_NETWORK');
     return E2Netmon(
-      payloadPath: (map['EE_PAYLOAD_PATH'] as List).map((e) => e as String).toList(),
+      payloadPath:
+          (map['EE_PAYLOAD_PATH'] as List).map((e) => e as String).toList(),
       formatter: map['EE_FORMATTER'] as String?,
       sign: map['EE_SIGN'] as String,
       sender: map['EE_SENDER'] as String,
       hash: map['EE_HASH'] as String,
       timestamp: map['EE_TIMESTAMP'] as String,
       timezone: map['EE_TIMEZONE'] as String,
-      currentNetwork:
-          currentNetworkMap.entries.map((entry) => NetmonBox(boxId: entry.key, details: entry.value)).toList(),
+      currentNetwork: currentNetworkMap.entries
+          .map((entry) => NetmonBox(boxId: entry.key, details: entry.value))
+          .toList(),
       isSupervisor: map['IS_SUPERVISOR'] as bool,
       messageBody: originalMap,
       content: content,

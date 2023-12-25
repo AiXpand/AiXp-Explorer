@@ -73,7 +73,9 @@ class UsageChart extends StatelessWidget {
               belowBarData: BarAreaData(
                 show: true,
                 gradient: LinearGradient(
-                  colors: [Colors.blue, Colors.cyanAccent].map((color) => color.withOpacity(0.3)).toList(),
+                  colors: [Colors.blue, Colors.cyanAccent]
+                      .map((color) => color.withOpacity(0.3))
+                      .toList(),
                 ),
               ),
               color: Colors.blue,

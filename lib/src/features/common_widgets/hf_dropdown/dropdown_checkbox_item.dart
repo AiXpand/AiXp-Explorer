@@ -41,7 +41,9 @@ class DropdownCheckboxItem extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Icon(
-              checked ? CarbonIcons.checkbox_checked_filled : CarbonIcons.checkbox,
+              checked
+                  ? CarbonIcons.checkbox_checked_filled
+                  : CarbonIcons.checkbox,
               color: checked ? ColorStyles.blue : ColorStyles.lightGrey,
             ),
             const SizedBox(

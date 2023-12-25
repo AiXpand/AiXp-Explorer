@@ -107,7 +107,8 @@ class Cavi2Metadata {
       loggerVersion: json["logger_version"],
       totalDisk: json["total_disk"]?.toDouble(),
       availableDisk: json["available_disk"]?.toDouble(),
-      activePlugins: List<E2ActivePlugin>.from(json["active_plugins"].map((x) => E2ActivePlugin.fromMap(x))),
+      activePlugins: List<E2ActivePlugin>.from(
+          json["active_plugins"].map((x) => E2ActivePlugin.fromMap(x))),
       nrInferences: json["nr_inferences"],
       nrPayloads: json["nr_payloads"],
       nrStreamsData: json["nr_streams_data"],
@@ -148,7 +149,8 @@ class Cavi2Metadata {
         "logger_version": loggerVersion,
         "total_disk": totalDisk,
         "available_disk": availableDisk,
-        "active_plugins": List<dynamic>.from(activePlugins.map((x) => x.toMap())),
+        "active_plugins":
+            List<dynamic>.from(activePlugins.map((x) => x.toMap())),
         "nr_inferences": nrInferences,
         "nr_payloads": nrPayloads,
         "nr_streams_data": nrStreamsData,

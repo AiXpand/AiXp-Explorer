@@ -58,7 +58,9 @@ class _TreeListViewState extends State<SingleLevelTreeView> {
           // physics: NeverScrollableScrollPhysics(),
           itemCount: widget.pipelineMessages.length,
           itemBuilder: (BuildContext item, int index) {
-            final childrenRaw = (widget.pipelineMessages[index]['PLUGINS'] as List).map((plugin) {
+            final childrenRaw =
+                (widget.pipelineMessages[index]['PLUGINS'] as List)
+                    .map((plugin) {
               final pluginMap = plugin as Map<String, dynamic>;
               final pluginInstances = pluginMap['INSTANCES'] as List;
 
@@ -69,13 +71,17 @@ class _TreeListViewState extends State<SingleLevelTreeView> {
                 children.add(
                   TreeChildElement(
                     text: pluginInstance['INSTANCE_ID'],
-                    isSelected: pluginInstance['INSTANCE_ID'] == selectedChildText &&
-                        widget.pipelineMessages[index]['NAME'] == selectedParentText,
+                    isSelected:
+                        pluginInstance['INSTANCE_ID'] == selectedChildText &&
+                            widget.pipelineMessages[index]['NAME'] ==
+                                selectedParentText,
                     onTap: () {
-                      widget.onPluginSelected
-                          .call(pluginInstance['INSTANCE_ID'], widget.pipelineMessages[index]['NAME']);
+                      widget.onPluginSelected.call(
+                          pluginInstance['INSTANCE_ID'],
+                          widget.pipelineMessages[index]['NAME']);
                       setState(() {
-                        selectedParentText = widget.pipelineMessages[index]['NAME'];
+                        selectedParentText =
+                            widget.pipelineMessages[index]['NAME'];
                         selectedChildText = pluginInstance['INSTANCE_ID'];
                       });
                     },
@@ -94,12 +100,15 @@ class _TreeListViewState extends State<SingleLevelTreeView> {
             return Padding(
               padding: const EdgeInsets.only(top: 4),
               child: TreeParentElement(
-                isSelected: widget.pipelineMessages[index]['NAME'] == selectedParentText,
-                isChildSelected:
-                    widget.pipelineMessages[index]['NAME'] == selectedParentText && selectedChildText != null,
+                isSelected: widget.pipelineMessages[index]['NAME'] ==
+                    selectedParentText,
+                isChildSelected: widget.pipelineMessages[index]['NAME'] ==
+                        selectedParentText &&
+                    selectedChildText != null,
                 rightAlignedText: widget.pipelineMessages[index]['TYPE'],
                 onTap: () {
-                  widget.onPipelineSelected.call(widget.pipelineMessages[index]['NAME']);
+                  widget.onPipelineSelected
+                      .call(widget.pipelineMessages[index]['NAME']);
                   setState(() {
                     selectedParentText = widget.pipelineMessages[index]['NAME'];
                     selectedChildText = null;

@@ -128,7 +128,9 @@ class _StressTestPageState extends State<StressTestPage> {
             onTap: () {
               E2Client().session.sendCommand(
                     ActionCommands.restart(
-                        targetId: 'theo_dckr', initiatorId: 'Explorer-Theo', sessionId: 'Theo-Session-ID'),
+                        targetId: 'theo_dckr',
+                        initiatorId: 'Explorer-Theo',
+                        sessionId: 'Theo-Session-ID'),
                   );
             },
             text: 'Send shutdown command',

@@ -39,7 +39,8 @@ class BoxMessagesTabDisplay extends StatefulWidget {
   State<StatefulWidget> createState() => _BoxMessagesTabDisplayState();
 }
 
-class _BoxMessagesTabDisplayState extends State<BoxMessagesTabDisplay> with TickerProviderStateMixin {
+class _BoxMessagesTabDisplayState extends State<BoxMessagesTabDisplay>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late int _tabIndex;
 

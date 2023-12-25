@@ -61,19 +61,29 @@ class _FilterTreeViewState extends State<FilterTreeView> {
           condition: (MessageFilter messageFilter) {
             return messageFilter.name.toLowerCase().contains(searchQuery);
           },
-          setNewChildren: (MessageFilter oldNode, Iterable<MessageFilter> newChildren) {
+          setNewChildren:
+              (MessageFilter oldNode, Iterable<MessageFilter> newChildren) {
             switch (oldNode.type) {
               case FilterType.pipelineFilter:
-                return (oldNode as PipelineFilter)
-                    .copyWith(children: newChildren.toList().map((e) => e as PluginTypeFilter).toList());
+                return (oldNode as PipelineFilter).copyWith(
+                    children: newChildren
+                        .toList()
+                        .map((e) => e as PluginTypeFilter)
+                        .toList());
               case FilterType.pluginTypeFilter:
-                return (oldNode as PluginTypeFilter)
-                    .copyWith(children: newChildren.toList().map((e) => e as PluginInstanceFilter).toList());
+                return (oldNode as PluginTypeFilter).copyWith(
+                    children: newChildren
+                        .toList()
+                        .map((e) => e as PluginInstanceFilter)
+                        .toList());
               case FilterType.pluginInstanceFilter:
                 return oldNode;
               case FilterType.boxFilter:
-                return (oldNode as BoxFilter)
-                    .copyWith(children: newChildren.toList().map((e) => e as PipelineFilter).toList());
+                return (oldNode as BoxFilter).copyWith(
+                    children: newChildren
+                        .toList()
+                        .map((e) => e as PipelineFilter)
+                        .toList());
             }
           },
           removeChildren: (MessageFilter oldNode) {
@@ -89,7 +99,8 @@ class _FilterTreeViewState extends State<FilterTreeView> {
             }
           })
       ..expandMatchingNodes(
-        (TreeNode<MessageFilter> node) => node.data.name.toLowerCase().contains(searchQuery),
+        (TreeNode<MessageFilter> node) =>
+            node.data.name.toLowerCase().contains(searchQuery),
         shouldRebuild: shouldRebuild,
       );
   }
@@ -116,15 +127,19 @@ class _FilterTreeViewState extends State<FilterTreeView> {
           nodeBuilder: (context, node) {
             bool isExpanded = treeController.isItemExpanded(node.data);
             bool? isChecked = treeController.getCheckboxValue(node.data);
-            bool hasChildren = treeController.dataSource.getChildren(node.data).isNotEmpty;
+            bool hasChildren =
+                treeController.dataSource.getChildren(node.data).isNotEmpty;
 
             return FilterTreeItem(
               onTap: () {
-                isExpanded ? treeController.collapse(node.data) : treeController.expand(node.data);
+                isExpanded
+                    ? treeController.collapse(node.data)
+                    : treeController.expand(node.data);
               },
               onCheckboxPressed: () {
                 // Set true if it is indeterminate or the opposite if not indeterminate
-                treeController.setItemCheckboxValue(node.data, value: isChecked == null ? true : !isChecked);
+                treeController.setItemCheckboxValue(node.data,
+                    value: isChecked == null ? true : !isChecked);
               },
               title: node.data.name,
               isChecked: isChecked,
@@ -140,7 +155,9 @@ class _FilterTreeViewState extends State<FilterTreeView> {
                   if (treeController.dataSource.hasChildren(node.data))
                     InkWell(
                       onTap: () {
-                        isExpanded ? treeController.collapse(node.data) : treeController.expand(node.data);
+                        isExpanded
+                            ? treeController.collapse(node.data)
+                            : treeController.expand(node.data);
                       },
                       child: SizedBox(
                         width: 24,
@@ -159,7 +176,8 @@ class _FilterTreeViewState extends State<FilterTreeView> {
                   InkWell(
                     onTap: () {
                       // Set true if it is indeterminate or the opposite if not indeterminate
-                      treeController.setItemCheckboxValue(node.data, value: isChecked == null ? true : !isChecked);
+                      treeController.setItemCheckboxValue(node.data,
+                          value: isChecked == null ? true : !isChecked);
                     },
                     child: SizedBox(
                       width: 24,

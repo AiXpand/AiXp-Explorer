@@ -18,8 +18,10 @@ class E2MetaStream extends E2Pipeline {
 
   factory E2MetaStream.fromMap(Map<String, dynamic> map) {
     return E2MetaStream(
-      collectedStreams: (map['COLLECTED_STREAMS'] as List).map((e) => e as String).toList(),
-      streamConfigMetadata: map['STREAM_CONFIG_METADATA'] as Map<String, dynamic>,
+      collectedStreams:
+          (map['COLLECTED_STREAMS'] as List).map((e) => e as String).toList(),
+      streamConfigMetadata:
+          map['STREAM_CONFIG_METADATA'] as Map<String, dynamic>,
       initiatorId: map['INITIATOR_ID'] as String,
       name: map['NAME'] as String,
       plugins: E2Plugin.fromList(map['PLUGINS'] as List),

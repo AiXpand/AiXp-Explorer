@@ -48,7 +48,8 @@ class E2DctStat {
         collectingStats = null;
       } else {
         if (collectingBody.runtimeType is List) {
-          collectingStats = (collectingBody as List).map((e) => e as String).toList();
+          collectingStats =
+              (collectingBody as List).map((e) => e as String).toList();
         }
       }
     }

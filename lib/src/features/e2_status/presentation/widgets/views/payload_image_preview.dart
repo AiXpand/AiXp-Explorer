@@ -88,7 +88,9 @@ class _PayloadImagePreviewState extends State<PayloadImagePreview> {
             child: PageView(
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
-              children: widget.base64Images.map((imageString) => Image.memory(base64Decode(imageString))).toList(),
+              children: widget.base64Images
+                  .map((imageString) => Image.memory(base64Decode(imageString)))
+                  .toList(),
             ),
           ),
         ),

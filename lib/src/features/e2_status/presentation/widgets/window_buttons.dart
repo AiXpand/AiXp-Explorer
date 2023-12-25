@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 
-
 class WindowButtons extends StatelessWidget {
   const WindowButtons({super.key});
 
@@ -15,5 +14,4 @@ class WindowButtons extends StatelessWidget {
       ],
     );
   }
-
 }

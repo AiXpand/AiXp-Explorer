@@ -53,11 +53,14 @@ class _ClickableContainerState extends State<ClickableContainer> {
               )
             : null,
         borderRadius: widget.shapeCorners != ShapeUtilsCorners.none
-            ? ShapeUtils.getBorderRadius(widget.shapeCorners, widget.borderRadius)
+            ? ShapeUtils.getBorderRadius(
+                widget.shapeCorners, widget.borderRadius)
             : null,
       ),
       duration: const Duration(milliseconds: 100),
-      child: widget.childBuilder != null ? widget.childBuilder!.call(isHover) : widget.child,
+      child: widget.childBuilder != null
+          ? widget.childBuilder!.call(isHover)
+          : widget.child,
     );
 
     if (widget.onTap != null) {

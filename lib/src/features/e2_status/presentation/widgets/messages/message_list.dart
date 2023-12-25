@@ -94,8 +94,9 @@ class _MessageListState extends State<MessageList> {
                   widget.onTap?.call(index, widget.messages[index]);
                 },
                 child: Container(
-                  color:
-                      widget.selectedMessageId == message['messageID'] ? const Color(0xff2A3A6F) : ColorStyles.dark800,
+                  color: widget.selectedMessageId == message['messageID']
+                      ? const Color(0xff2A3A6F)
+                      : ColorStyles.dark800,
                   height: 30,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -113,7 +114,9 @@ class _MessageListState extends State<MessageList> {
                         ),
                         Expanded(
                           child: Text(
-                            DateFormat('hh:mm:ss').format(DateTime.parse(message['time']?['hostTime']).toLocal()),
+                            DateFormat('hh:mm:ss').format(
+                                DateTime.parse(message['time']?['hostTime'])
+                                    .toLocal()),
                             style: const TextStyle(
                               color: Colors.white38,
                             ),
