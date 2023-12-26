@@ -1,4 +1,3 @@
-import 'package:e2_explorer/dart_e2/formatter/mqtt_message_transformer.dart';
 import 'package:e2_explorer/dart_e2/models/payload/e2_payload.dart';
 import 'package:e2_explorer/src/features/common_widgets/tooltip/simple_tooltip.dart';
 import 'package:e2_explorer/src/features/e2_status/application/client_messages/payload_message.dart';
@@ -164,15 +163,24 @@ class _PayloadViewerState extends State<PayloadViewer> {
                     // print('EEEEEE');
                     // _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
 
-                    /// ToDo:  find  a way to optimize and insert the element in the sorted list
-                    final Map<String, dynamic> convertedMessage =
-                        MqttMessageTransformer.formatToRaw(message);
-                    final E2Payload payloadObject = E2Payload.fromMap(
-                      convertedMessage,
-                      originalMap: message,
+                    // /// ToDo:  find  a way to optimize and insert the element in the sorted list
+                    // final Map<String, dynamic> convertedMessage =
+                    //     MqttMessageTransformer.formatToRaw(message);
+                    // final E2Payload payloadObject = E2Payload.fromMap(
+                    //   convertedMessage,
+                    //   originalMap: message,
+                    // );
+                    //
+
+                    // final payloadMessage =
+                    //     PayloadMessage.fromE2Payload(payloadObject);
+
+                    final payloadMessage = PayloadMessage.fromE2Payload(
+                      E2Payload.fromMap(
+                        message,
+                        originalMap: message,
+                      ),
                     );
-                    final payloadMessage =
-                        PayloadMessage.fromE2Payload(payloadObject);
 
                     messages.add(payloadMessage);
                     // /// ToDo:  find  a way to optimize and insert the element in the sorted list

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:carbon_icons/carbon_icons.dart';
+import 'package:e2_explorer/dart_e2/formatter/mqtt_message_transformer.dart';
 import 'package:e2_explorer/dart_e2/models/payload/netmon/netmon_box_details.dart';
 import 'package:e2_explorer/dart_e2/utils/xpand_utils.dart';
 import 'package:e2_explorer/src/features/common_widgets/hf_dropdown/overlay_utils.dart';
@@ -52,12 +53,15 @@ class _NetworkStatusPageState extends State<NetworkStatusPage> {
   @override
   Widget build(BuildContext context) {
     return E2Listener(
-      onPayload: (data) {
-        final dataMap = data as Map<String, dynamic>;
-        if (dataMap['data']?['specificValue']?['is_supervisor'] == true &&
-            dataMap['data']?['specificValue']?['current_network'] != null) {
-          final currentNetwork = dataMap['data']?['specificValue']
-              ?['current_network'] as Map<String, dynamic>;
+      onPayload: (message) {
+        final Map<String, dynamic> convertedMessage =
+            MqttMessageTransformer.formatToRaw(message);
+
+        if (convertedMessage['IS_SUPERVISOR'] == true &&
+            convertedMessage['CURRENT_NETWORK'] != null) {
+          final currentNetwork =
+              convertedMessage['CURRENT_NETWORK'] as Map<String, dynamic>;
+
           final currentNetworkMap = <String, NetmonBoxDetails>{};
           currentNetwork.forEach((key, value) {
             currentNetworkMap[key] =
@@ -65,13 +69,14 @@ class _NetworkStatusPageState extends State<NetworkStatusPage> {
           });
           if (currentNetworkMap.length > 1) {
             setState(() {
-              currentSupervisor = dataMap['EE_PAYLOAD_PATH']?[0];
+              currentSupervisor = convertedMessage['EE_PAYLOAD_PATH']?[0];
               refreshReady = false;
               netmonStatus = currentNetworkMap;
               netmonStatusList = netmonStatus.entries
                   .map((entry) =>
                       NetmonBox(boxId: entry.key, details: entry.value))
                   .toList();
+
               supervisorIds = netmonStatusList
                   .where((element) =>
                       element.details.isSupervisor &&

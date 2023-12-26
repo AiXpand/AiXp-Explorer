@@ -1,51 +1,46 @@
 class Cavi2Transformer {
   /// A method used to transform the cavi2 payload into a raw payload in order for use to be able to load it into our class models.
-  static Map<String, dynamic> decodeCavi2(Map<String, dynamic> encodedOutput) {
-    // return cavi2Decoder(encodedOutput);
-    // Remove specific keys if they exist
-    if (encodedOutput.containsKey('SB_IMPLEMENTATION')) {
-      encodedOutput.remove('SB_IMPLEMENTATION');
-    }
-    if (encodedOutput.containsKey('EE_FORMATTER')) {
-      encodedOutput.remove('EE_FORMATTER');
-    }
-
+  static Map<String, dynamic> decodeCavi2(Map<String, dynamic> encodedToCavi2) {
     Map<String, dynamic> output = {};
 
-    // Remove 'messageID' from encodedOutput
-    encodedOutput.remove('messageID');
+    // Remove 'messageID' from encodedToCavi2
+    // encodedToCavi2.remove('messageID');
 
-    String eventType = encodedOutput.remove('type');
-    String eeEventType = eventType;
+    // String eventType = encodedToCavi2.remove('type');
+    String eeEventType = encodedToCavi2['type'];
 
     // Determine EE_EVENT_TYPE based on event type
-    if (eventType != 'notification' && eventType != 'heartbeat') {
+    if (eeEventType != 'notification' && eeEventType != 'heartbeat') {
       eeEventType = 'payload';
     }
-    output['EE_EVENT_TYPE'] = eeEventType.toUpperCase();
 
-    Map<String, dynamic> data = encodedOutput.remove('data');
-    Map<String, dynamic> metadata = encodedOutput.remove('metadata');
+    output['EE_EVENT_TYPE'] = eeEventType.toUpperCase();
+    final data = encodedToCavi2['data'];
+    final metadata = encodedToCavi2['metadata'];
+
+    // Map<String, dynamic> data = encodedToCavi2.remove('data');
+    // Map<String, dynamic> metadata = encodedToCavi2.remove('metadata');
 
     // Process 'sender' zone
-    output['EE_ID'] = encodedOutput['sender']['hostId'];
-    encodedOutput['sender'].remove('id');
-    encodedOutput['sender'].remove('instanceId');
-    encodedOutput.remove('sender');
+    output['EE_ID'] = encodedToCavi2['sender']['hostId'];
+    encodedToCavi2['sender'].remove('id');
+    encodedToCavi2['sender'].remove('instanceId');
+    encodedToCavi2.remove('sender');
 
     // Process 'time' zone
-    output['EE_TIMESTAMP'] = encodedOutput['time']['hostTime'];
-    encodedOutput['time'].remove('deviceTime');
-    encodedOutput['time'].remove('internetTime');
-    encodedOutput.remove('time');
+    output['EE_TIMESTAMP'] = encodedToCavi2['time']['hostTime'];
+    encodedToCavi2['time'].remove('deviceTime');
+    encodedToCavi2['time'].remove('internetTime');
+    encodedToCavi2.remove('time');
 
     // Extract metadata values
     output['EE_TOTAL_MESSAGES'] = metadata['sbTotalMessages'];
     output['EE_MESSAGE_ID'] = metadata['sbCurrentMessage'];
 
     // Process additional data if not a 'notification' or 'heartbeat' event
-    if (eventType != 'notification' && eventType != 'heartbeat') {
-      output['SIGNATURE'] = eventType.toUpperCase();
+    if (eeEventType.toLowerCase() != 'notification' &&
+        eeEventType.toLowerCase() != 'heartbeat') {
+      output['SIGNATURE'] = eeEventType;
       Map<String, dynamic> captureMetadata = metadata['captureMetadata'];
       Map<String, dynamic> pluginMetadata = metadata['pluginMetadata'];
 
@@ -72,27 +67,30 @@ class Cavi2Transformer {
       output['SESSION_ID'] = data['identifiers']['sessionId'];
       output['ID'] = data['identifiers']['payloadId'];
       output['ID_TAGS'] = data['identifiers']['idTags'];
-      data.remove('identifiers');
+      // data.remove('identifiers');
 
       // Process data 'value' and 'specificValue'
       data['value'].forEach((k, v) {
         output[k.toUpperCase()] = v;
       });
-      data['value'].keys.toList().forEach((k) {
-        data['value'].remove(k);
-      });
+
+      // data['value'].keys.toList().forEach((k) {
+      //   data['value'].remove(k);
+      // });
+
       data['specificValue'].forEach((k, v) {
         output[k.toUpperCase()] = v;
       });
-      data['specificValue'].keys.toList().forEach((k) {
-        data['specificValue'].remove(k);
-      });
+
+      // data['specificValue'].keys.toList().forEach((k) {
+      //   data['specificValue'].remove(k);
+      // });
 
       // Process image data
       String? img = data['img']['id'];
       int? imgH = data['img']['height'];
       int? imgW = data['img']['width'];
-      data.remove('img');
+      // data.remove('img');
 
       if (img != null) {
         output['IMG'] = img;
@@ -112,9 +110,9 @@ class Cavi2Transformer {
     });
 
     // Remove additional keys
-    encodedOutput.remove('category');
-    encodedOutput.remove('version');
-    encodedOutput.remove('demoMode');
+    encodedToCavi2.remove('category');
+    encodedToCavi2.remove('version');
+    encodedToCavi2.remove('demoMode');
 
     return output;
   }
