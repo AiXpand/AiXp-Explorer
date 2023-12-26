@@ -1,3 +1,4 @@
+import 'package:e2_explorer/dart_e2/formatter/cavi2_transformer.dart';
 import 'package:e2_explorer/dart_e2/models/payload/e2_payload.dart';
 import 'package:e2_explorer/src/features/common_widgets/tooltip/simple_tooltip.dart';
 import 'package:e2_explorer/src/features/e2_status/application/client_messages/payload_message.dart';
@@ -153,39 +154,17 @@ class _PayloadViewerState extends State<PayloadViewer> {
               builder: (context, setStateBuilder) {
                 return E2Listener(
                   onPayload: (message) {
-                    print("E2Listener: $message");
-
                     if (message == null) return;
-                    // if (messages.isEmpty) {
-                    //   final box = _client.selectBoxByName(widget.boxName);
-                    //   messages = box?.payloadMessages ?? [];
-                    // }
-                    // print('EEEEEE');
-                    // _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-
-                    // /// ToDo:  find  a way to optimize and insert the element in the sorted list
-                    // final Map<String, dynamic> convertedMessage =
-                    //     MqttMessageTransformer.formatToRaw(message);
-                    // final E2Payload payloadObject = E2Payload.fromMap(
-                    //   convertedMessage,
-                    //   originalMap: message,
-                    // );
-                    //
-
-                    // final payloadMessage =
-                    //     PayloadMessage.fromE2Payload(payloadObject);
 
                     final payloadMessage = PayloadMessage.fromE2Payload(
                       E2Payload.fromMap(
-                        message,
+                        Cavi2Transformer.decodeCavi2(message),
                         originalMap: message,
                       ),
                     );
 
                     messages.add(payloadMessage);
-                    // /// ToDo:  find  a way to optimize and insert the element in the sorted list
-                    // final payloadMessage = PayloadMessage.fromMap(message);
-                    // messages.add(payloadMessage);
+
                     if (autoScroll) {
                       if (filters.isNotEmpty) {
                         if (filterSingleMessageByFilters(
@@ -198,10 +177,11 @@ class _PayloadViewerState extends State<PayloadViewer> {
                             .jumpTo(_scrollController.position.maxScrollExtent);
                       }
                     }
-
+                    // TODO: sort messages by timestamp
                     // messages.sort(
                     //   (a, b) => a.localTimestamp.compareTo(b.localTimestamp),
                     // );
+
                     setStateBuilder(() {});
                   },
                   dataFilter: E2ListenerFilters.acceptAll(),
