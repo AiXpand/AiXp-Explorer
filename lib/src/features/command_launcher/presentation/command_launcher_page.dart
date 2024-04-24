@@ -1,5 +1,6 @@
 import 'package:e2_explorer/dart_e2/commands/e2_commands.dart';
 import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
+import 'package:e2_explorer/src/design/app_toast.dart';
 import 'package:e2_explorer/src/features/command_launcher/model/command_launcher_data.dart';
 import 'package:e2_explorer/src/features/command_launcher/presentation/widgets/command_launcher_logs.dart';
 import 'package:e2_explorer/src/features/common_widgets/app_dialog_widget.dart';
@@ -49,7 +50,7 @@ class CommandLauncherPage extends StatelessWidget {
         builder: (context) {
           return Scaffold(
             body: DashboardBodyContainer(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 22),
+              // padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 22),
               child: Column(
                 children: [
                   const SizedBox(height: 12),
@@ -104,6 +105,11 @@ class CommandLauncherPage extends StatelessWidget {
                                                 ActionCommands.stop(
                                                     targetId: item.edgeNode),
                                               );
+                                              AppToast(
+                                                message: 'Command sent',
+                                                description:
+                                                    'Command sent to ${item.edgeNode}',
+                                              ).show(context);
                                             },
                                             text: 'Restart',
                                             height: 30,

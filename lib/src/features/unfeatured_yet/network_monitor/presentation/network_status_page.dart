@@ -117,14 +117,14 @@ class _NetworkStatusPageState extends ConsumerState<NetworkStatusPage> {
                         const SizedBox(width: 10),
                         Row(
                           children: [
-                            Checkbox(
-                                value: isSingleNodeManager,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isSingleNodeManager = value!;
-                                  });
-                                }),
-                            const Text("Single node manager"),
+                            // Checkbox(
+                            //     value: isSingleNodeManager,
+                            //     onChanged: (value) {
+                            //       setState(() {
+                            //         isSingleNodeManager = value!;
+                            //       });
+                            //     }),
+                            // const Text("Single node manager"),
                           ],
                         ),
                         const Spacer(),
@@ -184,9 +184,7 @@ class _NetworkStatusPageState extends ConsumerState<NetworkStatusPage> {
                         child: CircularProgressIndicator(),
                       )
                     : isSingleNodeManager
-                        ? SingleNodeNetworkPage(
-                            netmonBox: provider.netmonStatusList[0],
-                          )
+                        ? Container()
                         : NetmonTableNew(
                             netmonBoxes: provider.netmonStatusList,
                             onBoxSelected: widget.onBoxSelected,

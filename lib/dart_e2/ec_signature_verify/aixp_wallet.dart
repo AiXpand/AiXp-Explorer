@@ -31,6 +31,10 @@ class AixpWallet {
     return privateKey!.d!.toRadixString(16).padLeft(64, '0');
   }
 
+  String get privateKeyPem {
+    return CryptoUtils.encodeEcPrivateKeyToPem(privateKey!);
+  }
+
   /// ECPublicKey to CompressedHex
   String get publicKeyHexCompressed =>
       _ecInstance.compressPublicKey(publicKey!);
@@ -50,6 +54,7 @@ class AixpWallet {
       publicKey = keyPair.publicKey as ECPublicKey;
       initiatorId = INITIATORIDPREFIX + Random().nextIntOfDigits(6).toString();
       await _saveData(password);
+      consoleKeyInfo();
     } catch (e) {
       rethrow;
     }
@@ -72,6 +77,7 @@ class AixpWallet {
       print("${privateKeyHex} Private Key Hex");
       print(initiatorId);
       print("${HexUtils.decode(privateKeyHex)} Private Key Unit8List");
+      print(privateKeyPem);
       print(publicKeyCompredHex);
       print("Address: ${_ecInstance.getAddressFromPublicKey(publicKey!)}");
     }
@@ -88,8 +94,7 @@ class AixpWallet {
   }
 
   Future _saveData(String password) async {
-    final privateKeyPkcs8Pem =
-        CryptoUtils.encodePrivateEcdsaKeyToPkcs8(privateKey!);
+    final privateKeyPkcs8Pem = CryptoUtils.encodeEcPrivateKeyToPem(privateKey!);
     final prefs = await SharedPreferences.getInstance();
     String encryptedPrivatePemData =
         EncryptData.encryptAES(privateKeyPkcs8Pem, password);
@@ -113,6 +118,7 @@ class AixpWallet {
       if (privateKeyData != null) {
         String descryptedPrivatePemData =
             EncryptData.decryptAES(privateKeyData, password);
+        print(descryptedPrivatePemData);
         privateKey = CryptoUtils.ecPrivateKeyFromPem(descryptedPrivatePemData);
         publicKey = _ecInstance.derivePublicKey(privateKey!);
         consoleKeyInfo();
@@ -135,15 +141,12 @@ class AixpWallet {
   }
 
   Future<bool> importWallet(
-    String privateKeyHex,
+    String privateKeyPem,
     String password,
   ) async {
     try {
       print("----- Import Wallet ------");
-      privateKey = ECPrivateKey(
-        BigInt.parse(privateKeyHex, radix: 16),
-        _ecInstance.secp256k1DomainParameter,
-      );
+      privateKey = CryptoUtils.ecPrivateKeyFromPem(privateKeyPem);
       publicKey = _ecInstance.derivePublicKey(privateKey!);
       initiatorId = INITIATORIDPREFIX + Random().nextIntOfDigits(6).toString();
       await _saveData(password);

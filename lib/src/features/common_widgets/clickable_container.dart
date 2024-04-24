@@ -1,4 +1,5 @@
 import 'package:e2_explorer/src/features/common_widgets/clickable_style_helper.dart';
+import 'package:e2_explorer/src/styles/color_styles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class ClickableContainer extends StatefulWidget {
     this.shapeBorder = ShapeUtilsBorder.all,
     required this.style,
     this.borderRadius = 2.0,
+    this.isValid = true,
   });
 
   final double? height;
@@ -29,6 +31,7 @@ class ClickableContainer extends StatefulWidget {
   final ShapeUtilsBorder shapeBorder;
   final ClickableStyleHelper style;
   final double borderRadius;
+  final bool isValid;
 
   @override
   State<StatefulWidget> createState() => _ClickableContainerState();
@@ -43,7 +46,11 @@ class _ClickableContainerState extends State<ClickableContainer> {
       height: widget.height,
       width: widget.width,
       decoration: BoxDecoration(
-        color: isHover ? widget.style.hoverColor : widget.style.defaultColor,
+        color: widget.isValid
+            ? isHover
+                ? widget.style.hoverColor
+                : widget.style.defaultColor
+            : AppColors.softButtonPrimaryBgColor,
         border: widget.style.hasBorder
             ? ShapeUtils.getBorder(
                 widget.shapeBorder,

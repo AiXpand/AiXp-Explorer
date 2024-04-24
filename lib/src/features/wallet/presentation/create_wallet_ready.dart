@@ -50,7 +50,7 @@ class CreateWalletReady extends StatelessWidget {
                   const Spacer(),
                   const SizedBox(height: 31),
                   ClickableButton(
-                    onTap: () => context.goNamed(RouteNames.network),
+                    onTap: () => context.goNamed(RouteNames.walletPassword),
                     text: "Unlock Wallet",
                     backgroundColor: AppColors.buttonPrimaryBgColor,
                   ),

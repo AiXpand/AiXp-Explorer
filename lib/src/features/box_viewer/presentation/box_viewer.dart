@@ -28,7 +28,6 @@ class _BoxViewerState extends State<BoxViewer> {
           ),
           Expanded(
             child: _selectedBox != null
-                // ? BoxViewer(boxName: _selectedBox!)
                 ? DebugViewer(
                     boxName: _selectedBox!,
                   )

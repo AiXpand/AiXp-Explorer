@@ -2,6 +2,7 @@ import 'package:e2_explorer/dart_e2/commands/e2_commands.dart';
 import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/dart_e2/utils/xpand_utils.dart';
 import 'package:e2_explorer/main.dart';
+import 'package:e2_explorer/src/design/app_toast.dart';
 import 'package:e2_explorer/src/features/common_widgets/app_dialog_widget.dart';
 import 'package:e2_explorer/src/features/common_widgets/layout/loading_parent_widget.dart';
 import 'package:e2_explorer/src/features/config_startup/widgets/form_builder.dart';
@@ -84,11 +85,19 @@ class _ConfigStartUpEditState extends State<ConfigStartUpEdit> {
             ),
           );
       debugPrint(' saved data: $base64Encoded');
+      AppToast(
+        message: 'Config Startup file saved successfully',
+        type: ToastificationType.success,
+      ).show(context);
 
       Navigator.of(context).pop();
     } catch (e) {
       // Handle errors, such as invalid JSON or encoding failures
       debugPrint('Error saving data: $e');
+      AppToast(
+        message: 'Failed to save Config Startup file',
+        type: ToastificationType.error,
+      ).show(context);
       // Optionally, you could show an error message to the user
     }
   }

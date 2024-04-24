@@ -24,8 +24,14 @@ final GlobalKey<NavigatorState> homeNavigatorKey =
 
 class AppRoutes {
   const AppRoutes._();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
 
   static final GoRouter routes = GoRouter(
+    navigatorKey: navigatorKey,
     initialLocation: RouteLocations.splashPage,
     redirect: (context, state) {
       return null;

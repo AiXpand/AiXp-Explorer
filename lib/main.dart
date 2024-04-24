@@ -30,10 +30,16 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 
   doWhenWindowReady(() {
-    const initialSize = Size(1400, 800);
-    // const initialSize = Size(500, 700);
-    appWindow.minSize = initialSize;
+    // const initialSize = Size(1400, 800);
+
+    // appWindow.minSize = initialSize;
+    final initialSize = Size(1400, 800);
+    // final minSize = Size(600, 450);
+    final maxSize = Size(2800, 1400);
+    appWindow.maxSize = maxSize;
+    // appWindow.minSize = minSize;
     appWindow.size = initialSize;
+    // appWindow.size = initialSize;
     appWindow.alignment = Alignment.center;
     appWindow.title = 'AiExpand';
     appWindow.show();
@@ -89,6 +95,7 @@ class _MyAppState extends State<MyApp> {
       title: 'MQTT Connection Demo',
       theme: appTheme,
       routerConfig: AppRoutes.routes,
+      scaffoldMessengerKey: AppRoutes.scaffoldMessengerKey,
     );
   }
 }

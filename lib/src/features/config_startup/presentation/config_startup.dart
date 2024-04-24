@@ -29,21 +29,6 @@ class ConfigStartUp extends StatefulWidget {
 class _ConfigStartUpState extends State<ConfigStartUp> {
   final period = const Duration(seconds: 5);
 
-  Future<void> saveJSONToFile(String data) async {
-    // Convert data to JSON string
-    String jsonString = jsonEncode(data);
-
-    // Get directory where user wants to save the file
-    String? directoryPath = await FilePicker.platform.getDirectoryPath();
-    if (directoryPath != null) {
-      String filePath = '$directoryPath/data.json';
-
-      // Save JSON to a file
-      File file = File(filePath);
-      await file.writeAsString(jsonString);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     FLRTableLabels flrTableLabels = FLRTableLabels(

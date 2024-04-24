@@ -38,6 +38,7 @@ dependencies:
   collection: ^1.18.0
   uuid: ^4.4.0
   archive: ^3.4.10
+  toastification: ^1.2.1
 
 
 

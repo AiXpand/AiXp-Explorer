@@ -1,4 +1,3 @@
-import 'package:e2_explorer/dart_e2/ec_signature_verify/aixp_wallet.dart';
 import 'package:e2_explorer/main.dart';
 import 'package:e2_explorer/src/features/wallet/widgets/stack_background.dart';
 import 'package:flutter/material.dart';

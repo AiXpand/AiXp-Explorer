@@ -1,8 +1,10 @@
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:e2_explorer/src/styles/color_styles.dart';
 import 'package:e2_explorer/src/styles/text_styles.dart';
+import 'package:e2_explorer/src/utils/asset_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// top left is occupied by field name
 /// bottom right is occupied by character count
@@ -798,6 +800,7 @@ class TextInputFieldWidget extends StatefulWidget {
     this.hintText,
     this.validator,
     this.inputFormatters,
+    this.obscureText = false,
   });
 
   final TextEditingController? controller;
@@ -805,6 +808,7 @@ class TextInputFieldWidget extends StatefulWidget {
   final String? hintText;
   final String? Function(BuildContext, String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
+  final bool obscureText;
 
   @override
   State<TextInputFieldWidget> createState() => _TextInputFieldWidgetState();
@@ -814,12 +818,14 @@ class _TextInputFieldWidgetState extends State<TextInputFieldWidget> {
   TextEditingController? _controller;
   FocusNode? _focusNode;
 
+  bool _obscureText = false;
   TextEditingController get controller => widget.controller ?? _controller!;
 
   FocusNode get focusNode => widget.focusNode ?? _focusNode!;
 
   @override
   void initState() {
+    _obscureText = widget.obscureText;
     if (widget.controller == null) {
       _controller = TextEditingController();
     }
@@ -836,8 +842,29 @@ class _TextInputFieldWidgetState extends State<TextInputFieldWidget> {
       focusNode: focusNode,
       validator: validator,
       inputFormatters: widget.inputFormatters,
+      obscureText: _obscureText,
       decoration: InputDecoration(
         hintText: widget.hintText,
+        suffixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+        suffixIcon: widget.obscureText
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  child: SvgPicture.asset(
+                    AssetUtils.getSvgIconPath(
+                      _obscureText ? "eye-off" : "eye",
+                    ),
+                    height: 16,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              )
+            : null,
         // contentPadding: const EdgeInsets.symmetric(horizontal: 16,vertical: 20)
       ),
     );

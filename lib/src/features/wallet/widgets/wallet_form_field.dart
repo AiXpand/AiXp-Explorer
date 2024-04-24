@@ -67,7 +67,9 @@ class _WalletFormFieldWidgetState extends State<WalletFormFieldWidget> {
                     });
                   },
                   child: SvgPicture.asset(
-                    AssetUtils.getSvgIconPath("eye"),
+                    AssetUtils.getSvgIconPath(
+                      _obscureText ? "eye-off" : "eye",
+                    ),
                     height: 16,
                     fit: BoxFit.fill,
                   ),

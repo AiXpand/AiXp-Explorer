@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:e2_explorer/src/features/e2_status/presentation/widgets/window_buttons.dart';
 import 'package:e2_explorer/src/styles/color_styles.dart';
@@ -12,32 +14,38 @@ class DesktopAppLayout extends StatelessWidget {
 
   final Widget? child;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        WindowTitleBarBox(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: MoveWindow(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        'E2 Explorer 0.1.2',
-                        style: TextStyles.small(color: ColorStyles.light200),
+        Container(
+          // height: 40,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 3.5,
+          ),
+          // color: Colors.red,
+          child: WindowTitleBarBox(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: MoveWindow(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          'AIExpand',
+                          style: TextStyles.small14Strong(),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              const WindowButtons(),
-            ],
+                const WindowButtons(),
+              ],
+            ),
           ),
         ),
         if (child != null) Expanded(child: child!),

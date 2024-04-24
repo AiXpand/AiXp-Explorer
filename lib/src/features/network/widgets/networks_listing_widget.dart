@@ -53,7 +53,8 @@ class NetworksListingWidget extends StatelessWidget {
                 if (value) {
                   overlay.showOverlay(
                     context: context,
-                    width: 200,
+                    width: 300,
+                    maxWidth: 600,
                     followerAnchor: Alignment.centerRight,
                     shellBuilder: (context, child) => Container(
                       decoration: BoxDecoration(

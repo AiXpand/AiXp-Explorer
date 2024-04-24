@@ -79,27 +79,6 @@ class _NetworkPageState extends ConsumerState<NetworkPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     children: [
-            //       IconButtonWithTooltip(
-            //         onTap: () {
-            //           setState(() {
-            //             _navIndex = _networkPageIndex;
-            //             selectedBoxName = null;
-            //           });
-            //         },
-            //         icon: CarbonIcons.chevron_left,
-            //         tooltipMessage: '',
-            //       ),
-            //       Text(
-            //         'Go back',
-            //         style: TextStyles.small14(),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             DashboardBodyContainer(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 22),
               child: Row(

@@ -53,7 +53,7 @@ class _SelectNetworkDialogState extends State<SelectNetworkDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextWidget(
-              'The default network for AiXtend transactions is Mainnet.',
+              'The default network for AiExpand transactions is Mainnet.',
               style: CustomTextStyles.text16_400_secondary,
             ),
             const SizedBox(height: 35),

@@ -10,7 +10,7 @@ class ClickableButton extends StatelessWidget {
   /// Creates a clickable button.
   const ClickableButton({
     super.key,
-    required this.onTap,
+    this.onTap,
     required this.text,
     this.textColor = ColorStyles.light100,
     this.fontSize = 14,
@@ -21,10 +21,11 @@ class ClickableButton extends StatelessWidget {
     this.hoveredTextColor = ColorStyles.light100,
     this.height = 40,
     this.width,
+    this.isValid = true,
   });
 
   /// A callback function to be called when the button is tapped.
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   /// The height of the button.
   final double? height;
@@ -56,9 +57,13 @@ class ClickableButton extends StatelessWidget {
   /// The text color of the button when hovered.
   final Color hoveredTextColor;
 
+  // Valid state for the button.
+  final bool isValid;
+
   @override
   Widget build(BuildContext context) {
     return ClickableContainer(
+      isValid: isValid,
       height: height,
       width: width,
       shapeCorners: ShapeUtilsCorners.all,

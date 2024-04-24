@@ -42,6 +42,7 @@ class AppColors {
 
   // Button colors
   static late Color buttonPrimaryBgColor;
+  static late Color softButtonPrimaryBgColor;
   static late Color buttonPrimaryTextColor;
   static late Color buttonPrimaryIconColor;
   static late Color buttonPrimaryBorderColor;
@@ -134,6 +135,7 @@ class AppColors {
 
     // Button colors
     buttonPrimaryBgColor = const Color(0xFF4E4BDE);
+    softButtonPrimaryBgColor = const Color(0xff9392D0).withOpacity(0.5);
     buttonPrimaryTextColor = const Color(0xFFFFFFFF);
     buttonPrimaryIconColor = const Color(0xFFFFFFFF);
     buttonPrimaryBorderColor = buttonPrimaryBgColor;
@@ -269,4 +271,5 @@ class ColorStyles {
   // start of new color
   static const Color primaryColor = Color(0xff0A0930);
   static const Color secondaryColor = Color(0xff1E1D47);
+  static const Color softBlueColor = Color(0xff9392D0);
 }

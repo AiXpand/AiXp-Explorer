@@ -118,7 +118,8 @@ class AixpVerifier {
           return isVerified;
         }
       }
-      print(" \n\n\n\n------- Verification Failed ------ \n\n");
+      print(
+          " \n\n\n\n------- Verification Failed(${decoded['EE_PAYLOAD_PATH']}) ------ \n\n");
 
       return false;
     } else {
