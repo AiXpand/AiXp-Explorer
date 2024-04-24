@@ -46,7 +46,6 @@ class _PipeLineState extends ConsumerState<PipeLine> {
               );
         },
         builder: (a) {
-          print(pipelineConfigStream.length);
           return PipelineTabBodyWidget(
             boxName: widget.boxName,
           );
