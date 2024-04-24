@@ -1,9 +1,8 @@
-import 'dart:math';
 import 'package:collection/collection.dart';
-import 'package:e2_explorer/dart_e2/models/payload/netmon/netmon_box_details.dart';
+
 import 'package:e2_explorer/dart_e2/utils/xpand_utils.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/network_state.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:riverpod/riverpod.dart';
 
 final nodePipelineProvider = StateNotifierProvider.autoDispose
@@ -16,6 +15,7 @@ class NodePipelineProvider extends StateNotifier<List<Map<String, dynamic>>> {
   final String boxName;
 
   String? selectedPipeline;
+  String? selectedPlugin;
 
   NodePipelineProvider(this.boxName) : super([]);
 
@@ -39,6 +39,11 @@ class NodePipelineProvider extends StateNotifier<List<Map<String, dynamic>>> {
 
   setSelectedPipeline(String selectedPipeline) {
     this.selectedPipeline = selectedPipeline;
+    updateState(state);
+  }
+
+  setSelectedPlugin(String selectedPlugin) {
+    this.selectedPlugin = selectedPlugin;
     updateState(state);
   }
 
