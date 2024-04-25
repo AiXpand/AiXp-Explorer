@@ -124,16 +124,4 @@ class _ConfigStartUpViewState extends State<ConfigStartUpView> {
       }),
     );
   }
-
-  Future<void> _copyNode(NodeViewModelState node, BuildContext context) async {
-    String text;
-    if (node.isRoot) {
-      final value = node.isClass ? 'class' : 'array';
-      debugPrint('key and value is ${node.key}: ${value}');
-      text = '${node.key}: ${node.value}';
-    } else {
-      text = '${node.key}: ${node.value}';
-    }
-    await Clipboard.setData(ClipboardData(text: text));
-  }
 }

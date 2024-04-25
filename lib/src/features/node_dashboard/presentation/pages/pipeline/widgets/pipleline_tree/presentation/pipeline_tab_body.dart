@@ -23,18 +23,38 @@ class PipelineTabBodyWidget extends ConsumerStatefulWidget {
 }
 
 class _PipelineTabBodyWidgetState extends ConsumerState<PipelineTabBodyWidget> {
+  final DataExplorerStore store = DataExplorerStore();
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        PipelineListWidget(boxName: widget.boxName),
-        const SizedBox(width: 20),
-        PluginListWidget(boxName: widget.boxName),
-        const SizedBox(width: 20),
-        PipelineJsonData(
-          boxName: widget.boxName,
-        )
-      ],
+    return p.ChangeNotifierProvider.value(
+      value: store,
+      child: p.Consumer<DataExplorerStore>(
+        builder: (context, value, child) {
+          return Row(
+            children: [
+              PipelineListWidget(boxName: widget.boxName),
+              const SizedBox(width: 20),
+              PluginListWidget(
+                boxName: widget.boxName,
+                onPluginSelected: (plugin) {
+                  final notifier =
+                      ref.read(nodePipelineProvider(widget.boxName).notifier);
+                  final data = notifier.getPluginList;
+                  final pluginData = data.firstWhereOrNull(
+                    (element) => element['SIGNATURE'] == plugin,
+                  );
+                  value.buildNodes(pluginData, areAllCollapsed: false);
+                },
+              ),
+              const SizedBox(width: 20),
+              PipelineJsonData(
+                boxName: widget.boxName,
+                value: value,
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }
@@ -98,10 +118,9 @@ class PipelineListWidget extends ConsumerWidget {
 
 class PluginListWidget extends ConsumerWidget {
   final String boxName;
-  const PluginListWidget({
-    super.key,
-    required this.boxName,
-  });
+  final Function(String plugin) onPluginSelected;
+  const PluginListWidget(
+      {super.key, required this.boxName, required this.onPluginSelected});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -122,7 +141,10 @@ class PluginListWidget extends ConsumerWidget {
             var mapData = data[index];
             bool isSelected = mapData['SIGNATURE'] == notifier.selectedPlugin;
             return InkWell(
-              onTap: () => notifier.setSelectedPlugin(mapData['SIGNATURE']),
+              onTap: () {
+                notifier.setSelectedPlugin(mapData['SIGNATURE']);
+                onPluginSelected(mapData['SIGNATURE']);
+              },
               child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 28, vertical: 4),
@@ -155,44 +177,31 @@ class PluginListWidget extends ConsumerWidget {
 }
 
 class PipelineJsonData extends ConsumerStatefulWidget {
-  const PipelineJsonData({super.key, required this.boxName});
+  const PipelineJsonData(
+      {super.key, required this.boxName, required this.value});
   final String boxName;
+  final DataExplorerStore value;
 
   @override
   ConsumerState<PipelineJsonData> createState() => _PipelineJsonDataState();
 }
 
 class _PipelineJsonDataState extends ConsumerState<PipelineJsonData> {
-  final DataExplorerStore store = DataExplorerStore();
-
   @override
   Widget build(BuildContext context) {
-    return p.ChangeNotifierProvider.value(
-      value: store,
-      child: p.Consumer<DataExplorerStore>(
-        builder: (context, value, child) {
-          final notifier =
-              ref.read(nodePipelineProvider(widget.boxName).notifier);
-          final data = notifier.getPluginList;
-          final selectedData = data.firstWhereOrNull(
-              (element) => element['SIGNATURE'] == notifier.selectedPlugin);
-          value.buildNodes(selectedData);
-          return Expanded(
-            flex: 5,
-            child: Container(
-              height: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 17),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: AppColors.containerBgColor,
-              ),
-              child: ReusableJsonDataExplorer(
-                value: value,
-                nodes: value.displayNodes,
-              ),
-            ),
-          );
-        },
+    return Expanded(
+      flex: 5,
+      child: Container(
+        height: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 17),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: AppColors.containerBgColor,
+        ),
+        child: ReusableJsonDataExplorer(
+          value: widget.value,
+          nodes: widget.value.displayNodes,
+        ),
       ),
     );
   }
