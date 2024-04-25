@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:e2_explorer/src/features/common_widgets/json_viewer/json_viewer.dart';
 import 'package:e2_explorer/src/features/common_widgets/text_widget.dart';
 import 'package:e2_explorer/src/features/node_dashboard/presentation/pages/pipeline/widgets/pipleline_tree/presentation/expandable_widget.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/node_pipeline_provider.dart';
@@ -7,8 +8,6 @@ import 'package:e2_explorer/src/widgets/transparent_inkwell_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:json_data_explorer/json_data_explorer.dart';
-import 'package:provider/provider.dart' as p;
 import 'package:json_data_explorer/json_data_explorer.dart';
 import 'package:provider/provider.dart' as p;
 
