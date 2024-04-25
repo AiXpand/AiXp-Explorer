@@ -52,11 +52,12 @@ class AppToast {
               ),
             )
           : null,
-      type: type ?? this.type,
+      type: type,
       style: style,
       borderRadius: BorderRadius.circular(8),
       boxShadow: highModeShadow,
       alignment: Alignment.topRight,
+      foregroundColor: Colors.white,
       showProgressBar: false,
       backgroundColor: AppColors.buttonSecondaryBgColor,
     );
