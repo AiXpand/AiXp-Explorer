@@ -116,7 +116,7 @@ class _BoxMessagesTabDisplayState extends State<BoxMessagesTabDisplay>
             Consumer(
               builder: (context, ref, child) {
                 return Visibility(
-                  visible: _tabIndex != 0,
+                  visible: _tabIndex == 2,
                   child: AppButtonSecondary(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     text: 'Filter',

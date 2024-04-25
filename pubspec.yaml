@@ -47,6 +47,7 @@ dependencies:
   basic_utils: ^5.7.0
   crypto: ^3.0.3
   flutter_riverpod: ^2.5.1
+  riverpod: ^2.5.1
 
 
 

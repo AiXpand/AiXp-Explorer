@@ -1,9 +1,31 @@
+import 'dart:math';
 import 'package:collection/collection.dart';
 
 import 'package:e2_explorer/dart_e2/utils/xpand_utils.dart';
-import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/network_state.dart';
 
 import 'package:riverpod/riverpod.dart';
+
+class NodePipelineState {
+  final List<Map<String, dynamic>> data;
+  final bool isLoading;
+
+  NodePipelineState({
+    required this.isLoading,
+    required this.data,
+  });
+
+  NodePipelineState copyWith({
+    bool? isLoading,
+    List<Map<String, dynamic>>? data,
+  }) {
+    return NodePipelineState(
+      isLoading: isLoading ?? this.isLoading,
+      data: data ?? this.data,
+    );
+  }
+}
+
+class SelectedPipelinePluginState {}
 
 final nodePipelineProvider = StateNotifierProvider.autoDispose
     .family<NodePipelineProvider, List<Map<String, dynamic>>, String>(
@@ -24,14 +46,26 @@ class NodePipelineProvider extends StateNotifier<List<Map<String, dynamic>>> {
   }
 
   List<Map<String, dynamic>> get getPluginList {
-    final pipelineData = state
+    final pluginData = state
         .firstWhereOrNull((element) => element['NAME'] == selectedPipeline);
-    if (pipelineData != null) {
-      var plugins = pipelineData['PLUGINS'] as List;
+    if (pluginData != null) {
+      var plugins = pluginData['PLUGINS'] as List;
       return plugins
           .map<Map<String, dynamic>>((e) => e as Map<String, dynamic>)
           .toList();
-      // return plugins;
+    }
+
+    return [];
+  }
+
+  List<Map<String, dynamic>> get getInstanceConfig {
+    final instanceConfigData = getPluginList
+        .firstWhereOrNull((element) => element['SIGNATURE'] == selectedPlugin);
+    if (instanceConfigData != null) {
+      var plugins = instanceConfigData['INSTANCES'] as List;
+      return plugins
+          .map<Map<String, dynamic>>((e) => e as Map<String, dynamic>)
+          .toList();
     }
 
     return [];
@@ -39,6 +73,7 @@ class NodePipelineProvider extends StateNotifier<List<Map<String, dynamic>>> {
 
   setSelectedPipeline(String selectedPipeline) {
     this.selectedPipeline = selectedPipeline;
+    selectedPlugin = null;
     updateState(state);
   }
 
@@ -57,8 +92,9 @@ class NodePipelineProvider extends StateNotifier<List<Map<String, dynamic>>> {
       final bool isV2 = convertedMessage['HEARTBEAT_VERSION'] == 'v2';
 
       if (isV2) {
-        final metadataEncoded = XpandUtils.decodeEncryptedGzipMessage(
-            convertedMessage['ENCODED_DATA'])['CONFIG_STREAMS'] as List;
+        final decodedData = XpandUtils.decodeEncryptedGzipMessage(
+            convertedMessage['ENCODED_DATA']);
+        final metadataEncoded = decodedData['CONFIG_STREAMS'] as List;
         updateState(metadataEncoded);
       }
     }

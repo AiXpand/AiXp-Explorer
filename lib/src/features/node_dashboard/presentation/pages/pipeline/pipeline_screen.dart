@@ -1,6 +1,5 @@
 import 'package:e2_explorer/dart_e2/commands/e2_commands.dart';
 import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
-
 import 'package:e2_explorer/main.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_client.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart';
@@ -20,6 +19,8 @@ class PipeLine extends ConsumerStatefulWidget {
 
 class _PipeLineState extends ConsumerState<PipeLine> {
   List<Map<String, dynamic>> pipelineConfigStream = [];
+
+  bool isLoading = true;
   @override
   void initState() {
     E2Client().session.sendCommand(
@@ -43,10 +44,16 @@ class _PipeLineState extends ConsumerState<PipeLine> {
               .updatePipelineList(
                 convertedMessage: convertedMessage,
               );
+          setState(() {
+            isLoading = false;
+          });
         },
         builder: (a) {
-          return PipelineTabBodyWidget(
-            boxName: widget.boxName,
+          return LoadingParentWidget(
+            isLoading: isLoading,
+            child: PipelineTabBodyWidget(
+              boxName: widget.boxName,
+            ),
           );
         },
       ),

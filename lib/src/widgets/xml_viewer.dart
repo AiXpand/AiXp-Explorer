@@ -23,13 +23,13 @@ class XMLViwer extends StatelessWidget {
     };
 
     return HighlightView(
-        type == "json"
-            ? const JsonEncoder.withIndent('  ').convert(jsonDecode(content))
-            : content,
-
-        theme: customTheme,
-        language: type,
-        padding: const EdgeInsets.all(12),
-        textStyle: TextStyles.small14regular());
+      type == "json"
+          ? const JsonEncoder.withIndent('  ').convert(jsonDecode(content))
+          : content,
+      theme: customTheme,
+      language: type,
+      padding: const EdgeInsets.all(12),
+      textStyle: TextStyles.small14regular(),
+    );
   }
 }

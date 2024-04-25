@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:e2_explorer/src/features/common_widgets/json_viewer/json_viewer.dart';
 import 'package:e2_explorer/src/features/coms/provider/filter_provider.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_client.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart';
 import 'package:e2_explorer/src/styles/color_styles.dart';
 import 'package:e2_explorer/src/styles/text_styles.dart';
-import 'package:e2_explorer/src/widgets/xml_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -40,8 +37,6 @@ class _CommsState extends State<Comms> {
 
   @override
   Widget build(BuildContext context) {
-    final session = E2Client();
-
     return p.ChangeNotifierProvider.value(
       value: store,
       child: p.Consumer<DataExplorerStore>(

@@ -41,10 +41,6 @@ class DebugViewer extends StatelessWidget {
           commsView: Comms(
             boxName: boxName!,
           ),
-          // Comms(
-          //   key: ValueKey('${boxName ?? ''}3'),
-          //   boxName: boxName!,
-          // ),
           onTabChanged: (tab) {},
         ));
   }
