@@ -81,6 +81,12 @@ class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
     updateState(state);
   }
 
+  resetSelectedState() {
+    selectedPipeline = null;
+    selectedPlugin = null;
+    updateState(state);
+  }
+
   void updatePipelineList({required Map<String, dynamic> convertedMessage}) {
     final eePayloadPath = (convertedMessage['EE_PAYLOAD_PATH'] as List)
         .map((e) => e as String?)

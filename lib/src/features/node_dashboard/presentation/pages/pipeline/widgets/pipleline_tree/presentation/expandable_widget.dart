@@ -1,5 +1,3 @@
-import 'package:e2_explorer/src/features/common_widgets/text_widget.dart';
-import 'package:e2_explorer/src/widgets/transparent_inkwell_widget.dart';
 import 'package:flutter/material.dart';
 
 class ExpandableWidget extends StatefulWidget {
