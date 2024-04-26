@@ -36,7 +36,8 @@ class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
 
   List<Map<String, dynamic>> getInstanceConfig(
       {required String? selectedPipeline, required String? selectedPlugin}) {
-    final instanceConfigData = getPluginList(selectedPipeline: selectedPipeline)
+    final pluginList = getPluginList(selectedPipeline: selectedPipeline);
+    final instanceConfigData = pluginList
         .firstWhereOrNull((element) => element['SIGNATURE'] == selectedPlugin);
     if (instanceConfigData != null) {
       var plugins = instanceConfigData['INSTANCES'] as List;

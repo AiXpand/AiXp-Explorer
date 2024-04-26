@@ -207,18 +207,20 @@ class InstanceConfigList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedPipeline = ref.watch(selectedPipelineProvider);
     ref.watch(nodePipelineProvider(boxName));
     final notifier = ref.read(nodePipelineProvider(boxName).notifier);
-    final selectedPipeline = ref.watch(selectedPipelineProvider);
-    final selectedPlugin = ref.watch(selectedPluginProvider);
+
     final instanceConfig = notifier.getInstanceConfig(
-        selectedPipeline: selectedPipeline, selectedPlugin: selectedPlugin);
+        selectedPipeline: selectedPipeline,
+        selectedPlugin: ref.watch(selectedPluginProvider));
 
     ref.listen(
       nodePipelineProvider(boxName),
       (previous, next) {
         final data = notifier.getInstanceConfig(
-            selectedPipeline: selectedPipeline, selectedPlugin: selectedPlugin);
+            selectedPipeline: selectedPipeline,
+            selectedPlugin: ref.watch(selectedPluginProvider));
         if (data.isNotEmpty) {
           store.buildNodes(data);
         }
