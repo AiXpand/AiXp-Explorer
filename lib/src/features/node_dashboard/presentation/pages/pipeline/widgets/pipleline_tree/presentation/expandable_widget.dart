@@ -100,7 +100,6 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
               AnimatedBuilder(
                   animation: _animation,
                   builder: (context, snapshot) {
-                    print(_animation.value);
                     return InkWell(
                       onHover: (value) {
                         setState(() {
