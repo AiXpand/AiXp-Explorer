@@ -112,7 +112,7 @@ class _PipelineItemWidgetState extends ConsumerState<PipelineItemWidget> {
     finalData.addEntries(entries);
     final currentPipelinName = widget.mapData.name;
     return Container(
-      color: notifier.selectedPipeline == currentPipelinName
+      color: ref.watch(selectedPipelineProvider) == currentPipelinName
           ? const Color(0xff2E2C6A)
           : null,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
@@ -158,7 +158,9 @@ class PluginListWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(nodePipelineProvider(boxName));
     final notifier = ref.read(nodePipelineProvider(boxName).notifier);
-    final data = notifier.getPluginList;
+    final selectedPipeline = ref.watch(selectedPipelineProvider);
+    final selectedPlugin = ref.watch(selectedPluginProvider);
+    final data = notifier.getPluginList(selectedPipeline: selectedPipeline);
 
     return Expanded(
       flex: 5,
@@ -174,7 +176,7 @@ class PluginListWidget extends ConsumerWidget {
             var mapData = data[index];
             final currentSignature = mapData['SIGNATURE'];
             return Container(
-              color: notifier.selectedPlugin == currentSignature
+              color: selectedPlugin == currentSignature
                   ? const Color(0xff2E2C6A)
                   : null,
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
@@ -205,14 +207,20 @@ class InstanceConfigList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedPipeline = ref.watch(selectedPipelineProvider);
     ref.watch(nodePipelineProvider(boxName));
     final notifier = ref.read(nodePipelineProvider(boxName).notifier);
-    final instanceConfig = notifier.getInstanceConfig;
+
+    final instanceConfig = notifier.getInstanceConfig(
+        selectedPipeline: selectedPipeline,
+        selectedPlugin: ref.watch(selectedPluginProvider));
 
     ref.listen(
       nodePipelineProvider(boxName),
       (previous, next) {
-        final data = notifier.getInstanceConfig;
+        final data = notifier.getInstanceConfig(
+            selectedPipeline: selectedPipeline,
+            selectedPlugin: ref.watch(selectedPluginProvider));
         if (data.isNotEmpty) {
           store.buildNodes(data);
         }

@@ -1,49 +1,26 @@
 import 'package:collection/collection.dart';
 import 'package:e2_explorer/dart_e2/utils/xpand_utils.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/model/plugin_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod/riverpod.dart';
-
-class NodePipelineState {
-  final List<Map<String, dynamic>> data;
-  final bool isLoading;
-
-  NodePipelineState({
-    required this.isLoading,
-    required this.data,
-  });
-
-  NodePipelineState copyWith({
-    bool? isLoading,
-    List<Map<String, dynamic>>? data,
-  }) {
-    return NodePipelineState(
-      isLoading: isLoading ?? this.isLoading,
-      data: data ?? this.data,
-    );
-  }
-}
-
-class SelectedPipelinePluginState {}
 
 final nodePipelineProvider = StateNotifierProvider.family<NodePipelineProvider,
     List<DecodedPlugin>, String>((ref, String boxName) {
-  return NodePipelineProvider(boxName);
+  return NodePipelineProvider(boxName, ref);
 });
 
 class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
   final String boxName;
+  final Ref ref;
 
-  String? selectedPipeline;
-
-  String? selectedPlugin;
-
-  NodePipelineProvider(this.boxName) : super([]);
+  NodePipelineProvider(this.boxName, this.ref) : super([]);
 
   updateState(List<DecodedPlugin> data) {
     state = [...data];
   }
 
-  List<Map<String, dynamic>> get getPluginList {
+  List<Map<String, dynamic>> getPluginList(
+      {required String? selectedPipeline}) {
     final pluginData =
         state.firstWhereOrNull((element) => element.name == selectedPipeline);
     if (pluginData != null) {
@@ -57,8 +34,10 @@ class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
     return [];
   }
 
-  List<Map<String, dynamic>> get getInstanceConfig {
-    final instanceConfigData = getPluginList
+  List<Map<String, dynamic>> getInstanceConfig(
+      {required String? selectedPipeline, required String? selectedPlugin}) {
+    final pluginList = getPluginList(selectedPipeline: selectedPipeline);
+    final instanceConfigData = pluginList
         .firstWhereOrNull((element) => element['SIGNATURE'] == selectedPlugin);
     if (instanceConfigData != null) {
       var plugins = instanceConfigData['INSTANCES'] as List;
@@ -71,13 +50,21 @@ class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
   }
 
   setSelectedPipeline(String selectedPipeline) {
-    this.selectedPipeline = selectedPipeline;
-    selectedPlugin = null;
+    ref
+        .read(selectedPipelineProvider.notifier)
+        .setSelectedPipeline(selectedPipeline);
+    ref.read(selectedPluginProvider.notifier).setSelectedPlugin(null);
     updateState(state);
   }
 
   setSelectedPlugin(String selectedPlugin) {
-    this.selectedPlugin = selectedPlugin;
+    ref.read(selectedPluginProvider.notifier).setSelectedPlugin(selectedPlugin);
+    updateState(state);
+  }
+
+  resetSelectedState() {
+    ref.read(selectedPipelineProvider.notifier).setSelectedPipeline(null);
+    ref.read(selectedPluginProvider.notifier).setSelectedPlugin(null);
     updateState(state);
   }
 
@@ -108,3 +95,29 @@ class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
     }
   }
 }
+
+class SelectedPipelineProvider extends StateNotifier<String?> {
+  SelectedPipelineProvider() : super(null);
+
+  void setSelectedPipeline(String? selectedPipeline) {
+    state = selectedPipeline;
+  }
+}
+
+final selectedPipelineProvider =
+    StateNotifierProvider<SelectedPipelineProvider, String?>((ref) {
+  return SelectedPipelineProvider();
+});
+
+class SelectedPluginProvider extends StateNotifier<String?> {
+  SelectedPluginProvider() : super(null);
+
+  void setSelectedPlugin(String? selectedPlugin) {
+    state = selectedPlugin;
+  }
+}
+
+final selectedPluginProvider =
+    StateNotifierProvider<SelectedPluginProvider, String?>((ref) {
+  return SelectedPluginProvider();
+});

@@ -60,9 +60,9 @@ class LineChartWidget extends StatelessWidget {
     double maxData =
         data.reduce((value, element) => value > element ? value : element);
     double averageChange = _calculateAverageChange(data);
-    double minBufferMultiplier = 0.2; // Adjust this multiplier as needed
+    double minBufferMultiplier = 0.19; // Adjust this multiplier as needed
     double minBuffer = averageChange * minBufferMultiplier;
-    double bufferPercentage = 0.1; // Adjust this buffer percentage as needed
+    double bufferPercentage = 0.15; // Adjust this buffer percentage as needed
     double buffer = max(maxData * bufferPercentage, minBuffer);
     double maxY = maxData + buffer;
     return LineChartData(

@@ -1,5 +1,3 @@
-import 'package:e2_explorer/src/features/common_widgets/text_widget.dart';
-import 'package:e2_explorer/src/widgets/transparent_inkwell_widget.dart';
 import 'package:flutter/material.dart';
 
 class ExpandableWidget extends StatefulWidget {
@@ -47,6 +45,8 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
 
   double _dropdownIconTurns = 0;
 
+  Color backgroundColor = Colors.transparent;
+
   @override
   void initState() {
     _isExpanded = widget.isExpanded;
@@ -91,22 +91,34 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
     );
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
-      child: Container(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                AnimatedBuilder(
-                    animation: _animation,
-                    builder: (context, snapshot) {
-                      print(_animation.value);
-                      return TransparentInkwellWidget(
-                        onTap: () {
-                          _toggleExpandableContainer();
-                          setState(() {
-                            _isExpanded = !_isExpanded;
-                          });
-                        },
+      child: Column(
+        children: [
+          Row(
+            children: [
+              AnimatedBuilder(
+                  animation: _animation,
+                  builder: (context, snapshot) {
+                    return InkWell(
+                      onHover: (value) {
+                        setState(() {
+                          backgroundColor = value
+                              ? Colors.grey.withOpacity(0.2)
+                              : Colors.transparent;
+                        });
+                      },
+                      onTap: () {
+                        _toggleExpandableContainer();
+                        setState(() {
+                          _isExpanded = !_isExpanded;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        color: backgroundColor,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 8,
+                        ),
                         child: AnimatedRotation(
                           turns: _isExpanded ? 0.25 : 0.75,
                           // turns: _isExpanded ? 1 : 0.5,
@@ -116,24 +128,24 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
                             size: 15,
                           ),
                         ),
-                      );
-                    }),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: widget.header,
-                ),
-              ],
-            ),
-            SizeTransition(
-              sizeFactor: _animation,
-              axis: Axis.vertical,
-              child: Container(
-                decoration: const BoxDecoration(),
-                child: widget.body,
+                      ),
+                    );
+                  }),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: widget.header,
               ),
+            ],
+          ),
+          SizeTransition(
+            sizeFactor: _animation,
+            axis: Axis.vertical,
+            child: Container(
+              decoration: const BoxDecoration(),
+              child: widget.body,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
