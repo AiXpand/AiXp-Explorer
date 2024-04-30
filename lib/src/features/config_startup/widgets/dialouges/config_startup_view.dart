@@ -1,6 +1,7 @@
 import 'package:e2_explorer/dart_e2/commands/e2_commands.dart';
 import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/dart_e2/utils/xpand_utils.dart';
+import 'package:e2_explorer/src/design/app_toast.dart';
 import 'package:e2_explorer/src/features/common_widgets/app_dialog_widget.dart';
 import 'package:e2_explorer/src/features/common_widgets/json_viewer/json_viewer.dart';
 import 'package:e2_explorer/src/features/common_widgets/layout/loading_parent_widget.dart';
@@ -92,6 +93,21 @@ class _ConfigStartUpViewState extends State<ConfigStartUpView> {
                 isLoading = false;
                 value.buildNodes(this.data, areAllCollapsed: false);
                 setState(() {});
+              }
+            }
+          },
+          onNotification: (data) {
+            final eePayloadPath = data['EE_PAYLOAD_PATH'];
+            if (eePayloadPath[0] == 'gts-test2' && eePayloadPath[1] == null) {
+              print('Notification received: $data');
+              final metadata = data['metadata'];
+
+              if ((metadata["notification"] as String)
+                  .contains("STARTUP_CONFIG")) {
+                AppToast(
+                  message: 'Command sent',
+                  description: 'Command sent to ${eePayloadPath[0]}',
+                ).show(context);
               }
             }
           },

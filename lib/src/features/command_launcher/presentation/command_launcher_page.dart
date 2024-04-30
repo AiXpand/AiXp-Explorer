@@ -51,15 +51,10 @@ class CommandLauncherPage extends StatelessWidget {
               .updateNetmonStatusList(convertedMessage: convertedMessage);
         },
         onNotification: (data) {
-          // "  Running 'STOP' command in main loop received from 'None'";
-
           final eePayloadPath = data['EE_PAYLOAD_PATH'];
           if (eePayloadPath[0] == 'gts-test2' && eePayloadPath[1] == null) {
             // print("$prettyprint");
-
             final metadata = data['metadata'];
-            print("This is notification ${metadata["notification"]}");
-
             if (metadata["notification"] ==
                 "  Running 'STOP' command in main loop received from 'None'") {
               AppToast(
