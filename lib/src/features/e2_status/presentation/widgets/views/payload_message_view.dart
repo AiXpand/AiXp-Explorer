@@ -35,8 +35,8 @@ class _PayloadMessageViewState extends State<PayloadMessageView> {
 
   @override
   void initState() {
-    super.initState();
-    // final imgField = widget.selectedMessage?.content['data']?['img']['id'];
+    // super.initState();
+    // // final imgField = widget.selectedMessage?.content['data']?['img']['id'];
     final imgField = null;
     selectedMessage = widget.selectedMessage;
     store.buildNodes(json.decode(jsonEncode(selectedMessage)));
