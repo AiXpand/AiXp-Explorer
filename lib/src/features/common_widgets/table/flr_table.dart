@@ -185,10 +185,10 @@ class _FLRTableState<ItemType, ColumnType extends Enum>
   Color getContainerColor(int index) {
     return index.isEven
         ? getHovered(index)
-            ? AppColors.tableRowEvenIndexBgColor.withOpacity(0.4)
+            ? AppColors.sideNavSelectedTileBgColor
             : AppColors.tableRowEvenIndexBgColor
         : getHovered(index)
-            ? AppColors.alertDialogBgColor.withOpacity(0.4)
+            ? AppColors.sideNavSelectedTileBgColor
             : AppColors.alertDialogBgColor;
   }
 
