@@ -114,18 +114,22 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
-                        color: backgroundColor,
+                        decoration: BoxDecoration(
+                            color: backgroundColor,
+                            borderRadius: BorderRadius.circular(8)),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 8,
                         ),
-                        child: AnimatedRotation(
-                          turns: _isExpanded ? 0.25 : 0.75,
-                          // turns: _isExpanded ? 1 : 0.5,
-                          duration: const Duration(milliseconds: 200),
-                          child: const Icon(
-                            Icons.arrow_back_ios,
-                            size: 15,
+                        child: Center(
+                          child: AnimatedRotation(
+                            turns: _isExpanded ? 0.25 : 0.75,
+                            // turns: _isExpanded ? 1 : 0.5,
+                            duration: const Duration(milliseconds: 200),
+                            child: const Icon(
+                              Icons.arrow_back_ios,
+                              size: 15,
+                            ),
                           ),
                         ),
                       ),
