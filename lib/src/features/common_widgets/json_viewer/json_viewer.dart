@@ -38,6 +38,16 @@ class _ReusableJsonDataExplorerState extends State<ReusableJsonDataExplorer> {
         const SizedBox(height: 10),
         Expanded(
           child: JsonDataExplorer(
+            valueFormatter: (value) {
+              var newValue = value.toString();
+
+              /// Temporary to ignore the big image field
+
+              if (newValue.length > 500) {
+                return newValue.replaceRange(10, newValue.length, '...');
+              }
+              return newValue;
+            },
             itemSpacing: 10,
             nodes: widget.nodes,
             trailingBuilder: (context, node) {
