@@ -3,7 +3,7 @@ import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/src/design/app_toast.dart';
 import 'package:e2_explorer/src/features/command_launcher/model/command_launcher_data.dart';
 import 'package:e2_explorer/src/features/command_launcher/presentation/widgets/command_launcher_logs.dart';
-import 'package:e2_explorer/src/features/common_widgets/app_dialog_widget.dart';
+import 'package:e2_explorer/src/features/command_launcher/presentation/widgets/create_pipeline.dart';
 import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_secondary.dart';
 import 'package:e2_explorer/src/features/common_widgets/buttons/refresh_button_with_animation.dart';
 import 'package:e2_explorer/src/features/common_widgets/table/flr_table.dart';
@@ -13,7 +13,6 @@ import 'package:e2_explorer/src/features/dashboard/presentation/widget/dashboard
 import 'package:e2_explorer/src/features/e2_status/application/e2_client.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/network_provider.dart';
-import 'package:e2_explorer/src/utils/app_utils.dart';
 import 'package:e2_explorer/src/utils/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -146,6 +145,13 @@ class CommandLauncherPage extends StatelessWidget {
                                             height: 30,
                                             minWidth: 100,
                                             text: 'Create Pipeline',
+                                            onPressed: () {
+                                              CreatePipelineDialogUtils
+                                                  .showDialog(
+                                                context,
+                                                boxName: item.edgeNode,
+                                              );
+                                            },
                                             icon: SvgPicture.asset(
                                               'assets/icons/svg/plus_circle.svg',
                                               height: 14,

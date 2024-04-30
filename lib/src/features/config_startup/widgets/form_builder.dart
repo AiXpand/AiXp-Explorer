@@ -88,11 +88,13 @@ class FormBuilder extends StatefulWidget {
     required this.label,
     this.initialValue,
     this.onChanged,
+    this.validator,
   }) : super(key: key);
 
   final FormBuilderType type;
   final String label;
   final dynamic initialValue;
+  final String? Function(String?)? validator;
   final void Function(String value, FormBuilderType formType)? onChanged;
 
   @override
@@ -120,11 +122,15 @@ class _FormBuilderState extends State<FormBuilder> {
         FormTextStyle(text: widget.label),
         const SizedBox(height: 10),
         if (widget.type == FormBuilderType.text)
-          TextField(controller: _controller),
+          TextFormField(
+            controller: _controller,
+            validator: widget.validator,
+          ),
         if (widget.type == FormBuilderType.number)
-          TextField(
+          TextFormField(
             controller: _controller,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            validator: widget.validator,
             inputFormatters: <NumberTextInputFormatter>[
               NumberTextInputFormatter(
                 integerDigits: 10,

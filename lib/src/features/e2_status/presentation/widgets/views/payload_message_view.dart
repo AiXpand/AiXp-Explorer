@@ -36,8 +36,9 @@ class _PayloadMessageViewState extends State<PayloadMessageView> {
   @override
   void initState() {
     super.initState();
-    // final imgField = widget.selectedMessage?.content['data']?['img']['id'];
-    final imgField = null;
+    final imgField =
+        widget.selectedMessage?.payload.messageBody!['data']?['img']['id'];
+    // final imgField = null;
     selectedMessage = widget.selectedMessage;
     store.buildNodes(json.decode(jsonEncode(selectedMessage)));
     if (imgField != null) {
@@ -66,8 +67,9 @@ class _PayloadMessageViewState extends State<PayloadMessageView> {
       store.buildNodes(
           json.decode(jsonEncode(selectedMessage?.payload.messageBody)));
 
-      // final imgField = widget.selectedMessage?.content['data']?['img']['id'];
-      final imgField = null;
+      final imgField =
+          widget.selectedMessage?.payload.messageBody!['data']?['img']['id'];
+      // final imgField = null;
 
       if (imgField != null) {
         if (imgField is List) {
