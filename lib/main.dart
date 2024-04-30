@@ -6,7 +6,7 @@ import 'package:e2_explorer/src/themes/app_theme.dart';
 import 'package:e2_explorer/src/utils/theme_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:windows_single_instance/windows_single_instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 AixpWallet? kAIXpWallet;
@@ -20,8 +20,13 @@ Future<void> clearServersAndDefaultServer() async {
   await prefs.remove(selectedServerNameKey);
 }
 
-void main() async {
+void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await WindowsSingleInstance.ensureSingleInstance(args, "custom_identifier",
+      onSecondWindow: (args) {
+    print(args);
+  });
 
   /// Check which theme to use and initialize the colors according to theme.
   await ThemeUtils.initialize();
