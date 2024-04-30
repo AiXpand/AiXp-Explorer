@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:e2_explorer/dart_e2/commands/e2_commands.dart';
 import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/src/design/app_toast.dart';
@@ -46,6 +48,15 @@ class CommandLauncherPage extends StatelessWidget {
           ref
               .read(networkProvider.notifier)
               .updateNetmonStatusList(convertedMessage: convertedMessage);
+        },
+        onNotification: (data) {
+          JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+          String prettyprint = encoder.convert(data);
+          print("$prettyprint");
+          final eePayloadPath = data['EE_PAYLOAD_PATH'];
+          if (eePayloadPath[0] == 'gts-test2') {
+            print("$prettyprint");
+          }
         },
         builder: (context) {
           return Scaffold(
