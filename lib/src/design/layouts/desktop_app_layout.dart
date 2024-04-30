@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:e2_explorer/src/features/e2_status/presentation/widgets/window_buttons.dart';
-import 'package:e2_explorer/src/styles/color_styles.dart';
 import 'package:e2_explorer/src/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +33,7 @@ class DesktopAppLayout extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Text(
-                          'AIExpand',
+                          'AIXpand',
                           style: TextStyles.small14Strong(),
                         ),
                       ),

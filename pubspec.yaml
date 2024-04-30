@@ -53,8 +53,8 @@ dependencies:
   riverpod: ^2.5.1
 
 msix_config:
-  display_name: AIExpand
-  publisher_display_name: AIExpand
+  display_name: AIXpand
+  publisher_display_name: AIXpand
   identity_name: hyperfy.aiexpand.explorer
   msix_version: 1.0.0.0
   # logo_path: C:\path\to\logo.png
