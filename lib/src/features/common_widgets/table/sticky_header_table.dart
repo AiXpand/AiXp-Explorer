@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:e2_explorer/src/features/common_widgets/table/sync_scroll_controller.dart';
 import 'package:e2_explorer/src/features/common_widgets/text_widget.dart';
 import 'package:e2_explorer/src/styles/color_styles.dart';
+import 'package:e2_explorer/src/widgets/transparent_inkwell_widget.dart';
 import 'package:flutter/material.dart';
 
 /// Table with sticky headers. Whenever you scroll content horizontally
@@ -350,42 +351,45 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                                                   : null,
                                             ),
                                             height: widget.rowHeight(rowIndex),
-                                            child: InkWell(
-                                              onHover: (value) {
-                                                widget.onRowHover(
-                                                    value, rowIndex);
-                                              },
+                                            child: GestureDetector(
                                               onTap: () {
                                                 widget.onRowTap(rowIndex);
                                               },
-                                              child: CustomScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                slivers: <Widget>[
-                                                  SliverList(
-                                                    delegate:
-                                                        SliverChildBuilderDelegate(
-                                                      (
-                                                        BuildContext context,
-                                                        int columnIndex,
-                                                      ) {
-                                                        return widget
-                                                            .rowsBuilder(
-                                                          columnIndex +
-                                                              widget.fixedLeft,
-                                                          rowIndex,
-                                                        );
-                                                      },
-                                                      childCount:
-                                                          flexibleLength,
+                                              child: MouseRegion(
+                                                onHover: (event) {
+                                                  widget.onRowHover(
+                                                      true, rowIndex);
+                                                },
+                                                child: CustomScrollView(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  slivers: <Widget>[
+                                                    SliverList(
+                                                      delegate:
+                                                          SliverChildBuilderDelegate(
+                                                        (
+                                                          BuildContext context,
+                                                          int columnIndex,
+                                                        ) {
+                                                          return widget
+                                                              .rowsBuilder(
+                                                            columnIndex +
+                                                                widget
+                                                                    .fixedLeft,
+                                                            rowIndex,
+                                                          );
+                                                        },
+                                                        childCount:
+                                                            flexibleLength,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SliverFillRemaining(
-                                                    hasScrollBody: false,
-                                                    fillOverscroll: true,
-                                                    child: SizedBox(),
-                                                  ),
-                                                ],
+                                                    const SliverFillRemaining(
+                                                      hasScrollBody: false,
+                                                      fillOverscroll: true,
+                                                      child: SizedBox(),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           );
