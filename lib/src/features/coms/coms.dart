@@ -92,37 +92,36 @@ class _CommsState extends State<Comms> {
                   borderRadius: BorderRadius.circular(16),
                   color: AppColors.containerBgColor,
                 ),
-                child: TabDisplay(
-                  tabNames: const <String>['Body', 'Images'],
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.containerBgColor,
-                      ),
-                      child: _selectedNotificationData != null
-                          ? ReusableJsonDataExplorer(
-                              nodes: value.displayNodes,
-                              value: value,
-                            )
-                          : Container(
-                              height: double.infinity,
-                              width: double.infinity,
-                              color: AppColors.containerBgColor,
-                              child: Center(
-                                child: Text(
-                                    'Select a notification to view its payload',
-                                    style: TextStyles.small14regular(
-                                      color: const Color(0xFFDFDFDF),
-                                    )),
+                child: _selectedNotificationData != null
+                    ? TabDisplay(
+                        tabNames: const <String>['Body', 'Images'],
+                        children: [
+                          Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.containerBgColor,
                               ),
-                            ),
-                    ),
-                    PayloadImageViwer(
-                      base64Images: base64Images,
-                      hasImages: hasImages,
-                    )
-                  ],
-                ),
+                              child: ReusableJsonDataExplorer(
+                                nodes: value.displayNodes,
+                                value: value,
+                              )),
+                          PayloadImageViwer(
+                            base64Images: base64Images,
+                            hasImages: hasImages,
+                          )
+                        ],
+                      )
+                    : Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        color: AppColors.containerBgColor,
+                        child: Center(
+                          child:
+                              Text('Select a notification to view its payload',
+                                  style: TextStyles.small14regular(
+                                    color: const Color(0xFFDFDFDF),
+                                  )),
+                        ),
+                      ),
               ),
             ),
           ],
