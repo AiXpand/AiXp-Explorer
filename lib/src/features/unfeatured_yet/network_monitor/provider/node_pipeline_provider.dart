@@ -51,21 +51,28 @@ class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
 
   setSelectedPipeline(String selectedPipeline) {
     ref
-        .read(selectedPipelineProvider.notifier)
+        .read(selectedPipelineItemProvider.notifier)
         .setSelectedPipeline(selectedPipeline);
-    ref.read(selectedPluginProvider.notifier).setSelectedPlugin(null);
-    updateState(state);
+    ref
+        .read(selectedPipelineItemProvider.notifier)
+        .setItemNull(PipelineItems.plugin);
   }
 
   setSelectedPlugin(String selectedPlugin) {
-    ref.read(selectedPluginProvider.notifier).setSelectedPlugin(selectedPlugin);
+    ref
+        .read(selectedPipelineItemProvider.notifier)
+        .setSelectedPlugin(selectedPlugin);
+
     updateState(state);
   }
 
   resetSelectedState() {
-    ref.read(selectedPipelineProvider.notifier).setSelectedPipeline(null);
-    ref.read(selectedPluginProvider.notifier).setSelectedPlugin(null);
-    updateState(state);
+    ref
+        .read(selectedPipelineItemProvider.notifier)
+        .setItemNull(PipelineItems.pipeline);
+    ref
+        .read(selectedPipelineItemProvider.notifier)
+        .setItemNull(PipelineItems.plugin);
   }
 
   void updatePipelineList({required Map<String, dynamic> convertedMessage}) {
@@ -96,28 +103,53 @@ class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
   }
 }
 
-class SelectedPipelineProvider extends StateNotifier<String?> {
-  SelectedPipelineProvider() : super(null);
-
-  void setSelectedPipeline(String? selectedPipeline) {
-    state = selectedPipeline;
-  }
-}
-
-final selectedPipelineProvider =
-    StateNotifierProvider<SelectedPipelineProvider, String?>((ref) {
-  return SelectedPipelineProvider();
-});
-
-class SelectedPluginProvider extends StateNotifier<String?> {
-  SelectedPluginProvider() : super(null);
+class SelectedPipleineItemProvider extends StateNotifier<SelectedItemState> {
+  SelectedPipleineItemProvider() : super(SelectedItemState.initials());
 
   void setSelectedPlugin(String? selectedPlugin) {
-    state = selectedPlugin;
+    state = state.copyWith(selectedPlugin: selectedPlugin);
+  }
+
+  void setSelectedPipeline(String? selectedPipeline) {
+    state = state.copyWith(selectedPipeline: selectedPipeline);
+  }
+
+  void setItemNull(PipelineItems item) {
+    state = state.setItemNull(item);
   }
 }
 
-final selectedPluginProvider =
-    StateNotifierProvider<SelectedPluginProvider, String?>((ref) {
-  return SelectedPluginProvider();
+final selectedPipelineItemProvider =
+    StateNotifierProvider<SelectedPipleineItemProvider, SelectedItemState>(
+        (ref) {
+  return SelectedPipleineItemProvider();
 });
+
+class SelectedItemState {
+  final String? selectedPipeline;
+  final String? selectedPlugin;
+
+  SelectedItemState({this.selectedPipeline, this.selectedPlugin});
+
+  SelectedItemState.initials()
+      : selectedPipeline = null,
+        selectedPlugin = null;
+
+  SelectedItemState copyWith(
+      {String? selectedPipeline, String? selectedPlugin}) {
+    return SelectedItemState(
+      selectedPipeline: selectedPipeline ?? this.selectedPipeline,
+      selectedPlugin: selectedPlugin ?? this.selectedPlugin,
+    );
+  }
+
+  SelectedItemState setItemNull(PipelineItems item) {
+    return SelectedItemState(
+      selectedPipeline:
+          item == PipelineItems.pipeline ? null : selectedPipeline,
+      selectedPlugin: item == PipelineItems.plugin ? null : selectedPlugin,
+    );
+  }
+}
+
+enum PipelineItems { pipeline, plugin }

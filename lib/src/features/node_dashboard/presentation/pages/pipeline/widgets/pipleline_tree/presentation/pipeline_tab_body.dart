@@ -112,7 +112,8 @@ class _PipelineItemWidgetState extends ConsumerState<PipelineItemWidget> {
     finalData.addEntries(entries);
     final currentPipelinName = widget.mapData.name;
     return Container(
-      color: ref.watch(selectedPipelineProvider) == currentPipelinName
+      color: ref.watch(selectedPipelineItemProvider).selectedPipeline ==
+              currentPipelinName
           ? const Color(0xff2E2C6A)
           : null,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
@@ -158,8 +159,12 @@ class PluginListWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(nodePipelineProvider(boxName));
     final notifier = ref.read(nodePipelineProvider(boxName).notifier);
-    final selectedPipeline = ref.watch(selectedPipelineProvider);
-    final selectedPlugin = ref.watch(selectedPluginProvider);
+    final selectedPipeline =
+        ref.watch(selectedPipelineItemProvider).selectedPipeline;
+
+    final selectedPlugin =
+        ref.watch(selectedPipelineItemProvider).selectedPlugin;
+
     final data = notifier.getPluginList(selectedPipeline: selectedPipeline);
 
     return Expanded(
@@ -207,20 +212,22 @@ class InstanceConfigList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedPipeline = ref.watch(selectedPipelineProvider);
+    final selectedPipeline =
+        ref.watch(selectedPipelineItemProvider).selectedPipeline;
     ref.watch(nodePipelineProvider(boxName));
     final notifier = ref.read(nodePipelineProvider(boxName).notifier);
 
     final instanceConfig = notifier.getInstanceConfig(
         selectedPipeline: selectedPipeline,
-        selectedPlugin: ref.watch(selectedPluginProvider));
+        selectedPlugin: ref.watch(selectedPipelineItemProvider).selectedPlugin);
 
     ref.listen(
       nodePipelineProvider(boxName),
       (previous, next) {
         final data = notifier.getInstanceConfig(
             selectedPipeline: selectedPipeline,
-            selectedPlugin: ref.watch(selectedPluginProvider));
+            selectedPlugin:
+                ref.watch(selectedPipelineItemProvider).selectedPlugin);
         if (data.isNotEmpty) {
           store.buildNodes(data);
         }
