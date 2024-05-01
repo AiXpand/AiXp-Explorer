@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:e2_explorer/src/features/common_widgets/json_viewer/json_viewer.dart';
 import 'package:e2_explorer/src/features/coms/provider/filter_provider.dart';
+import 'package:e2_explorer/src/features/coms/widget/payload_image_viewer.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_client.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart';
+import 'package:e2_explorer/src/features/e2_status/presentation/widgets/common/tab_display.dart';
+import 'package:e2_explorer/src/features/e2_status/presentation/widgets/views/full_payload_view.dart';
 import 'package:e2_explorer/src/styles/color_styles.dart';
 import 'package:e2_explorer/src/styles/text_styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -24,6 +30,8 @@ class Comms extends StatefulWidget {
 class _CommsState extends State<Comms> {
   get itemBuilder => null;
   bool copied = false;
+  List<String> base64Images = [];
+  bool hasImages = false;
 
   int selectedIndex = 0;
   NotificationData? _selectedNotificationData;
@@ -49,6 +57,23 @@ class _CommsState extends State<Comms> {
                 boxName: widget.boxName,
                 onChange: (a) {
                   setState(() {
+                    final imgField = a.data['data']['img']["id"];
+                    if (imgField != null) {
+                      if (imgField is List) {
+                        // base64Images = imgField.map((e) => (e as Map<String, dynamic>)['id'] as String).toList();
+                        base64Images =
+                            imgField.map((e) => e as String).toList();
+                        hasImages = true;
+                      } else if (imgField is String) {
+                        base64Images = [imgField];
+                        hasImages = true;
+                      } else {
+                        hasImages = false;
+                      }
+                    } else {
+                      hasImages = false;
+                    }
+
                     _selectedNotificationData = a;
                     value.buildNodes(a.data);
                   });
@@ -68,15 +93,34 @@ class _CommsState extends State<Comms> {
                   color: AppColors.containerBgColor,
                 ),
                 child: _selectedNotificationData != null
-                    ? ReusableJsonDataExplorer(
-                        nodes: value.displayNodes,
-                        value: value,
+                    ? TabDisplay(
+                        tabNames: const <String>['Body', 'Images'],
+                        children: [
+                          Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.containerBgColor,
+                              ),
+                              child: ReusableJsonDataExplorer(
+                                nodes: value.displayNodes,
+                                value: value,
+                              )),
+                          PayloadImageViwer(
+                            base64Images: base64Images,
+                            hasImages: hasImages,
+                          )
+                        ],
                       )
-                    : SizedBox(
-                        child: Text('Select a notification to view its payload',
-                            style: TextStyles.small14regular(
-                              color: const Color(0xFFDFDFDF),
-                            )),
+                    : Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        color: AppColors.containerBgColor,
+                        child: Center(
+                          child:
+                              Text('Select a notification to view its payload',
+                                  style: TextStyles.small14regular(
+                                    color: const Color(0xFFDFDFDF),
+                                  )),
+                        ),
                       ),
               ),
             ),

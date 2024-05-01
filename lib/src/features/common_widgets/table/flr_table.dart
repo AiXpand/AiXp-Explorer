@@ -1,6 +1,7 @@
 import 'package:e2_explorer/src/features/common_widgets/table/sticky_header_table.dart';
 import 'package:e2_explorer/src/features/common_widgets/table/sync_scroll_controller.dart';
 import 'package:e2_explorer/src/utils/dimens.dart';
+import 'package:e2_explorer/src/widgets/transparent_inkwell_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../styles/color_styles.dart';
@@ -73,7 +74,7 @@ class FLRTable<ItemType, ColumnType extends Enum> extends StatefulWidget {
   final FLRTableHeaderBuilder<ColumnType> headerBuilder;
   final FLRTableHeaderTitle<ColumnType> headerTitle;
   final FLRTableColumnWidth<ColumnType> columnWidth;
-  final Future<void> Function(int) onTap;
+  final Future<void> Function(int)? onTap;
   final void Function() onRefresh;
   final double headerHeight;
   final FLRTableRowHeightCallback<ItemType> rowHeight;
@@ -88,7 +89,8 @@ class FLRTable<ItemType, ColumnType extends Enum> extends StatefulWidget {
   final bool expandLastColumn;
 
   @override
-  State<FLRTable<ItemType, ColumnType>> createState() => _FLRTableState<ItemType, ColumnType>();
+  State<FLRTable<ItemType, ColumnType>> createState() =>
+      _FLRTableState<ItemType, ColumnType>();
 }
 
 class _FLRTableState<ItemType, ColumnType extends Enum>
@@ -122,7 +124,8 @@ class _FLRTableState<ItemType, ColumnType extends Enum>
 
   bool _checkRightColumns() {
     final List<ColumnType> reversedColumns = _columns.reversed.toList();
-    final List<ColumnType> reversedColumnsRight = widget.columnsRight.reversed.toList();
+    final List<ColumnType> reversedColumnsRight =
+        widget.columnsRight.reversed.toList();
     for (int index = 0; index < reversedColumnsRight.length; index++) {
       if (reversedColumns[index] != reversedColumnsRight[index]) {
         return false;
@@ -176,6 +179,30 @@ class _FLRTableState<ItemType, ColumnType extends Enum>
     });
   }
 
+  bool isHovered = false;
+  int hoveredIndex = -1;
+
+  Color getContainerColor(int index) {
+    return index.isEven
+        ? getHovered(index)
+            ? AppColors.sideNavSelectedTileBgColor.withOpacity(0.4)
+            : AppColors.tableRowEvenIndexBgColor
+        : getHovered(index)
+            ? AppColors.sideNavSelectedTileBgColor.withOpacity(0.4)
+            : AppColors.alertDialogBgColor;
+  }
+
+  void changeHovered(bool value, int index) {
+    setState(() {
+      isHovered = value;
+      hoveredIndex = index;
+    });
+  }
+
+  bool getHovered(int index) {
+    return isHovered && hoveredIndex == index;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -198,7 +225,8 @@ class _FLRTableState<ItemType, ColumnType extends Enum>
                     headersLength: getColumnsToBuild.length,
                     headerHeight: widget.headerHeight,
                     columnWidth: (int columnIndex) {
-                      final ColumnType columnType = getColumnsToBuild[columnIndex];
+                      final ColumnType columnType =
+                          getColumnsToBuild[columnIndex];
                       return widget.columnWidth(columnType);
                     },
                     rowsLength: widget.items.length,
@@ -245,9 +273,9 @@ class _FLRTableState<ItemType, ColumnType extends Enum>
                         height: height,
                         alignment: Alignment.centerLeft,
                         decoration: BoxDecoration(
-                          color: rowIndex.isEven
-                              ? AppColors.tableRowEvenIndexBgColor
-                              : AppColors.tableRowOddIndexBgColor,
+                          color: getContainerColor(
+                            rowIndex,
+                          ),
                           border: Border(
                             right: BorderSide(
                               color: AppColors.tableBorderColor,
@@ -268,10 +296,16 @@ class _FLRTableState<ItemType, ColumnType extends Enum>
                           _selectedRow = index;
                         });
                       }*/
-                      widget.onTap(index);
+                      if (widget.onTap != null) {
+                        widget.onTap!(index);
+                      }
+                    },
+                    onRowHover: (value, index) {
+                      changeHovered(value, index);
                     },
                     isRowSelected: (int rowIndex) {
-                      return widget.selectRowOnClick && widget.selectedRowIndex == rowIndex;
+                      return widget.selectRowOnClick &&
+                          widget.selectedRowIndex == rowIndex;
                     },
                     rowHeight: (int rowIndex) {
                       final ItemType item = widget.items[rowIndex];

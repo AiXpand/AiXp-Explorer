@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:e2_explorer/src/features/common_widgets/table/sync_scroll_controller.dart';
 import 'package:e2_explorer/src/features/common_widgets/text_widget.dart';
 import 'package:e2_explorer/src/styles/color_styles.dart';
+import 'package:e2_explorer/src/widgets/transparent_inkwell_widget.dart';
 import 'package:flutter/material.dart';
 
 /// Table with sticky headers. Whenever you scroll content horizontally
@@ -46,6 +47,8 @@ class StickyHeadersTable extends StatefulWidget {
 
     /// Callback function for on row tap
     required this.onRowTap,
+    //
+    required this.onRowHover,
 
     /// Callback to determine if row is selected
     required this.isRowSelected,
@@ -74,6 +77,7 @@ class StickyHeadersTable extends StatefulWidget {
   final Widget Function(int columnIndex, int rowIndex) rowsBuilder;
   final void Function(int rowIndex) onRowTap;
   final bool Function(int rowIndex) isRowSelected;
+  final void Function(bool value, int index) onRowHover;
 
   @override
   State<StickyHeadersTable> createState() => _StickyHeadersTableState();
@@ -87,8 +91,10 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
   void initState() {
     super.initState();
     // Create controllers internally if not given by widget.
-    _verticalSyncController = widget.verticalSyncController ?? SyncScrollController();
-    _horizontalSyncController = widget.horizontalSyncController ?? SyncScrollController();
+    _verticalSyncController =
+        widget.verticalSyncController ?? SyncScrollController();
+    _horizontalSyncController =
+        widget.horizontalSyncController ?? SyncScrollController();
   }
 
   @override
@@ -105,7 +111,8 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
 
   @override
   Widget build(BuildContext context) {
-    final int flexibleLength = widget.headersLength - (widget.fixedLeft + widget.fixedRight);
+    final int flexibleLength =
+        widget.headersLength - (widget.fixedLeft + widget.fixedRight);
 
     double leftWidth = 0;
     double rightWidth = 0;
@@ -117,7 +124,9 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
     for (int i = 0; i < widget.fixedRight; i++) {
       rightWidth += widget.columnWidth(widget.headersLength - i - 1);
     }
-    for (int i = widget.fixedLeft; i < widget.headersLength - widget.fixedRight; i++) {
+    for (int i = widget.fixedLeft;
+        i < widget.headersLength - widget.fixedRight;
+        i++) {
       middleWidth += widget.columnWidth(i);
     }
     return ScrollConfiguration(
@@ -166,14 +175,17 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                       return false;
                     },
                     child: LayoutBuilder(
-                      builder: (BuildContext context, BoxConstraints constraints) {
-                        final double headerWidth = max(constraints.maxWidth, middleWidth);
+                      builder:
+                          (BuildContext context, BoxConstraints constraints) {
+                        final double headerWidth =
+                            max(constraints.maxWidth, middleWidth);
 
                         return SizedBox(
                           width: headerWidth,
                           child: CustomScrollView(
                             scrollDirection: Axis.horizontal,
-                            controller: _horizontalSyncController.leadingController,
+                            controller:
+                                _horizontalSyncController.leadingController,
                             physics: const ClampingScrollPhysics(),
                             slivers: <Widget>[
                               SliverList(
@@ -227,7 +239,7 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
           Expanded(
             child: widget.rowsLength > 0
                 ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       /// STICKY LEFT COLUMNS
                       NotificationListener<ScrollNotification>(
@@ -251,7 +263,8 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                           //   ),
                           // ),
                           child: ListView.builder(
-                            controller: _verticalSyncController.leadingController,
+                            controller:
+                                _verticalSyncController.leadingController,
                             itemCount: widget.rowsLength,
                             shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
@@ -270,6 +283,9 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                                       : null,
                                 ),
                                 child: InkWell(
+                                  onHover: (value) {
+                                    widget.onRowHover(value, rowIndex);
+                                  },
                                   onTap: () => widget.onRowTap(rowIndex),
                                   child: Row(
                                     children: List<Widget>.generate(
@@ -307,16 +323,20 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                             }
                           },
                           child: LayoutBuilder(
-                            builder: (BuildContext context, BoxConstraints constraints) {
-                              final double contentWidth = max(middleWidth, constraints.maxWidth);
+                            builder: (BuildContext context,
+                                BoxConstraints constraints) {
+                              final double contentWidth =
+                                  max(middleWidth, constraints.maxWidth);
                               return SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                controller: _horizontalSyncController.bodyController,
+                                controller:
+                                    _horizontalSyncController.bodyController,
                                 physics: const ClampingScrollPhysics(),
                                 child: SizedBox(
                                   width: contentWidth,
                                   child: SingleChildScrollView(
-                                    controller: _verticalSyncController.bodyController,
+                                    controller:
+                                        _verticalSyncController.bodyController,
                                     physics: const ClampingScrollPhysics(),
                                     child: Column(
                                       children: List<Widget>.generate(
@@ -324,38 +344,52 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                                         (int rowIndex) {
                                           return Container(
                                             decoration: BoxDecoration(
-                                              color: widget.isRowSelected(rowIndex)
-                                                  ? AppColors.tableRowEvenIndexBgColor
+                                              color: widget
+                                                      .isRowSelected(rowIndex)
+                                                  ? AppColors
+                                                      .tableRowEvenIndexBgColor
                                                   : null,
                                             ),
                                             height: widget.rowHeight(rowIndex),
-                                            child: InkWell(
+                                            child: GestureDetector(
                                               onTap: () {
                                                 widget.onRowTap(rowIndex);
                                               },
-                                              child: CustomScrollView(
-                                                scrollDirection: Axis.horizontal,
-                                                slivers: <Widget>[
-                                                  SliverList(
-                                                    delegate: SliverChildBuilderDelegate(
-                                                      (
-                                                        BuildContext context,
-                                                        int columnIndex,
-                                                      ) {
-                                                        return widget.rowsBuilder(
-                                                          columnIndex + widget.fixedLeft,
-                                                          rowIndex,
-                                                        );
-                                                      },
-                                                      childCount: flexibleLength,
+                                              child: MouseRegion(
+                                                onHover: (event) {
+                                                  widget.onRowHover(
+                                                      true, rowIndex);
+                                                },
+                                                child: CustomScrollView(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  slivers: <Widget>[
+                                                    SliverList(
+                                                      delegate:
+                                                          SliverChildBuilderDelegate(
+                                                        (
+                                                          BuildContext context,
+                                                          int columnIndex,
+                                                        ) {
+                                                          return widget
+                                                              .rowsBuilder(
+                                                            columnIndex +
+                                                                widget
+                                                                    .fixedLeft,
+                                                            rowIndex,
+                                                          );
+                                                        },
+                                                        childCount:
+                                                            flexibleLength,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SliverFillRemaining(
-                                                    hasScrollBody: false,
-                                                    fillOverscroll: true,
-                                                    child: SizedBox(),
-                                                  ),
-                                                ],
+                                                    const SliverFillRemaining(
+                                                      hasScrollBody: false,
+                                                      fillOverscroll: true,
+                                                      child: SizedBox(),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           );
@@ -386,7 +420,8 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                           width: rightWidth + borderWidth,
                           child: ListView.builder(
                             shrinkWrap: true,
-                            controller: _verticalSyncController.trailingController,
+                            controller:
+                                _verticalSyncController.trailingController,
                             itemCount: widget.rowsLength,
                             itemBuilder: (context, int rowIndex) {
                               return Container(
@@ -414,14 +449,17 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                                             border: Border(
                                               left: colIndex == 0
                                                   ? BorderSide(
-                                                      color: AppColors.tableBorderColor,
+                                                      color: AppColors
+                                                          .tableBorderColor,
                                                       width: borderWidth,
                                                     )
                                                   : BorderSide.none,
                                             ),
                                           ),
                                           child: widget.rowsBuilder(
-                                            colIndex + widget.fixedLeft + flexibleLength,
+                                            colIndex +
+                                                widget.fixedLeft +
+                                                flexibleLength,
                                             rowIndex,
                                           ),
                                         );

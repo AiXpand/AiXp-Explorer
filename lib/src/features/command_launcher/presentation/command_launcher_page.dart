@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:e2_explorer/dart_e2/commands/e2_commands.dart';
 import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/src/design/app_toast.dart';
@@ -15,6 +17,7 @@ import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart'
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/network_provider.dart';
 import 'package:e2_explorer/src/utils/dimens.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -45,6 +48,20 @@ class CommandLauncherPage extends StatelessWidget {
           ref
               .read(networkProvider.notifier)
               .updateNetmonStatusList(convertedMessage: convertedMessage);
+        },
+        onNotification: (data) {
+          final eePayloadPath = data['EE_PAYLOAD_PATH'];
+          if (eePayloadPath[0] == 'gts-test2' && eePayloadPath[1] == null) {
+            // print("$prettyprint");
+            final metadata = data['metadata'];
+            if (metadata["notification"] ==
+                "  Running 'STOP' command in main loop received from 'None'") {
+              AppToast(
+                message: 'Command sent',
+                description: 'Command sent to ${eePayloadPath[0]}',
+              ).show(context);
+            }
+          }
         },
         builder: (context) {
           return Scaffold(
@@ -104,11 +121,6 @@ class CommandLauncherPage extends StatelessWidget {
                                                 ActionCommands.stop(
                                                     targetId: item.edgeNode),
                                               );
-                                              AppToast(
-                                                message: 'Command sent',
-                                                description:
-                                                    'Command sent to ${item.edgeNode}',
-                                              ).show(context);
                                             },
                                             text: 'Restart',
                                             height: 30,
