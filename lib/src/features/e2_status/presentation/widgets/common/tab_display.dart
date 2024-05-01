@@ -1,3 +1,4 @@
+import 'package:e2_explorer/src/styles/color_styles.dart';
 import 'package:flutter/material.dart';
 
 class TabDisplay extends StatefulWidget {
@@ -65,49 +66,60 @@ class _TabDisplayState extends State<TabDisplay> with TickerProviderStateMixin {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(
-            children: <Widget>[
-              Positioned.fill(
-                child: Align(
-                  alignment: AlignmentDirectional.bottomStart,
-                  child: Container(
-                    color: const Color(0xff282828),
-                    width: double.infinity,
-                    height: 2,
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          child: SizedBox(
+            height: 40,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: FractionallySizedBox(
+                widthFactor: 3 / 3,
+                child: TabBar(
+                  labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimaryColor,
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: FractionallySizedBox(
-                    widthFactor: 3 / 3,
-                    child: TabBar(
-                      indicatorColor: const Color(0xff0073E6),
-                      controller: _tabController,
-                      tabs: widget.tabNames
-                          .map(
-                            (name) => Tab(
-                              text: name,
-                            ),
-                          )
-                          .toList(),
+                  unselectedLabelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textSecondaryColor,
+                  ),
+                  indicator: ShapeDecoration(
+                    shape: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 4.0,
+                        style: BorderStyle.solid,
+                      ),
                     ),
+                    gradient: AppColors.tabBarIndicatorGradient,
                   ),
+                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  tabAlignment: TabAlignment.start,
+                  indicatorPadding: const EdgeInsets.only(top: 35),
+                  padding: EdgeInsets.zero,
+                  labelPadding: const EdgeInsets.only(right: 24),
+                  isScrollable: true,
+                  dividerHeight: 0,
+                  indicatorWeight: 4,
+                  indicatorColor: const Color(0xff0073E6),
+                  controller: _tabController,
+                  tabs: widget.tabNames
+                      .map(
+                        (name) => Tab(
+                          text: name,
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
-            ],
+            ),
           ),
         ),
         Expanded(
-          child: ColoredBox(
-            color: const Color(0xff1F1F1F),
-            child: IndexedStack(
-              index: _tabIndex,
-              children: widget.children,
-            ),
+          child: TabBarView(
+            controller: _tabController,
+            children: widget.children,
           ),
         ),
       ],
