@@ -30,7 +30,6 @@ class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
               .toList() ??
           [];
     }
-
     return [];
   }
 

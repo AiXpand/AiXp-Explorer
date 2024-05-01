@@ -351,6 +351,10 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                                             ),
                                             height: widget.rowHeight(rowIndex),
                                             child: InkWell(
+                                              onHover: (value) {
+                                                widget.onRowHover(
+                                                    value, rowIndex);
+                                              },
                                               onTap: () {
                                                 widget.onRowTap(rowIndex);
                                               },
