@@ -74,7 +74,7 @@ class FLRTable<ItemType, ColumnType extends Enum> extends StatefulWidget {
   final FLRTableHeaderBuilder<ColumnType> headerBuilder;
   final FLRTableHeaderTitle<ColumnType> headerTitle;
   final FLRTableColumnWidth<ColumnType> columnWidth;
-  final Future<void> Function(int) onTap;
+  final Future<void> Function(int)? onTap;
   final void Function() onRefresh;
   final double headerHeight;
   final FLRTableRowHeightCallback<ItemType> rowHeight;
@@ -185,10 +185,10 @@ class _FLRTableState<ItemType, ColumnType extends Enum>
   Color getContainerColor(int index) {
     return index.isEven
         ? getHovered(index)
-            ? AppColors.tableRowEvenIndexBgColor.withOpacity(0.4)
+            ? AppColors.sideNavSelectedTileBgColor
             : AppColors.tableRowEvenIndexBgColor
         : getHovered(index)
-            ? AppColors.alertDialogBgColor.withOpacity(0.4)
+            ? AppColors.sideNavSelectedTileBgColor
             : AppColors.alertDialogBgColor;
   }
 
@@ -296,7 +296,9 @@ class _FLRTableState<ItemType, ColumnType extends Enum>
                           _selectedRow = index;
                         });
                       }*/
-                      widget.onTap(index);
+                      if (widget.onTap != null) {
+                        widget.onTap!(index);
+                      }
                     },
                     onRowHover: (value, index) {
                       changeHovered(value, index);
