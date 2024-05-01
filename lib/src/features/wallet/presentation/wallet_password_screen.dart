@@ -101,6 +101,15 @@ class _WalletPasswordScreenState extends State<WalletPasswordScreen> {
                                     context,
                                     type: ToastificationType.success,
                                   );
+                                } else {
+                                  AppToast(
+                                    message: "Wallet unlocked failed",
+                                    description:
+                                        'Unable to unlock wallet with this password.',
+                                  ).show(
+                                    context,
+                                    type: ToastificationType.error,
+                                  );
                                 }
                               }
                             : null,
