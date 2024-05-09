@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CommandLauncherPage extends StatelessWidget {
+class CommandLauncherPage extends ConsumerWidget {
   const CommandLauncherPage({Key? key}) : super(key: key);
 
   static FLRTableLabels flrTableLabels = FLRTableLabels(
@@ -36,7 +36,7 @@ class CommandLauncherPage extends StatelessWidget {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final E2Client _client = E2Client();
 
     return Consumer(builder: (context, ref, child) {
@@ -161,6 +161,7 @@ class CommandLauncherPage extends StatelessWidget {
                                               CreatePipelineDialogUtils
                                                   .showDialog(
                                                 context,
+                                                ref,
                                                 boxName: item.edgeNode,
                                               );
                                             },

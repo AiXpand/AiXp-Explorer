@@ -22,6 +22,7 @@ class AppButtonPrimary extends StatelessWidget {
     this.height = 40,
     this.minWidth,
     this.loading = false,
+    this.isEnabled = true,
   });
 
   final String text;
@@ -37,32 +38,42 @@ class AppButtonPrimary extends StatelessWidget {
   final double height;
   final double? minWidth;
   final bool loading;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      constraints: BoxConstraints(
-        minHeight: height,
-        minWidth: minWidth ?? 0,
+    return MouseRegion(
+      cursor: appButtonStatus == AppButtonStatus.disabled
+          ? SystemMouseCursors.zoomIn
+          : SystemMouseCursors.click,
+      child: Container(
+        height: height,
+        constraints: BoxConstraints(
+          minHeight: height,
+          minWidth: minWidth ?? 0,
+        ),
+        child: iconWidget != null
+            ? ElevatedButton.icon(
+                style: buttonStyle,
+                onPressed: appButtonStatus == AppButtonStatus.disabled
+                    ? null
+                    : (loading ? () {} : onPressed ?? () {}),
+                icon: iconWidget!,
+                label: textWidget,
+              )
+            : ElevatedButton(
+                style: buttonStyle,
+                onPressed: appButtonStatus == AppButtonStatus.disabled
+                    ? null
+                    : (loading ? () {} : onPressed ?? () {}),
+                child: textWidget,
+              ),
       ),
-      child: iconWidget != null
-          ? ElevatedButton.icon(
-              style: buttonStyle,
-              onPressed: loading ? () {} : onPressed ?? () {},
-              icon: iconWidget!,
-              label: textWidget,
-            )
-          : ElevatedButton(
-              style: buttonStyle,
-              onPressed: loading ? () {} : onPressed ?? () {},
-              child: textWidget,
-            ),
     );
   }
 
   Widget get textWidget => Stack(
-    alignment: Alignment.center,
+        alignment: Alignment.center,
         children: [
           Text(
             text,
@@ -76,7 +87,9 @@ class AppButtonPrimary extends StatelessWidget {
             const SizedBox(
               height: 20,
               width: 20,
-              child: CircularProgressIndicator(strokeWidth: 2,),
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ),
             ),
           ],
         ],

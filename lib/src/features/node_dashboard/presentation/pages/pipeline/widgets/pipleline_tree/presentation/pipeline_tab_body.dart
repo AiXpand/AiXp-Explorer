@@ -112,7 +112,7 @@ class _PipelineItemWidgetState extends ConsumerState<PipelineItemWidget> {
     super.initState();
   }
 
-  var keys = ["TYPE", "VALIDATED", 'SESSION', 'LIVE_FEED'];
+  var keys = ["TYPE", "VALIDATED", 'SESSION', 'LIVE_FEED', 'URL'];
 
   @override
   Widget build(BuildContext context) {

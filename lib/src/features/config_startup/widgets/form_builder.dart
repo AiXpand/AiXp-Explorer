@@ -124,7 +124,10 @@ class _FormBuilderState extends State<FormBuilder> {
         if (widget.type == FormBuilderType.text)
           TextFormField(
             controller: _controller,
-            validator: widget.validator,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (a) {
+              return widget.validator?.call(a);
+            },
           ),
         if (widget.type == FormBuilderType.number)
           TextFormField(

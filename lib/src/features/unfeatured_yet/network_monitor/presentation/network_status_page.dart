@@ -1,25 +1,16 @@
 import 'dart:async';
 
-import 'package:carbon_icons/carbon_icons.dart';
 import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/dart_e2/models/payload/netmon/netmon_box_details.dart';
 import 'package:e2_explorer/dart_e2/utils/xpand_utils.dart';
-import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_primary.dart';
 import 'package:e2_explorer/src/features/common_widgets/hf_dropdown/overlay_utils.dart';
 import 'package:e2_explorer/src/features/common_widgets/text_widget.dart';
-import 'package:e2_explorer/src/features/common_widgets/tooltip/icon_button_tooltip.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart';
-import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/presentation/table_elements/netmon_table.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/presentation/table_elements/netmon_table_new.dart';
-import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/presentation/widgets/preferred_supervisor_menu.dart';
-import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/presentation/widgets/single_node_page.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/network_provider.dart';
 import 'package:e2_explorer/src/styles/color_styles.dart';
-import 'package:e2_explorer/src/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:provider/provider.dart';
 
 class NetworkStatusPage extends ConsumerStatefulWidget {
   const NetworkStatusPage({

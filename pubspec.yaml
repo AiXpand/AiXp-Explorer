@@ -41,6 +41,8 @@ dependencies:
   toastification: ^1.2.1
   number_text_input_formatter: ^1.0.0+8
   windows_single_instance: ^1.0.1
+  just_the_tooltip: ^0.0.12
+
 
   # Windows Build
   msix: ^3.16.7
