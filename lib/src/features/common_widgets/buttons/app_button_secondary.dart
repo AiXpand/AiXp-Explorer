@@ -78,7 +78,7 @@ class _AppButtonSecondaryState extends State<AppButtonSecondary> {
               },
               style: buttonStyle,
               onPressed: widget.appButtonStatus == AppButtonStatus.disabled
-                  ? () {}
+                  ? null
                   : widget.loading
                       ? () {}
                       : widget.onPressed ?? () {},
@@ -118,14 +118,16 @@ class _AppButtonSecondaryState extends State<AppButtonSecondary> {
 
   ButtonStyle get buttonStyle => ElevatedButton.styleFrom(
         backgroundColor: bgColor,
+        disabledBackgroundColor: AppColors.buttonSecondaryDisabledBgColor,
         padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             Dimens.btnSecondaryBorderRadius,
           ),
           side: BorderSide(
-              color:
-                  widget.borderColor ?? AppColors.buttonSecondaryBorderColor),
+              color: widget.appButtonStatus == AppButtonStatus.disabled
+                  ? Colors.transparent
+                  : widget.borderColor ?? AppColors.buttonSecondaryBorderColor),
         ),
       );
 
