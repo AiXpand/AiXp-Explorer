@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:e2_explorer/dart_e2/commands/e2_commands.dart';
 import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/src/design/app_toast.dart';
 import 'package:e2_explorer/src/features/command_launcher/model/command_launcher_data.dart';
 import 'package:e2_explorer/src/features/command_launcher/presentation/widgets/command_launcher_logs.dart';
-import 'package:e2_explorer/src/features/command_launcher/presentation/widgets/create_pipeline.dart';
+import 'package:e2_explorer/src/features/command_launcher/presentation/widgets/create_pipeline_widget.dart';
 import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_secondary.dart';
 import 'package:e2_explorer/src/features/common_widgets/buttons/refresh_button_with_animation.dart';
 import 'package:e2_explorer/src/features/common_widgets/table/flr_table.dart';

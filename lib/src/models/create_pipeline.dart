@@ -1,3 +1,4 @@
+import 'package:e2_explorer/src/utils/app_utils.dart';
 import 'package:uuid/uuid.dart';
 
 var uuid = const Uuid();
@@ -23,6 +24,13 @@ class CreatePipeline {
     ));
   }
 
+  bool get isFormValid {
+    return isCustomFieldsValid &&
+        isAllPluginValid &&
+        name.isNotEmpty &&
+        type.isNotEmpty;
+  }
+
   bool get isCustomFieldsValid {
     var data = customFields.where((e) => !e.isValid).toList();
     return data.isEmpty;
@@ -44,13 +52,15 @@ class CreatePipeline {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'type': type,
-      'url': url,
-      ...customFieldsJson,
-      "plugins": plugins.map((e) => e.toJson()).toList(),
-    };
+    return uppercaseKeysOfMap(
+      {
+        'name': name,
+        'type': type,
+        'url': url,
+        ...customFieldsJson,
+        "plugins": plugins.map((e) => e.toJson()).toList(),
+      },
+    );
   }
 
   CreatePipeline copyWith(
@@ -115,10 +125,10 @@ class Plugins {
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return uppercaseKeysOfMap({
       'signature': signature,
-      "insatnces": instances.map((e) => e.toJson()).toList(),
-    };
+      "instances": instances.map((e) => e.toJson()).toList(),
+    });
   }
 }
 
@@ -172,10 +182,10 @@ class Instance {
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return uppercaseKeysOfMap({
       'instance_id': instanceId,
       ...customFieldsJson,
-    };
+    });
   }
 }
 

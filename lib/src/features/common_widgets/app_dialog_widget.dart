@@ -26,6 +26,7 @@ class AppDialogWidget extends StatelessWidget {
     this.isSubmitting = false,
     this.appDialogType = AppDialogType.small,
     this.isActionbuttonReversed = false,
+    this.appButtonStatusPositiveButton = AppButtonStatus.normal,
     this.headerButtons,
   });
   final List<AppDialogHeaderButtons>? headerButtons;
@@ -35,6 +36,7 @@ class AppDialogWidget extends StatelessWidget {
 
   /// default is OK
   final String? positiveActionButtonText;
+  final AppButtonStatus appButtonStatusPositiveButton;
 
   /// default is cancel
   final String? negativeActionButtonText;
@@ -78,6 +80,7 @@ class AppDialogWidget extends StatelessWidget {
         minWidth: 134,
         text: positiveActionButtonText ?? 'OK',
         onPressed: positiveActionButtonAction,
+        appButtonStatus: appButtonStatusPositiveButton,
       ),
     ];
     return Stack(

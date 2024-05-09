@@ -4,14 +4,14 @@ import 'package:e2_explorer/src/models/create_pipeline.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final createPipelineProvider = StateNotifierProvider.family<
-    CreatePipelineTestProvider, CreatePipeline, String>((ref, String boxName) {
-  return CreatePipelineTestProvider(CreatePipeline.initialize(), boxName, ref);
+    CreatePipelineProvider, CreatePipeline, String>((ref, String boxName) {
+  return CreatePipelineProvider(CreatePipeline.initialize(), boxName, ref);
 });
 
-class CreatePipelineTestProvider extends StateNotifier<CreatePipeline> {
+class CreatePipelineProvider extends StateNotifier<CreatePipeline> {
   final String boxName;
   final Ref ref;
-  CreatePipelineTestProvider(CreatePipeline data, this.boxName, this.ref)
+  CreatePipelineProvider(CreatePipeline data, this.boxName, this.ref)
       : super(data);
 
   initialize() {
