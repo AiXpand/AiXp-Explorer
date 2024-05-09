@@ -36,6 +36,8 @@ class CommandLauncherPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final E2Client _client = E2Client();
+    String tooltipMessage =
+        "Can't perform any action on this node due to lost status";
 
     return Consumer(builder: (context, ref, child) {
       final state = ref.watch(networkProvider);
@@ -115,10 +117,10 @@ class CommandLauncherPage extends ConsumerWidget {
                                       child: Row(
                                         children: [
                                           AppButtonSecondary(
-                                            tootlTipText: item.status ==
-                                                    'lost status'
-                                                ? "This button is disable because this node status is lost"
-                                                : null,
+                                            tootlTipText:
+                                                item.status == 'lost status'
+                                                    ? tooltipMessage
+                                                    : null,
                                             appButtonStatus:
                                                 item.status == 'lost status'
                                                     ? AppButtonStatus.disabled
@@ -140,10 +142,10 @@ class CommandLauncherPage extends ConsumerWidget {
                                           ),
                                           const SizedBox(width: 8),
                                           AppButtonSecondary(
-                                            tootlTipText: item.status ==
-                                                    'lost status'
-                                                ? "This button is disable because this node status is lost"
-                                                : null,
+                                            tootlTipText:
+                                                item.status == 'lost status'
+                                                    ? tooltipMessage
+                                                    : null,
                                             appButtonStatus:
                                                 item.status == 'lost status'
                                                     ? AppButtonStatus.disabled
@@ -169,10 +171,10 @@ class CommandLauncherPage extends ConsumerWidget {
                                           ),
                                           const SizedBox(width: 8),
                                           AppButtonSecondary(
-                                            tootlTipText: item.status ==
-                                                    'lost status'
-                                                ? "This button is disable because this node status is lost"
-                                                : null,
+                                            tootlTipText:
+                                                item.status == 'lost status'
+                                                    ? tooltipMessage
+                                                    : null,
                                             appButtonStatus:
                                                 item.status == 'lost status'
                                                     ? AppButtonStatus.disabled

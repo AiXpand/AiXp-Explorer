@@ -29,6 +29,9 @@ class _ConfigStartUpState extends State<ConfigStartUp> {
 
   @override
   Widget build(BuildContext context) {
+    String tooltipMessage =
+        "Can't perform any action on this node due to lost status";
+
     FLRTableLabels flrTableLabels = FLRTableLabels(
       filters: (BuildContext context) => 'Filters',
       hideColumns: (BuildContext context) => 'Hide Columns',
@@ -98,10 +101,10 @@ class _ConfigStartUpState extends State<ConfigStartUp> {
                                     child: Row(
                                       children: [
                                         AppButtonSecondary(
-                                          tootlTipText: item.status ==
-                                                  'lost status'
-                                              ? "This button is disable because this node status is lost"
-                                              : null,
+                                          tootlTipText:
+                                              item.status == 'lost status'
+                                                  ? tooltipMessage
+                                                  : null,
                                           appButtonStatus:
                                               item.status == 'lost status'
                                                   ? AppButtonStatus.disabled
@@ -126,10 +129,10 @@ class _ConfigStartUpState extends State<ConfigStartUp> {
                                         ),
                                         const SizedBox(width: 8),
                                         AppButtonSecondary(
-                                          tootlTipText: item.status ==
-                                                  'lost status'
-                                              ? "This button is disable because this node status is lost"
-                                              : null,
+                                          tootlTipText:
+                                              item.status == 'lost status'
+                                                  ? tooltipMessage
+                                                  : null,
                                           appButtonStatus:
                                               item.status == 'lost status'
                                                   ? AppButtonStatus.disabled
