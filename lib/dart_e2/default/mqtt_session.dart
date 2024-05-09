@@ -103,8 +103,7 @@ class MqttSession extends GenericSession {
     _notificationReceiveStream?.stream.listen((message) {
       var messageVerifier = aixpVerifier.verifyMessage(message);
       final eePayloadPath = message['EE_PAYLOAD_PATH'];
-      if (eePayloadPath[0] == 'gts-test2' &&
-          eePayloadPath[1] == 'admin_pipeline') {
+      if (eePayloadPath[0] == 'gts-test2') {
         JsonEncoder encoder = const JsonEncoder.withIndent('  ');
         String prettyprint = encoder.convert(message);
         print("$prettyprint");

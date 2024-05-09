@@ -1,5 +1,11 @@
+import 'dart:convert';
+
+import 'package:e2_explorer/dart_e2/commands/e2_commands.dart';
+import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_primary.dart';
 import 'package:e2_explorer/src/features/common_widgets/json_viewer/json_viewer.dart';
 import 'package:e2_explorer/src/features/common_widgets/text_widget.dart';
+import 'package:e2_explorer/src/features/e2_status/application/e2_client.dart';
+import 'package:e2_explorer/src/features/e2_status/presentation/widgets/views/full_payload_view.dart';
 import 'package:e2_explorer/src/features/node_dashboard/presentation/pages/pipeline/widgets/pipleline_tree/presentation/expandable_widget.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/model/plugin_model.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/node_pipeline_provider.dart';
@@ -25,13 +31,22 @@ class PipelineTabBodyWidget extends ConsumerStatefulWidget {
 class _PipelineTabBodyWidgetState extends ConsumerState<PipelineTabBodyWidget> {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    // return FullPayloadView(
+    //   boxName: widget.boxName,
+    // );
+    return Column(
       children: [
-        PipelineListWidget(boxName: widget.boxName),
-        const SizedBox(width: 20),
-        PluginListWidget(boxName: widget.boxName),
-        const SizedBox(width: 20),
-        InstanceConfigList(boxName: widget.boxName),
+        Expanded(
+          child: Row(
+            children: [
+              PipelineListWidget(boxName: widget.boxName),
+              const SizedBox(width: 20),
+              PluginListWidget(boxName: widget.boxName),
+              const SizedBox(width: 20),
+              InstanceConfigList(boxName: widget.boxName),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -68,7 +83,6 @@ class PipelineListWidget extends ConsumerWidget {
               ),
             );
           },
-          // separatorBuilder: (context, index) => const SizedBox(height: 10),
           itemCount: data.length,
         ),
       ),
@@ -98,7 +112,7 @@ class _PipelineItemWidgetState extends ConsumerState<PipelineItemWidget> {
     super.initState();
   }
 
-  var keys = ["TYPE", "VALIDATED", 'SESSION', 'LIVE_FEED'];
+  var keys = ["TYPE", "VALIDATED", 'SESSION', 'LIVE_FEED', 'URL'];
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +228,8 @@ class InstanceConfigList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedPipeline =
         ref.watch(selectedPipelineItemProvider).selectedPipeline;
-    ref.watch(nodePipelineProvider(boxName));
+
+    var data = ref.watch(nodePipelineProvider(boxName));
     final notifier = ref.read(nodePipelineProvider(boxName).notifier);
 
     final instanceConfig = notifier.getInstanceConfig(
@@ -243,19 +258,59 @@ class InstanceConfigList extends ConsumerWidget {
           borderRadius: BorderRadius.circular(16),
           color: AppColors.containerBgColor,
         ),
-        child: instanceConfig.isEmpty
-            ? Container()
-            : p.ChangeNotifierProvider.value(
-                value: store,
-                child: p.Consumer<DataExplorerStore>(
-                  builder: (context, DataExplorerStore value, child) {
-                    return ReusableJsonDataExplorer(
-                      nodes: value.displayNodes,
-                      value: value,
-                    );
-                  },
-                ),
-              ),
+        child: Column(
+          children: [
+            AppButtonPrimary(
+                text: 'Test',
+                onPressed: () {
+                  var dataToUpdate = data.first.toJsonUpdatePipeline();
+                  print(jsonEncode(dataToUpdate));
+                  // dataToUpdate['NAME'] = dataToUpdate['NAME'] + "Test";
+                  // dataToUpdate['URL'] = 'https://hyperfy.tech/';
+                  // print(dataToUpdate);
+                  // dataToUpdate = {
+                  //   "NAME": "struct-stream-tutorial",
+                  //   "TYPE": "StructStreamTutorial",
+                  //   "URL": "",
+                  //   "CAP_RESOLUTION": 0.5,
+                  //   "PLUGINS": [
+                  //     {
+                  //       "SIGNATURE": "STRUCT_STREAM_TUTORIAL_101",
+                  //       "INSTANCES": [
+                  //         {
+                  //           "INSTANCE_ID": "STRUCT_STREAM_TUTORIAL_101_def1",
+                  //           "PROCESS_DELAY": 10,
+                  //           "ENCRYPT_PAYLOAD": false
+                  //         }
+                  //       ]
+                  //     }
+                  //   ]
+                  // };
+                  return;
+                  E2Client().session.sendCommand(
+                        ActionCommands.updateConfig(
+                          targetId: boxName,
+                          payload: dataToUpdate,
+                        ),
+                      );
+                }),
+            Expanded(
+              child: instanceConfig.isEmpty
+                  ? Container()
+                  : p.ChangeNotifierProvider.value(
+                      value: store,
+                      child: p.Consumer<DataExplorerStore>(
+                        builder: (context, DataExplorerStore value, child) {
+                          return ReusableJsonDataExplorer(
+                            nodes: value.displayNodes,
+                            value: value,
+                          );
+                        },
+                      ),
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }

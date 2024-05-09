@@ -7,6 +7,13 @@ Future<dynamic> showAppDialog({
   return await showDialog(context: context, builder: (_) => content);
 }
 
+Map<String, dynamic> uppercaseKeysOfMap(Map<String, dynamic> data) {
+  var keys = data.keys;
+  keys = keys.map((e) => e.toUpperCase());
+  var values = data.values.toList();
+  return Map.fromIterables(keys, values);
+}
+
 String timeAgoString(int seconds) {
   final duration = Duration(seconds: seconds);
   if (duration.inDays > 0) {

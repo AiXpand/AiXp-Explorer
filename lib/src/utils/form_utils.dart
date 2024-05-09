@@ -13,9 +13,7 @@ class FormUtils {
     if (value.length < 6) {
       return 'Password must contain at least 6 characters!';
     }
-    // if (!isPasswordValid(value)) {
-    //   return 'Password invalid!';
-    // }
+
     return null;
   }
 
@@ -29,6 +27,68 @@ class FormUtils {
       return 'This field is required!';
     }
     return null;
+  }
+
+  static String? validateCreatePipelineUrl(
+    BuildContext context, {
+    String? val,
+    List<String> existingUrl = const [],
+  }) {
+    // if (!isRequiredFieldValid(val)) {
+    //   return 'This field is required!';
+    // }
+    // String pattern =
+    //     r'(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
+    // RegExp regExp = RegExp(pattern);
+    // if (!regExp.hasMatch(val ?? '')) {
+    //   return 'Please enter valid url';
+    // }
+    final isNotEmpty = existingUrl
+        .where((element) => element.toLowerCase() == val!.toLowerCase());
+
+    if (isNotEmpty.isNotEmpty) {
+      return 'Enter unique Url';
+    }
+    return null;
+  }
+
+  static String? validateUrl(BuildContext context, String? val) {
+    String pattern =
+        r'(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
+    RegExp regExp = RegExp(pattern);
+    if (!regExp.hasMatch(val ?? '')) {
+      return 'Please enter valid url';
+    }
+    return null;
+  }
+
+  static String? validateCreatePipelineKey(
+    BuildContext context, {
+    String? value,
+    List<String> existingKeys = const [],
+  }) {
+    print(existingKeys);
+    if (!isRequiredFieldValid(value)) {
+      return 'This field is required!';
+    }
+
+    if (isNumericUsingRegularExpression(value!)) {
+      return 'This field cannot have numberic value';
+    }
+    final isNotEmpty = existingKeys
+        .where((element) => element.toLowerCase() == value.toLowerCase());
+
+    if (isNotEmpty.isNotEmpty) {
+      return 'Entered key matches with existing keys. Unique key required';
+    }
+
+    return null;
+  }
+
+  static bool isNumericUsingRegularExpression(String string) {
+    final numericRegex = RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$');
+
+    return numericRegex.hasMatch(string);
   }
 
   static bool isRequiredFieldValid(String? value) {

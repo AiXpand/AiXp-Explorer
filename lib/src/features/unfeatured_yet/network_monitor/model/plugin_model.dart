@@ -118,6 +118,15 @@ class DecodedPlugin {
     }
   }
 
+  Map<String, dynamic> toJsonUpdatePipeline() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['NAME'] = name;
+    data['TYPE'] = type;
+    data['URL'] = url;
+    data['PLUGINS'] = plugins?.map((plugin) => plugin?.toJson()).toList();
+    return data;
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['RECONNECTABLE'] = reconnectable;

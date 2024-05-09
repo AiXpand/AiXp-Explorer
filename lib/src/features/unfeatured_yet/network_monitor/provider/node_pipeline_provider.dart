@@ -87,7 +87,7 @@ class NodePipelineProvider extends StateNotifier<List<DecodedPlugin>> {
         final decodedData = XpandUtils.decodeEncryptedGzipMessage(
             convertedMessage['ENCODED_DATA']);
         final metadataEncoded = decodedData['CONFIG_STREAMS'] as List;
-        print(metadataEncoded);
+
         try {
           updateState(
             metadataEncoded

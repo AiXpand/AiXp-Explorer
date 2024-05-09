@@ -38,6 +38,29 @@ class _WalletPasswordScreenState extends State<WalletPasswordScreen> {
 
   bool get isFormValid => _formKey.currentState?.validate() ?? false;
 
+  submit() async {
+    final isSuccess = await kAIXpWallet!.loadWallet(passwordController.text);
+    if (isSuccess) {
+      // ignore: use_build_context_synchronously
+      context.goNamed(RouteNames.connection);
+      AppToast(
+        message: "Wallet unlocked successfully",
+        description: 'You have successfully unlocked your wallet.',
+      ).show(
+        context,
+        type: ToastificationType.success,
+      );
+    } else {
+      AppToast(
+        message: "Wallet unlocked failed",
+        description: 'Unable to unlock wallet with this password.',
+      ).show(
+        context,
+        type: ToastificationType.error,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StackWalletBackground(
@@ -80,39 +103,16 @@ class _WalletPasswordScreenState extends State<WalletPasswordScreen> {
                       maxLines: 1,
                       validator: (value) =>
                           FormUtils.validatePassword(context, value),
+                      onFieldSubmitted: (a) {
+                        submit();
+                      },
                     ),
                     const SizedBox(height: 31),
                     LoadingParentWidget(
                       isLoading: isLoading,
                       child: ClickableButton(
                         isValid: isFormValid,
-                        onTap: isFormValid
-                            ? () async {
-                                final isSuccess = await kAIXpWallet!
-                                    .loadWallet(passwordController.text);
-                                if (isSuccess) {
-                                  // ignore: use_build_context_synchronously
-                                  context.goNamed(RouteNames.connection);
-                                  AppToast(
-                                    message: "Wallet unlocked successfully",
-                                    description:
-                                        'You have successfully unlocked your wallet.',
-                                  ).show(
-                                    context,
-                                    type: ToastificationType.success,
-                                  );
-                                } else {
-                                  AppToast(
-                                    message: "Wallet unlocked failed",
-                                    description:
-                                        'Unable to unlock wallet with this password.',
-                                  ).show(
-                                    context,
-                                    type: ToastificationType.error,
-                                  );
-                                }
-                              }
-                            : null,
+                        onTap: () => submit(),
                         // text: "Create a Wallet",
                         text: 'Unlock Wallet',
                         backgroundColor: AppColors.buttonPrimaryBgColor,

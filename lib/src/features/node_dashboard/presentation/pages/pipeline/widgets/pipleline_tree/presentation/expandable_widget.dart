@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ExpandableWidget extends StatefulWidget {
   ///A widget whose body section expands and collapses alternately on clicking
@@ -135,9 +136,11 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
                       ),
                     );
                   }),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: widget.header,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: widget.header,
+                ),
               ),
             ],
           ),
