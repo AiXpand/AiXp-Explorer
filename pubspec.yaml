@@ -43,7 +43,6 @@ dependencies:
   windows_single_instance: ^1.0.1
   just_the_tooltip: ^0.0.12
 
-
   # Windows Build
   msix: ^3.16.7
 
@@ -53,7 +52,6 @@ dependencies:
   crypto: ^3.0.3
   flutter_riverpod: ^2.5.1
   riverpod: ^2.5.1
-  just_the_tooltip: ^0.0.12
 
 msix_config:
   display_name: AIXpand

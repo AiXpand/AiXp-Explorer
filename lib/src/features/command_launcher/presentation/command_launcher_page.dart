@@ -15,9 +15,9 @@ import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart'
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/network_provider.dart';
 import 'package:e2_explorer/src/utils/dimens.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_primary.dart';
 
 class CommandLauncherPage extends ConsumerWidget {
   const CommandLauncherPage({Key? key}) : super(key: key);
