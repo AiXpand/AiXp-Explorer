@@ -55,6 +55,7 @@ class _WalletFormFieldWidgetState extends State<WalletFormFieldWidget> {
       validator: widget.validator,
       autovalidateMode: widget.autovalidateMode,
       maxLines: widget.maxLines,
+      onFieldSubmitted: widget.onFieldSubmitted,
       decoration: InputDecoration(
         suffixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
         suffixIcon: widget.obscureText
