@@ -51,7 +51,7 @@ class CreatePipelineDialog extends ConsumerStatefulWidget {
 
 class _CreatePipelineDialogState extends ConsumerState<CreatePipelineDialog> {
   final scrollController = ScrollController();
-
+  UiMode uiMode = UiMode.Edit;
   final pageController = PageController();
   @override
   void initState() {
@@ -88,12 +88,14 @@ class _CreatePipelineDialogState extends ConsumerState<CreatePipelineDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppButtonPrimary(
-                text: pageController.page == 0 ? "View Mode" : 'Edit Mode',
+                text: uiMode == UiMode.Edit ? "View Mode" : 'Edit Mode',
                 onPressed: () {
                   if (pageController.page == 0) {
                     pageController.jumpToPage(1);
+                    uiMode = UiMode.View;
                   } else {
                     pageController.jumpToPage(0);
+                    uiMode = UiMode.Edit;
                   }
                   setState(() {});
                 },
