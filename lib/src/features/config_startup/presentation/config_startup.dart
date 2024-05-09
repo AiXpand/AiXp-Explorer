@@ -1,8 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/src/features/command_launcher/model/command_launcher_data.dart';
 import 'package:e2_explorer/src/features/command_launcher/presentation/command_launcher_page.dart';
+import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_primary.dart';
 import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_secondary.dart';
 import 'package:e2_explorer/src/features/common_widgets/buttons/refresh_button_with_animation.dart';
 import 'package:e2_explorer/src/features/common_widgets/table/flr_table.dart';
@@ -14,7 +13,6 @@ import 'package:e2_explorer/src/features/dashboard/presentation/widget/dashboard
 import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/network_provider.dart';
 import 'package:e2_explorer/src/utils/dimens.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -81,6 +79,7 @@ class _ConfigStartUpState extends State<ConfigStartUp> {
                               .map((e) => CommandLauncherData(
                                     edgeNode: e.boxId,
                                     configStartupFile: 'configStartupFile',
+                                    status: e.details.working.toLowerCase(),
                                   ))
                               .toList(),
                           rowBuilder: (item, columns) {
@@ -99,6 +98,14 @@ class _ConfigStartUpState extends State<ConfigStartUp> {
                                     child: Row(
                                       children: [
                                         AppButtonSecondary(
+                                          tootlTipText: item.status ==
+                                                  'lost status'
+                                              ? "This button is disable because this node status is lost"
+                                              : null,
+                                          appButtonStatus:
+                                              item.status == 'lost status'
+                                                  ? AppButtonStatus.disabled
+                                                  : AppButtonStatus.normal,
                                           onPressed: () {
                                             ConfigStartUpViewDialog
                                                 .viewConfigLog(
@@ -119,6 +126,14 @@ class _ConfigStartUpState extends State<ConfigStartUp> {
                                         ),
                                         const SizedBox(width: 8),
                                         AppButtonSecondary(
+                                          tootlTipText: item.status ==
+                                                  'lost status'
+                                              ? "This button is disable because this node status is lost"
+                                              : null,
+                                          appButtonStatus:
+                                              item.status == 'lost status'
+                                                  ? AppButtonStatus.disabled
+                                                  : AppButtonStatus.normal,
                                           onPressed: () {
                                             ConfigStartUpEditDialog
                                                 .viewConfigLog(

@@ -5,6 +5,7 @@ import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/src/design/app_toast.dart';
 import 'package:e2_explorer/src/features/command_launcher/model/command_launcher_data.dart';
 import 'package:e2_explorer/src/features/command_launcher/presentation/widgets/command_launcher_logs.dart';
+import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_primary.dart';
 
 import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_secondary.dart';
 import 'package:e2_explorer/src/features/common_widgets/buttons/refresh_button_with_animation.dart';
@@ -99,6 +100,7 @@ class CommandLauncherPage extends StatelessWidget {
                                 .map((e) => CommandLauncherData(
                                       edgeNode: e.boxId,
                                       configStartupFile: "configStartupFile",
+                                      status: e.details.working.toLowerCase(),
                                     ))
                                 .toList(),
                             rowBuilder: (item, columns) {
@@ -117,6 +119,14 @@ class CommandLauncherPage extends StatelessWidget {
                                       child: Row(
                                         children: [
                                           AppButtonSecondary(
+                                            tootlTipText: item.status ==
+                                                    'lost status'
+                                                ? "This button is disable because this node status is lost"
+                                                : null,
+                                            appButtonStatus:
+                                                item.status == 'lost status'
+                                                    ? AppButtonStatus.disabled
+                                                    : AppButtonStatus.normal,
                                             onPressed: () {
                                               _client.session.sendCommand(
                                                 ActionCommands.stop(
@@ -134,6 +144,14 @@ class CommandLauncherPage extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 8),
                                           AppButtonSecondary(
+                                            tootlTipText: item.status ==
+                                                    'lost status'
+                                                ? "This button is disable because this node status is lost"
+                                                : null,
+                                            appButtonStatus:
+                                                item.status == 'lost status'
+                                                    ? AppButtonStatus.disabled
+                                                    : AppButtonStatus.normal,
                                             onPressed: () {
                                               _client.session.sendCommand(
                                                 ActionCommands.fullHeartbeat(
@@ -155,6 +173,14 @@ class CommandLauncherPage extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 8),
                                           AppButtonSecondary(
+                                            tootlTipText: item.status ==
+                                                    'lost status'
+                                                ? "This button is disable because this node status is lost"
+                                                : null,
+                                            appButtonStatus:
+                                                item.status == 'lost status'
+                                                    ? AppButtonStatus.disabled
+                                                    : AppButtonStatus.normal,
                                             height: 30,
                                             minWidth: 100,
                                             text: 'Create Pipeline',
@@ -216,7 +242,4 @@ class CommandLauncherPage extends StatelessWidget {
   }
 }
 
-enum CommandLauncherColumns {
-  edgeNode,
-  configStartupFile,
-}
+enum CommandLauncherColumns { edgeNode, configStartupFile }

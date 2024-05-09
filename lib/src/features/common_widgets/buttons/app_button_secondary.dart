@@ -1,7 +1,7 @@
 import 'package:e2_explorer/src/styles/color_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:just_the_tooltip/just_the_tooltip.dart';
 import '../../../utils/dimens.dart';
 import 'app_button_primary.dart';
 
@@ -22,6 +22,7 @@ class AppButtonSecondary extends StatefulWidget {
     this.minWidth,
     this.borderColor,
     this.loading = false,
+    this.tootlTipText,
   });
 
   final String text;
@@ -38,6 +39,7 @@ class AppButtonSecondary extends StatefulWidget {
   final double? minWidth;
   final Color? borderColor;
   final bool loading;
+  final String? tootlTipText;
 
   @override
   State<AppButtonSecondary> createState() => _AppButtonSecondaryState();
@@ -48,6 +50,19 @@ class _AppButtonSecondaryState extends State<AppButtonSecondary> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.tootlTipText != null) {
+      return JustTheTooltip(
+          content: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(widget.tootlTipText!),
+          ),
+          child: buildButton());
+    } else {
+      return buildButton();
+    }
+  }
+
+  Container buildButton() {
     return Container(
       height: widget.height,
       constraints: BoxConstraints(
@@ -62,7 +77,11 @@ class _AppButtonSecondaryState extends State<AppButtonSecondary> {
                 });
               },
               style: buttonStyle,
-              onPressed: widget.loading ? () {} : widget.onPressed ?? () {},
+              onPressed: widget.appButtonStatus == AppButtonStatus.disabled
+                  ? () {}
+                  : widget.loading
+                      ? () {}
+                      : widget.onPressed ?? () {},
               icon: iconWidget!,
               label: textWidget,
             )
@@ -104,7 +123,9 @@ class _AppButtonSecondaryState extends State<AppButtonSecondary> {
           borderRadius: BorderRadius.circular(
             Dimens.btnSecondaryBorderRadius,
           ),
-          side: BorderSide(color: widget.borderColor ?? AppColors.buttonSecondaryBorderColor),
+          side: BorderSide(
+              color:
+                  widget.borderColor ?? AppColors.buttonSecondaryBorderColor),
         ),
       );
 
@@ -114,7 +135,7 @@ class _AppButtonSecondaryState extends State<AppButtonSecondary> {
         return AppColors.buttonSecondaryBgColor;
 
       case AppButtonStatus.disabled:
-        return AppColors.buttonSecondaryBgColor;
+        return AppColors.buttonSecondaryDisabledBgColor;
 
       case AppButtonStatus.normal:
         return AppColors.buttonSecondaryBgColor;
