@@ -50,6 +50,7 @@ class AppColors {
   static late Color buttonSecondaryTextColor;
   static late Color buttonSecondaryIconColor;
   static late Color buttonSecondaryBorderColor;
+  static late Color buttonSecondaryDisabledBgColor;
 
   // Dialog colors
   static late Color alertDialogBgColor;
@@ -143,6 +144,7 @@ class AppColors {
     buttonSecondaryTextColor = const Color(0xFFFFFFFF);
     buttonSecondaryIconColor = const Color(0xFFFFFFFF);
     buttonSecondaryBorderColor = const Color(0xFF5553DA);
+    buttonSecondaryDisabledBgColor = const Color(0xFF9392D0).withOpacity(0.5);
 
     // Dialog colors
     alertDialogBgColor = const Color(0xFF1E1D47);

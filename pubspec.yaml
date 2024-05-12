@@ -43,7 +43,6 @@ dependencies:
   windows_single_instance: ^1.0.1
   just_the_tooltip: ^0.0.12
 
-
   # Windows Build
   msix: ^3.16.7
 

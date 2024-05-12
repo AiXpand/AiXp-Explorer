@@ -15,9 +15,9 @@ import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart'
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/network_provider.dart';
 import 'package:e2_explorer/src/utils/dimens.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_primary.dart';
 
 class CommandLauncherPage extends ConsumerWidget {
   const CommandLauncherPage({Key? key}) : super(key: key);
@@ -36,6 +36,8 @@ class CommandLauncherPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final E2Client _client = E2Client();
+    String tooltipMessage =
+        "Can't perform any action on this node due to lost status";
 
     return Consumer(builder: (context, ref, child) {
       final state = ref.watch(networkProvider);
@@ -96,6 +98,7 @@ class CommandLauncherPage extends ConsumerWidget {
                                 .map((e) => CommandLauncherData(
                                       edgeNode: e.boxId,
                                       configStartupFile: "configStartupFile",
+                                      status: e.details.working.toLowerCase(),
                                     ))
                                 .toList(),
                             rowBuilder: (item, columns) {
@@ -114,6 +117,14 @@ class CommandLauncherPage extends ConsumerWidget {
                                       child: Row(
                                         children: [
                                           AppButtonSecondary(
+                                            tootlTipText:
+                                                item.status == 'lost status'
+                                                    ? tooltipMessage
+                                                    : null,
+                                            appButtonStatus:
+                                                item.status == 'lost status'
+                                                    ? AppButtonStatus.disabled
+                                                    : AppButtonStatus.normal,
                                             onPressed: () {
                                               _client.session.sendCommand(
                                                 ActionCommands.stop(
@@ -131,6 +142,14 @@ class CommandLauncherPage extends ConsumerWidget {
                                           ),
                                           const SizedBox(width: 8),
                                           AppButtonSecondary(
+                                            tootlTipText:
+                                                item.status == 'lost status'
+                                                    ? tooltipMessage
+                                                    : null,
+                                            appButtonStatus:
+                                                item.status == 'lost status'
+                                                    ? AppButtonStatus.disabled
+                                                    : AppButtonStatus.normal,
                                             onPressed: () {
                                               _client.session.sendCommand(
                                                 ActionCommands.fullHeartbeat(
@@ -152,6 +171,14 @@ class CommandLauncherPage extends ConsumerWidget {
                                           ),
                                           const SizedBox(width: 8),
                                           AppButtonSecondary(
+                                            tootlTipText:
+                                                item.status == 'lost status'
+                                                    ? tooltipMessage
+                                                    : null,
+                                            appButtonStatus:
+                                                item.status == 'lost status'
+                                                    ? AppButtonStatus.disabled
+                                                    : AppButtonStatus.normal,
                                             height: 30,
                                             minWidth: 100,
                                             text: 'Create Pipeline',
@@ -221,7 +248,4 @@ class CommandLauncherPage extends ConsumerWidget {
   }
 }
 
-enum CommandLauncherColumns {
-  edgeNode,
-  configStartupFile,
-}
+enum CommandLauncherColumns { edgeNode, configStartupFile }
