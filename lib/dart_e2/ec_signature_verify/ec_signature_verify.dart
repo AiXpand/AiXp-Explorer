@@ -75,7 +75,7 @@ class EcSignatureAndVerifier {
   }
 
   String getAddressFromPublicKey(ECPublicKey publicKey) {
-    return ADDR_PREFIX +
+    return ADDR_PREFIX[1] +
         getCompressedPublicKeyBase64(publicKey, isUrlSaveBase64: true);
   }
 

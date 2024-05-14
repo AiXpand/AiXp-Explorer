@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 
-const ADDR_PREFIX = 'aixp_';
+const ADDR_PREFIX = ['aixp_', '0xai_'];
 
 const INITIATORIDPREFIX = 'explorer_';
 

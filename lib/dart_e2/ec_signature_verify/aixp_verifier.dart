@@ -89,9 +89,10 @@ class AixpVerifier {
       var bytes = utf8.encode(jsonData); // Data being hashed
       var digest = sha256.convert(bytes);
       String hashHex = digest.toString();
+      String sender = urlSafeBase64ToBase64(eeSender
+          .replaceFirst(ADDR_PREFIX[0], '')
+          .replaceFirst(ADDR_PREFIX[1], ''));
 
-      String sender =
-          urlSafeBase64ToBase64(eeSender.replaceFirst(ADDR_PREFIX, ''));
       Uint8List publicKeyBytes = base64.decode(sender);
       ECPublicKey publicKey = _ecInstance.loadPublicKey(publicKeyBytes);
 
