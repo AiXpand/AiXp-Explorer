@@ -94,7 +94,7 @@ class CommandLauncherPage extends ConsumerWidget {
                                 CommandLauncherColumns.values.toSet(),
                             sortingColumns: const {},
                             sortedColumn: null,
-                            items: state.netmonStatusList
+                            items: state.onlineNetmon
                                 .map((e) => CommandLauncherData(
                                       edgeNode: e.boxId,
                                       configStartupFile: "configStartupFile",

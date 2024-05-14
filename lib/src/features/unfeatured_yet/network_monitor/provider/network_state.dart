@@ -9,6 +9,12 @@ class NetworkState {
   final List<String> supervisorIds;
   final bool refreshReady;
 
+  List<NetmonBox> get onlineNetmon {
+    return netmonStatusList
+        .where((e) => e.details.working.toLowerCase() != 'lost status')
+        .toList();
+  }
+
   NetworkState({
     required this.serverData,
     required this.isLoading,
