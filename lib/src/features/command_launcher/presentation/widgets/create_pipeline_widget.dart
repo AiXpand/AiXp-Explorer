@@ -6,22 +6,24 @@ import 'package:e2_explorer/src/features/common_widgets/json_viewer/json_viewer.
 import 'package:e2_explorer/src/features/common_widgets/text_widget.dart';
 import 'package:e2_explorer/src/features/config_startup/widgets/form_builder.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_listener.dart';
+import 'package:e2_explorer/src/features/e2_status/presentation/widgets/common/tab_display.dart';
 import 'package:e2_explorer/src/features/node_dashboard/presentation/pages/pipeline/widgets/pipleline_tree/presentation/expandable_widget.dart';
 import 'package:e2_explorer/src/features/unfeatured_yet/network_monitor/provider/node_pipeline_provider.dart';
 import 'package:e2_explorer/src/models/create_pipeline.dart';
+import 'package:e2_explorer/src/styles/color_styles.dart';
 import 'package:e2_explorer/src/utils/app_utils.dart';
+import 'package:e2_explorer/src/utils/asset_utils.dart';
 import 'package:e2_explorer/src/utils/form_utils.dart';
 import 'package:e2_explorer/src/widgets/transparent_inkwell_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:json_data_explorer/json_data_explorer.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
 import 'package:provider/provider.dart' as p;
 import '../../../common_widgets/buttons/app_button_primary.dart';
-
-enum UiMode { Edit, View }
 
 class CreatePipelineDialogUtils {
   static String boxName = '';
@@ -51,8 +53,7 @@ class CreatePipelineDialog extends ConsumerStatefulWidget {
 
 class _CreatePipelineDialogState extends ConsumerState<CreatePipelineDialog> {
   final scrollController = ScrollController();
-  UiMode uiMode = UiMode.Edit;
-  final pageController = PageController();
+
   @override
   void initState() {
     super.initState();
@@ -87,31 +88,18 @@ class _CreatePipelineDialogState extends ConsumerState<CreatePipelineDialog> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppButtonPrimary(
-                text: uiMode == UiMode.Edit ? "View Mode" : 'Edit Mode',
-                onPressed: () {
-                  if (pageController.page == 0) {
-                    pageController.jumpToPage(1);
-                    uiMode = UiMode.View;
-                  } else {
-                    pageController.jumpToPage(0);
-                    uiMode = UiMode.Edit;
-                  }
-                  setState(() {});
-                },
-              ),
               Expanded(
-                child: PageView(
-                  controller: pageController,
-                  children: [
-                    EditTestMode(
-                      boxName: widget.boxName,
-                    ),
-                    _ViewMode(
-                      boxName: widget.boxName,
-                    ),
-                  ],
-                ),
+                child: TabDisplay(tabNames: const [
+                  "Edit Mode",
+                  "View Mode"
+                ], children: [
+                  EditTestMode(
+                    boxName: widget.boxName,
+                  ),
+                  _ViewMode(
+                    boxName: widget.boxName,
+                  ),
+                ]),
               ),
             ],
           );
@@ -158,16 +146,23 @@ class __ViewModeState extends ConsumerState<_ViewMode> {
     ref.listen(createPipelineProvider(widget.boxName), (p, s) {
       store.buildNodes(s.toJson());
     });
-    return p.ChangeNotifierProvider.value(
-      value: store,
-      child: p.Consumer<DataExplorerStore>(
-        builder: (context, DataExplorerStore value, child) {
-          return ReusableJsonDataExplorer(
-            nodes: value.displayNodes,
-            value: value,
-          );
-        },
-      ),
+    return Column(
+      children: [
+        const SizedBox(height: 30),
+        Expanded(
+          child: p.ChangeNotifierProvider.value(
+            value: store,
+            child: p.Consumer<DataExplorerStore>(
+              builder: (context, DataExplorerStore value, child) {
+                return ReusableJsonDataExplorer(
+                  nodes: value.displayNodes,
+                  value: value,
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -220,23 +215,7 @@ class _EditTestModeState extends ConsumerState<EditTestMode>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                const Spacer(),
-                if (state.isCustomFieldsValid)
-                  addCustomFieldBtn
-                else
-                  JustTheTooltip(
-                    content: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextWidget(
-                        "Make Sure Existing Custom Fields are valid",
-                      ),
-                    ),
-                    child: addCustomFieldBtn,
-                  ),
-              ],
-            ),
+            const SizedBox(height: 30),
             ...notifier.defaultKey.mapIndexed(
               (i, e) {
                 /// Needed for validation to make sure we don't have duplicate keys
@@ -259,6 +238,19 @@ class _EditTestModeState extends ConsumerState<EditTestMode>
                 );
               },
             ),
+            const SizedBox(height: 16),
+            if (state.isCustomFieldsValid)
+              addCustomFieldBtn
+            else
+              JustTheTooltip(
+                content: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextWidget(
+                    "Make Sure Existing Custom Fields are valid",
+                  ),
+                ),
+                child: addCustomFieldBtn,
+              ),
             ...state.customFields.mapIndexed(
               (index, element) {
                 final existingKeys = notifier.allKeysWithoutPlugin
@@ -287,8 +279,6 @@ class _EditTestModeState extends ConsumerState<EditTestMode>
               padding: const EdgeInsets.only(top: 15.0),
               child: Row(
                 children: [
-                  const Text("PLUGINS"),
-                  const Spacer(),
                   if (state.isAllPluginValid)
                     AppButtonPrimary(
                       height: 36,
@@ -328,9 +318,11 @@ class _EditTestModeState extends ConsumerState<EditTestMode>
                 ],
               ),
             ),
+            const SizedBox(height: 16),
             ...List.generate(pluginsData.length, (index) {
               var plugin = pluginsData[index];
               return CreatePluginWidget(
+                index: index,
                 key: ValueKey(plugin.id),
                 plugin: pluginsData[index],
                 boxName: widget.boxName,
@@ -352,6 +344,7 @@ class _EditTestModeState extends ConsumerState<EditTestMode>
 
 class CreatePluginWidget extends ConsumerWidget {
   final Plugins plugin;
+  final int index;
   final Function onAddInstance;
   final String boxName;
   const CreatePluginWidget({
@@ -359,11 +352,12 @@ class CreatePluginWidget extends ConsumerWidget {
     required this.onAddInstance,
     required this.boxName,
     required this.plugin,
+    required this.index,
   });
 
   Widget addInstanceButton(notifier) {
     return AppButtonPrimary(
-      text: 'Add Instance',
+      text: 'Add Plugin Instance',
       height: 36,
       onPressed: () {
         notifier.addInstance(plugin);
@@ -382,9 +376,8 @@ class CreatePluginWidget extends ConsumerWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(10),
-      ),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: const Color(0xFF7C7BB5))),
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: ExpandableWidget(
@@ -408,8 +401,6 @@ class CreatePluginWidget extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
                 child: Row(
                   children: [
-                    const Text("PLUGINS INSTANCE:"),
-                    const Spacer(),
                     if (plugin.isAllInstanceValid)
                       addInstanceButton(notifier)
                     else
@@ -441,13 +432,13 @@ class CreatePluginWidget extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           child: Row(
             children: [
-              Text("PLUGINS: "),
+              TextWidget(
+                "PLUGINS: $index ",
+                style: CustomTextStyles.text16_600,
+              ),
               const Spacer(),
               TransparentInkwellWidget(
-                child: const Icon(
-                  Icons.minimize_outlined,
-                  color: Colors.red,
-                ),
+                child: _deleteButton(),
                 onTap: () {
                   notifier.removePlugin(plugin);
                 },
@@ -493,9 +484,8 @@ class CreateInstanceWidget extends ConsumerWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(10),
-      ),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: const Color(0xFF7C7BB5))),
       margin: const EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: ExpandableWidget(
@@ -517,6 +507,20 @@ class CreateInstanceWidget extends ConsumerWidget {
                   );
                 },
               ),
+              const SizedBox(height: 16),
+              if (instance.isCustomFieldsValid)
+                addCustomFieldBtn
+              else
+                JustTheTooltip(
+                  content: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextWidget(
+                      "Make Sure Existing Custom Fields are valid",
+                    ),
+                  ),
+                  child: addCustomFieldBtn,
+                ),
+              const SizedBox(height: 16),
               ...instance.customFields.map(
                 (element) {
                   var existingKeys = instance.allCustomFieldsKey;
@@ -565,25 +569,13 @@ class CreateInstanceWidget extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           child: Row(
             children: [
-              Text("INSTANCE $index:"),
+              TextWidget(
+                "INSTANCE $index:",
+                style: CustomTextStyles.text16_600,
+              ),
               const Spacer(),
-              if (instance.isCustomFieldsValid)
-                addCustomFieldBtn
-              else
-                JustTheTooltip(
-                  content: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextWidget(
-                      "Make Sure Existing Custom Fields are valid",
-                    ),
-                  ),
-                  child: addCustomFieldBtn,
-                ),
               TransparentInkwellWidget(
-                child: const Icon(
-                  Icons.minimize_outlined,
-                  color: Colors.red,
-                ),
+                child: _deleteButton(),
                 onTap: () {
                   notifier.removeInstance(plugin, instance);
                 },
@@ -656,13 +648,9 @@ class _KeyValueInputFieldState extends State<KeyValueInputField> {
           ),
         ),
         TransparentInkwellWidget(
-          child: const Padding(
-            padding: EdgeInsets.only(top: 15.0, left: 10),
-            child: Icon(
-              Icons.minimize_outlined,
-              color: Colors.red,
-            ),
-          ),
+          child: Padding(
+              padding: const EdgeInsets.only(top: 30.0, left: 10),
+              child: _deleteButton()),
           onTap: () {
             widget.onRemove();
             // onRemove(index);
@@ -671,4 +659,14 @@ class _KeyValueInputFieldState extends State<KeyValueInputField> {
       ],
     );
   }
+}
+
+Widget _deleteButton() {
+  return Container(
+    padding: const EdgeInsets.all(5),
+    decoration: BoxDecoration(
+        color: AppColors.inputFieldFillColor,
+        borderRadius: BorderRadius.circular(10)),
+    child: SvgPicture.asset(AssetUtils.getSvgIconPath("trash")),
+  );
 }
