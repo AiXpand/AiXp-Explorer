@@ -123,6 +123,8 @@ class _ConfigStartUpViewState extends State<ConfigStartUpView> {
               title: "Config Startup file for ${widget.targetId}",
               content: SizedBox(
                 child: LoadingParentWidget(
+                  message:
+                      "Config Startup file requested ${widget.targetId}. Please wait until file is received and displayed",
                   isLoading: isLoading,
                   child: SizedBox(
                     child: ReusableJsonDataExplorer(
