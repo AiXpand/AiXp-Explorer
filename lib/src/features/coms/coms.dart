@@ -244,7 +244,7 @@ class _NotificationListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
       decoration: BoxDecoration(
         color: isSelected ? const Color(0xFF2E2C6A) : null,
         borderRadius: BorderRadius.circular(10),
