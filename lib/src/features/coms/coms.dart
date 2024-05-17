@@ -58,6 +58,7 @@ class _CommsState extends State<Comms> {
                 onChange: (a) {
                   setState(() {
                     final imgField = a.data['data']['img']["id"];
+
                     if (imgField != null) {
                       if (imgField is List) {
                         // base64Images = imgField.map((e) => (e as Map<String, dynamic>)['id'] as String).toList();

@@ -39,7 +39,7 @@ class _PayloadImageViwerState extends State<PayloadImageViwer> {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.containerBgColor,
-      child: widget.hasImages
+      child: !widget.hasImages
           ? const Center(
               child: Text(
                 'No images available',
