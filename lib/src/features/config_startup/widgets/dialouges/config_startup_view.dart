@@ -116,7 +116,11 @@ class _ConfigStartUpViewState extends State<ConfigStartUpView> {
               appDialogType: AppDialogType.medium,
               isActionbuttonReversed: true,
               positiveActionButtonAction: () async {
-                await FileUtils.saveJSONToFile(data);
+                //file name format DD-MM-YYYY-HH:MM:SS-config_startup_<edge_node_name>.json
+                final String fileName =
+                    "${DateTime.now()}config_startup_${widget.targetId}";
+                await FileUtils.saveJSONToFile(context,
+                    data: data, fileName: fileName);
               },
               positiveActionButtonText: "Download Json",
               negativeActionButtonText: "Close",

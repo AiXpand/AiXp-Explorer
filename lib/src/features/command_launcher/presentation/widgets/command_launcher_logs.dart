@@ -91,7 +91,7 @@ class _CommandLauncherLogsState extends State<CommandLauncherLogs> {
                 }
               }
             },
-            builder: (context) {
+            builder: (ctx) {
               return AppDialogWidget(
                 appDialogType: AppDialogType.medium,
                 headerButtons: [
@@ -105,9 +105,12 @@ class _CommandLauncherLogsState extends State<CommandLauncherLogs> {
                       }),
                   AppDialogHeaderButtons(
                     icon: Icons.download_sharp,
-                    onTap: () {
+                    onTap: () async {
                       if (!isLoading) {
-                        FileUtils.saveJSONToFile(data);
+                        final String fileName =
+                            "${formatDateFileName(DateTime.now())}command_launcher_logs${widget.targetId}";
+                        await FileUtils.saveJSONToFile(context,
+                            data: data, fileName: fileName);
                       }
                     },
                   ),
