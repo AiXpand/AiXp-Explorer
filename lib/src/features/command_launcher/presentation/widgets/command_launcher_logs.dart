@@ -108,7 +108,7 @@ class _CommandLauncherLogsState extends State<CommandLauncherLogs> {
                     onTap: () async {
                       if (!isLoading) {
                         final String fileName =
-                            "${formatDateFileName(DateTime.now())}command_launcher_logs${widget.targetId}";
+                            "${formatDateFileName(DateTime.now())}-logs_${widget.targetId}";
                         await FileUtils.saveJSONToFile(context,
                             data: data, fileName: fileName);
                       }
