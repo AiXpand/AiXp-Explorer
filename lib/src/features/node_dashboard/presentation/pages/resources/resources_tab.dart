@@ -72,6 +72,7 @@ class _ResourcesTabState extends ConsumerState<ResourcesTab> {
                   children: [
                     Expanded(
                       child: LineChartWidget(
+                        maximumY: 100,
                         data: state.nodeHistoryModel!.nodeHistory.gpuLoadHist
                             .map((e) => e.toDouble())
                             .toList(),
@@ -85,6 +86,7 @@ class _ResourcesTabState extends ConsumerState<ResourcesTab> {
                     const SizedBox(width: 34),
                     Expanded(
                       child: LineChartWidget(
+                        maximumY: 100,
                         timestamps: state
                             .nodeHistoryModel!.nodeHistory.convertedTimeStamps,
                         data: state.nodeHistoryModel!.nodeHistory.cpuHist
