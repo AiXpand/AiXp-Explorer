@@ -58,6 +58,7 @@ class _CommsState extends State<Comms> {
                 onChange: (a) {
                   setState(() {
                     final imgField = a.data['data']['img']["id"];
+
                     if (imgField != null) {
                       if (imgField is List) {
                         // base64Images = imgField.map((e) => (e as Map<String, dynamic>)['id'] as String).toList();
@@ -243,7 +244,7 @@ class _NotificationListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
       decoration: BoxDecoration(
         color: isSelected ? const Color(0xFF2E2C6A) : null,
         borderRadius: BorderRadius.circular(10),
