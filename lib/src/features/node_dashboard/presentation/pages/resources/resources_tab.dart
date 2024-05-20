@@ -90,8 +90,13 @@ class _ResourcesTabState extends ConsumerState<ResourcesTab> {
                         timestamps: state
                             .nodeHistoryModel!.nodeHistory.convertedTimeStamps,
                         data: state.nodeHistoryModel!.nodeHistory.cpuHist
-                            .map((e) => e.toDouble())
-                            .toList(),
+                            .map((e) {
+                          double value = e.toDouble();
+                          if (value < 0) {
+                            return 0.toDouble();
+                          }
+                          return value;
+                        }).toList(),
                         title: 'CPU',
                         borderColor: AppColors.lineChartMagentaBorderColor,
                         gradient: AppColors.lineChartMagentaGradient,
@@ -108,8 +113,13 @@ class _ResourcesTabState extends ConsumerState<ResourcesTab> {
                             .nodeHistoryModel!.nodeHistory.convertedTimeStamps,
                         data: state
                             .nodeHistoryModel!.nodeHistory.gpuMemAvailHist
-                            .map((e) => e.toDouble())
-                            .toList(),
+                            .map((e) {
+                          double value = e.toDouble();
+                          if (value < 0) {
+                            return 0.toDouble();
+                          }
+                          return value;
+                        }).toList(),
                         title: 'GPU Memory',
                         borderColor: AppColors.lineChartPinkBorderColor,
                         gradient: AppColors.lineChartPinkGradient,
