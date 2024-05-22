@@ -118,6 +118,8 @@ class _CommandLauncherLogsState extends State<CommandLauncherLogs> {
                   height: 475,
                   padding: const EdgeInsets.all(16),
                   child: LoadingParentWidget(
+                    message:
+                        "Logs requested for ${widget.targetId}. Please wait until logs is received and displayed",
                     isLoading: isLoading,
                     child: ReusableJsonDataExplorer(
                       nodes: value.displayNodes,
