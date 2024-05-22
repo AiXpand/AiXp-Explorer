@@ -4,7 +4,6 @@ import 'package:e2_explorer/src/features/common_widgets/text_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:meta/meta.dart';
 
 import '../../styles/color_styles.dart';
 
@@ -15,13 +14,15 @@ class LineChartWidget extends StatelessWidget {
       required this.gradient,
       required this.title,
       required this.data,
-      required this.timestamps});
+      required this.timestamps,
+      this.maximumY});
 
   final Color borderColor;
   final Gradient? gradient;
   final String title;
   final List<double> data;
   final List<String> timestamps;
+  final double? maximumY;
 
   LineChartBarData get finalData => LineChartBarData(
         isCurved: true,
@@ -74,7 +75,7 @@ class LineChartWidget extends StatelessWidget {
       lineBarsData: lineBarsData2,
       minX: 0,
       maxX: (timestamps.length.toDouble() - 1),
-      maxY: maxY,
+      maxY: maximumY ?? maxY,
       minY: 0,
     );
   }
@@ -97,12 +98,22 @@ class LineChartWidget extends StatelessWidget {
         topTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+        leftTitles: AxisTitles(
+          sideTitles: leftTitles,
         ),
       );
 
   FlBorderData get borderData => FlBorderData(show: false);
+
+  SideTitles get leftTitles => SideTitles(
+        showTitles: true,
+        reservedSize: 40,
+        interval: 10,
+        getTitlesWidget: (value, meta) {
+          return TextWidget(value.toStringAsFixed(0),
+              style: CustomTextStyles.text12_400_tertiary);
+        },
+      );
 
   SideTitles get bottomTitles => SideTitles(
         showTitles: true,
@@ -201,6 +212,8 @@ class LineChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //if any value is in negative then it makes it 0
+
     return Container(
       // width: 570,
       // height: 315,
@@ -220,6 +233,7 @@ class LineChartWidget extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
+          const SizedBox(height: 10),
           AspectRatio(
             aspectRatio: 1.87,
             // aspectRatio: 1.23,

@@ -72,6 +72,7 @@ class _ResourcesTabState extends ConsumerState<ResourcesTab> {
                   children: [
                     Expanded(
                       child: LineChartWidget(
+                        maximumY: 100,
                         data: state.nodeHistoryModel!.nodeHistory.gpuLoadHist
                             .map((e) => e.toDouble())
                             .toList(),
@@ -85,11 +86,17 @@ class _ResourcesTabState extends ConsumerState<ResourcesTab> {
                     const SizedBox(width: 34),
                     Expanded(
                       child: LineChartWidget(
+                        maximumY: 100,
                         timestamps: state
                             .nodeHistoryModel!.nodeHistory.convertedTimeStamps,
                         data: state.nodeHistoryModel!.nodeHistory.cpuHist
-                            .map((e) => e.toDouble())
-                            .toList(),
+                            .map((e) {
+                          double value = e.toDouble();
+                          if (value < 0) {
+                            return 0.toDouble();
+                          }
+                          return value;
+                        }).toList(),
                         title: 'CPU',
                         borderColor: AppColors.lineChartMagentaBorderColor,
                         gradient: AppColors.lineChartMagentaGradient,
@@ -106,8 +113,13 @@ class _ResourcesTabState extends ConsumerState<ResourcesTab> {
                             .nodeHistoryModel!.nodeHistory.convertedTimeStamps,
                         data: state
                             .nodeHistoryModel!.nodeHistory.gpuMemAvailHist
-                            .map((e) => e.toDouble())
-                            .toList(),
+                            .map((e) {
+                          double value = e.toDouble();
+                          if (value < 0) {
+                            return 0.toDouble();
+                          }
+                          return value;
+                        }).toList(),
                         title: 'GPU Memory',
                         borderColor: AppColors.lineChartPinkBorderColor,
                         gradient: AppColors.lineChartPinkGradient,
