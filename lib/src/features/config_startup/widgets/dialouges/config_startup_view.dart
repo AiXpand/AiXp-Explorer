@@ -3,6 +3,7 @@ import 'package:e2_explorer/dart_e2/formatter/format_decoder.dart';
 import 'package:e2_explorer/dart_e2/utils/xpand_utils.dart';
 import 'package:e2_explorer/src/design/app_toast.dart';
 import 'package:e2_explorer/src/features/common_widgets/app_dialog_widget.dart';
+import 'package:e2_explorer/src/features/common_widgets/buttons/app_button_primary.dart';
 import 'package:e2_explorer/src/features/common_widgets/json_viewer/json_viewer.dart';
 import 'package:e2_explorer/src/features/common_widgets/layout/loading_parent_widget.dart';
 import 'package:e2_explorer/src/features/e2_status/application/e2_client.dart';
@@ -113,10 +114,16 @@ class _ConfigStartUpViewState extends State<ConfigStartUpView> {
           },
           builder: (context) {
             return AppDialogWidget(
+              appButtonStatusPositiveButton:
+                  isLoading ? AppButtonStatus.disabled : AppButtonStatus.normal,
               appDialogType: AppDialogType.medium,
               isActionbuttonReversed: true,
               positiveActionButtonAction: () async {
-                await FileUtils.saveJSONToFile(data);
+                //file name format DD-MM-YYYY-HH:MM:SS-config_startup_<edge_node_name>.json
+                final String fileName =
+                    "${DateTime.now()}config_startup_${widget.targetId}";
+                await FileUtils.saveJSONToFile(context,
+                    data: data, fileName: fileName);
               },
               positiveActionButtonText: "Download Json",
               negativeActionButtonText: "Close",
